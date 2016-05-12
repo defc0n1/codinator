@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="F9g-RV-Waj">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="F9g-RV-Waj">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
@@ -853,7 +853,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="349" height="150"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="coC-Uf-SeT">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="coC-Uf-SeT">
                                 <rect key="frame" x="130" y="60" width="203" height="30"/>
                                 <color key="backgroundColor" red="0.090196078430000007" green="0.090196078430000007" blue="0.090196078430000007" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="textColor" white="1" alpha="0.43370616010000002" colorSpace="calibratedWhite"/>
@@ -863,19 +863,19 @@
                                     <outlet property="delegate" destination="MET-6v-nUA" id="xpB-0o-wPk"/>
                                 </connections>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C2C-03-pip">
-                                <rect key="frame" x="16" y="64" width="45" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="HTTP link" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C2C-03-pip">
+                                <rect key="frame" x="16" y="64" width="74" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="HTTP link" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="loU-nS-NRn">
-                                <rect key="frame" x="16" y="103" width="74" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="loU-nS-NRn">
+                                <rect key="frame" x="16" y="102" width="45" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="http link " minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QZU-XQ-Jgz">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QZU-XQ-Jgz">
                                 <rect key="frame" x="130" y="98" width="203" height="30"/>
                                 <color key="backgroundColor" red="0.090196078430000007" green="0.090196078430000007" blue="0.090196078430000007" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="textColor" white="1" alpha="0.43370616010000002" colorSpace="calibratedWhite"/>
@@ -895,10 +895,10 @@
                             <constraint firstItem="loU-nS-NRn" firstAttribute="leading" secondItem="kHd-Wi-uCp" secondAttribute="leadingMargin" id="HvY-Ke-sKi"/>
                             <constraint firstItem="loU-nS-NRn" firstAttribute="centerY" secondItem="QZU-XQ-Jgz" secondAttribute="centerY" id="NgE-ph-g2q"/>
                             <constraint firstItem="coC-Uf-SeT" firstAttribute="leading" secondItem="QZU-XQ-Jgz" secondAttribute="leading" id="Smv-tC-f48"/>
-                            <constraint firstItem="QZU-XQ-Jgz" firstAttribute="leading" secondItem="loU-nS-NRn" secondAttribute="trailing" constant="40" id="jka-vR-3db"/>
                             <constraint firstItem="coC-Uf-SeT" firstAttribute="centerY" secondItem="C2C-03-pip" secondAttribute="centerY" id="pL7-fm-6kj"/>
                             <constraint firstItem="C2C-03-pip" firstAttribute="top" secondItem="FxQ-4W-izI" secondAttribute="bottom" constant="20" id="uPz-nJ-vAP"/>
                             <constraint firstItem="C2C-03-pip" firstAttribute="leading" secondItem="kHd-Wi-uCp" secondAttribute="leadingMargin" id="uR3-ah-buh"/>
+                            <constraint firstItem="coC-Uf-SeT" firstAttribute="leading" secondItem="C2C-03-pip" secondAttribute="trailing" constant="40" id="y0h-nq-CfA"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Link Snippet" id="m8l-Z8-vVF">
@@ -936,7 +936,7 @@
                         <viewControllerLayoutGuide type="bottom" id="02z-Bl-7hb"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="YQt-ZI-83N">
-                        <rect key="frame" x="0.0" y="0.0" width="349" height="150"/>
+                        <rect key="frame" x="0.0" y="0.0" width="349" height="120"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="number of points" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="biJ-ON-4k4">
@@ -981,11 +981,11 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
-                    <value key="contentSizeForViewInPopover" type="size" width="349" height="150"/>
+                    <value key="contentSizeForViewInPopover" type="size" width="349" height="120"/>
                     <nil key="simulatedStatusBarMetrics"/>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="349" height="150"/>
+                    <size key="freeformSize" width="349" height="120"/>
                     <connections>
                         <outlet property="enumNumberLabel" destination="hDX-8m-OMC" id="pe5-6d-f9p"/>
                         <outlet property="stepper" destination="2vh-kO-bhj" id="CnL-hR-ODE"/>
@@ -1297,6 +1297,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="b4G-6a-did" sceneMemberID="viewController">
                     <toolbarItems/>
+                    <value key="contentSizeForViewInPopover" type="size" width="349" height="150"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="G7u-dR-Jra">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1315,6 +1316,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="C1I-M0-4Gg" sceneMemberID="viewController">
                     <toolbarItems/>
+                    <value key="contentSizeForViewInPopover" type="size" width="349" height="120"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="h0E-Eq-ags">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1333,6 +1335,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="aZG-Up-KG5" sceneMemberID="viewController">
                     <toolbarItems/>
+                    <value key="contentSizeForViewInPopover" type="size" width="349" height="194"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="BdC-Ij-CQE">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>

@@ -147,8 +147,6 @@
 		64A082F11BDCD8BB0001CA0C /* HistoryRow.m in Sources */ = {isa = PBXBuildFile; fileRef = 64A082EF1BDCD8BB0001CA0C /* HistoryRow.m */; };
 		64A082F41BDCD8C80001CA0C /* HistoryWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64A082F31BDCD8C80001CA0C /* HistoryWebViewController.m */; };
 		64A082FC1BDCD8E70001CA0C /* GitHubViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64A082FB1BDCD8E70001CA0C /* GitHubViewController.m */; };
-		64A083041BDD14170001CA0C /* KOKeyboardRow.m in Sources */ = {isa = PBXBuildFile; fileRef = 64A083011BDD14170001CA0C /* KOKeyboardRow.m */; };
-		64A083051BDD14170001CA0C /* KOSwipeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 64A083031BDD14170001CA0C /* KOSwipeButton.m */; };
 		64A083081BDD142B0001CA0C /* VWASAccessoryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 64A083061BDD142B0001CA0C /* VWASAccessoryView.m */; };
 		64A0830C1BDD14B80001CA0C /* AskQuestioniPad.m in Sources */ = {isa = PBXBuildFile; fileRef = 64A0830B1BDD14B80001CA0C /* AskQuestioniPad.m */; };
 		64A083271BDD155C0001CA0C /* WUTextSuggestionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64A083241BDD155C0001CA0C /* WUTextSuggestionController.m */; };
@@ -405,10 +403,6 @@
 		64A082F31BDCD8C80001CA0C /* HistoryWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryWebViewController.m; sourceTree = "<group>"; };
 		64A082FA1BDCD8E70001CA0C /* GitHubViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GitHubViewController.h; sourceTree = "<group>"; };
 		64A082FB1BDCD8E70001CA0C /* GitHubViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GitHubViewController.m; sourceTree = "<group>"; };
-		64A083001BDD14170001CA0C /* KOKeyboardRow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KOKeyboardRow.h; sourceTree = "<group>"; };
-		64A083011BDD14170001CA0C /* KOKeyboardRow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KOKeyboardRow.m; sourceTree = "<group>"; };
-		64A083021BDD14170001CA0C /* KOSwipeButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KOSwipeButton.h; sourceTree = "<group>"; };
-		64A083031BDD14170001CA0C /* KOSwipeButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KOSwipeButton.m; sourceTree = "<group>"; };
 		64A083061BDD142B0001CA0C /* VWASAccessoryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VWASAccessoryView.m; sourceTree = "<group>"; };
 		64A083071BDD142B0001CA0C /* VWASAccessoryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VWASAccessoryView.h; sourceTree = "<group>"; };
 		64A0830A1BDD14B80001CA0C /* AskQuestioniPad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AskQuestioniPad.h; sourceTree = "<group>"; };
@@ -1239,7 +1233,6 @@
 		64A082FD1BDD13F20001CA0C /* Keyboard */ = {
 			isa = PBXGroup;
 			children = (
-				64A082FF1BDD140B0001CA0C /* Regular */,
 				64A082FE1BDD13FE0001CA0C /* Compact */,
 			);
 			path = Keyboard;
@@ -1252,17 +1245,6 @@
 				64A083071BDD142B0001CA0C /* VWASAccessoryView.h */,
 			);
 			path = Compact;
-			sourceTree = "<group>";
-		};
-		64A082FF1BDD140B0001CA0C /* Regular */ = {
-			isa = PBXGroup;
-			children = (
-				64A083001BDD14170001CA0C /* KOKeyboardRow.h */,
-				64A083011BDD14170001CA0C /* KOKeyboardRow.m */,
-				64A083021BDD14170001CA0C /* KOSwipeButton.h */,
-				64A083031BDD14170001CA0C /* KOSwipeButton.m */,
-			);
-			path = Regular;
 			sourceTree = "<group>";
 		};
 		64A083091BDD14B10001CA0C /* New Project */ = {
@@ -1517,7 +1499,6 @@
 				64A082CA1BDBE89A0001CA0C /* AFHTTPRequestOperation.m in Sources */,
 				64380E131CCA980300FCF69A /* AssistantViewController.swift in Sources */,
 				646EC6F41CA8D0BE00F359C2 /* GCDWebServerStreamedResponse.m in Sources */,
-				64A083041BDD14170001CA0C /* KOKeyboardRow.m in Sources */,
 				64A082F11BDCD8BB0001CA0C /* HistoryRow.m in Sources */,
 				64A082CB1BDBE89A0001CA0C /* AFHTTPRequestOperationManager.m in Sources */,
 				64A081431BDBE12A0001CA0C /* FontSettingsViewController.m in Sources */,
@@ -1576,7 +1557,6 @@
 				64FD18B41CC7BFF600A4A3B7 /* Notifications.swift in Sources */,
 				646EC71B1CA8D15700F359C2 /* NSString+LTMorphingLabel.swift in Sources */,
 				64FD18B61CC815E500A4A3B7 /* ArchiveViewController.swift in Sources */,
-				64A083051BDD14170001CA0C /* KOSwipeButton.m in Sources */,
 				64A082A81BDBE7CC0001CA0C /* CSNativeBlurView.m in Sources */,
 				646EC7141CA8D15700F359C2 /* LTMorphingLabel+Anvil.swift in Sources */,
 				64A082CC1BDBE89A0001CA0C /* AFHTTPSessionManager.m in Sources */,

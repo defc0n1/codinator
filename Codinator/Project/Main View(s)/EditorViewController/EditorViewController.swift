@@ -97,7 +97,7 @@ class EditorViewController: UIViewController, UITextViewDelegate, ProjectSplitVi
     }
     
     
-    private var textView: CYRTextView {
+    var textView: CYRTextView {
         get {
             let fileExtension = projectManager.selectedFileURL.pathExtension!
             switch fileExtension {
@@ -248,6 +248,21 @@ class EditorViewController: UIViewController, UITextViewDelegate, ProjectSplitVi
             
             // line break + indent
             textView.insertText("\n" + indentingString)
+            
+            textView.undoManager?.__registerUndoWithTarget(self, handler: { _ in
+                textView.undoManager?.disableUndoRegistration()
+
+                
+                if indentingString.characters.count > 1 {
+                    for _ in 1...indentingString.characters.count {
+                        textView.deleteBackward()
+                    }
+                }
+                
+               
+                textView.undoManager?.enableUndoRegistration()
+            })
+            
             return false
         }
         else if range.length == 1 {
@@ -266,6 +281,13 @@ class EditorViewController: UIViewController, UITextViewDelegate, ProjectSplitVi
                 textView.deleteBackward()
                 textView.deleteBackward()
                 textView.deleteBackward()
+                
+                textView.undoManager?.__registerUndoWithTarget(self, handler: { _ in
+                    textView.undoManager?.disableUndoRegistration()
+                    textView.insertText("    ")
+                    textView.undoManager?.enableUndoRegistration()
+                })
+                
                 return false
             }
             else {

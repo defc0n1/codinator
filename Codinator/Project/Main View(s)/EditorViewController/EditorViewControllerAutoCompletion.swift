@@ -56,7 +56,11 @@ extension EditorViewController: WUTextSuggestionDisplayControllerDataSource {
         let stringFromRange = (htmlTextView.text as NSString).substringWithRange( NSRange(location: htmlTextView.selectedRange.location - 10, length: 10))
         
         // Find where the tag starts
-        let findTag = stringFromRange.characters.enumerate().filter { $0.element == "<"}.last?.index
+        var findTag = stringFromRange.characters.enumerate().filter { $0.element == "<"}.last?.index
+        
+        if (findTag == nil) {
+            findTag = 0
+        }
         
         // Try to find the distance between the cursor and the beginning of the tag. Since we don't want to delete the tag we do +1
         let itemsToDeleteTillTag = stringFromRange.characters.count - findTag! - 1
