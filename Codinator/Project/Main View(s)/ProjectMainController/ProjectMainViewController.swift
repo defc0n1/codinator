@@ -71,25 +71,16 @@ class ProjectMainViewController: UIViewController, UISplitViewControllerDelegate
         getSplitView.projectManager = Polaris(projectPath: path, currentView: nil, withWebServer: NSUserDefaults.standardUserDefaults().boolForKey("CnWebServer"), uploadServer: NSUserDefaults.standardUserDefaults().boolForKey("CnUploadServer"), andWebDavServer: NSUserDefaults.standardUserDefaults().boolForKey("CnWebDavServer"))
     
         
-        // Override trait collection
-        let horizontallyRegularTraitCollection = UITraitCollection(horizontalSizeClass: .Regular)
-        self.setOverrideTraitCollection(horizontallyRegularTraitCollection, forChildViewController: getSplitView!)
-
-        
-        leftTarget = leftButton.target
-        leftAction = leftButton.action
+                
+        getSplitView.delegate = self
 
     }
 
     
     
-    var leftTarget: AnyObject?
-    var leftAction: Selector?
-    
     var notConfigured = true
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        
         
         
         let projectName = getSplitView.projectManager.getSettingsDataForKey("ProjectName") as! String
@@ -97,16 +88,6 @@ class ProjectMainViewController: UIViewController, UISplitViewControllerDelegate
             getSplitView.rootVC = self
         
         
-        if notConfigured {
-            notConfigured = false
-            
-            if self.isCompact {
-                self.getSplitView?.preferredDisplayMode = .PrimaryOverlay
-            }
-            else {
-                self.getSplitView?.preferredDisplayMode = .AllVisible
-            }
-        }
         
         self.getSplitView?.filesTableView?.viewDidAppear(true)
         
@@ -114,13 +95,6 @@ class ProjectMainViewController: UIViewController, UISplitViewControllerDelegate
         getSplitView.redoButton = redoButton
         
     
-    if isCompact {
-        
-            leftButton.target = getSplitView.displayModeButtonItem().target
-            leftButton.action = getSplitView.displayModeButtonItem().action
-    }
-        
-        
 
     }
     
@@ -174,7 +148,7 @@ class ProjectMainViewController: UIViewController, UISplitViewControllerDelegate
 
     var isCompact: Bool {
         get {
-            return self.view.traitCollection.horizontalSizeClass == .Compact
+            return self.getSplitView.view.traitCollection.horizontalSizeClass == .Compact
         }
     }
     
@@ -185,27 +159,6 @@ class ProjectMainViewController: UIViewController, UISplitViewControllerDelegate
     var firstStartHappened = false
     override func traitCollectionDidChange(previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-
-
-        
-        // Hide undo button
-        
-        if firstStartHappened == true {
-            if isCompact {
-                leftButton.target = getSplitView.displayModeButtonItem().target
-                leftButton.action = getSplitView.displayModeButtonItem().action
-                
-                self.getSplitView?.preferredDisplayMode = .PrimaryOverlay
-            }
-            else {
-                leftButton.target = leftTarget
-                leftButton.action = leftAction!
-                self.getSplitView?.preferredDisplayMode = .AllVisible
-            }
-        }
-        else {
-            firstStartHappened = true
-        }
         
         
         if self.view.frame.width >= 480 {
@@ -235,28 +188,6 @@ class ProjectMainViewController: UIViewController, UISplitViewControllerDelegate
     
     override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
-        
-        
-        // Hide undo button
-        
-        if firstStartHappened == true {
-            if isCompact {
-                leftButton.target = getSplitView.displayModeButtonItem().target
-                leftButton.action = getSplitView.displayModeButtonItem().action
-                
-                self.getSplitView?.preferredDisplayMode = .PrimaryOverlay
-            }
-            else {
-                leftButton.target = leftTarget
-                leftButton.action = leftAction!
-                self.getSplitView?.preferredDisplayMode = .AllVisible
-
-            }
-        }
-        else {
-            firstStartHappened = true
-        }
-        
         
         if size.width >= 480 {
             

@@ -34,29 +34,45 @@ class ProjectSplitViewController: UISplitViewController{
     var filesTableView: FilesTableViewController? {
         get {
             
-            guard let filesTableNavCoontroller = self.viewControllers.first as? UINavigationController else {
+            guard let filesTableNavController = self.viewControllers.first as? UINavigationController else {
                 assertionFailure("Empty FilesTable Nav Controller")
                 return nil
             }
             
-            guard let filesTableVC = filesTableNavCoontroller.viewControllers.last as? FilesTableViewController else {
-                assertionFailure("Empty FilesTable VC")
-                return nil
+            if let filesTableVC = filesTableNavController.viewControllers.last as? FilesTableViewController {
+                return filesTableVC
+            }
+            else {
+                guard let filesTableVC = filesTableNavController.viewControllers[viewControllers.count - 1] as? FilesTableViewController else {
+                    assertionFailure("Empty FilesTable Nav Controller")
+                    return nil
+                }
+                
+                return filesTableVC
             }
             
-            return filesTableVC
         }
     }
     
+    private var eView: EditorViewController!
     var editorView: EditorViewController? {
         get {
             
-            guard let editorVC = self.viewControllers.last as? EditorViewController else {
-                assertionFailure("Empty EditorVC")
-                return nil
+            
+            if eView == nil {
+                if let editorVC = self.viewControllers.last as? EditorViewController {
+                    eView = editorVC
+                    return eView
+                }
+                else {
+                    eView = self.storyboard?.instantiateViewControllerWithIdentifier("editorViewController") as? EditorViewController
+                    return eView
+                }
+            }
+            else {
+                return eView
             }
             
-            return editorVC
         }
     }
     
@@ -74,15 +90,13 @@ class ProjectSplitViewController: UISplitViewController{
         self.maximumPrimaryColumnWidth = 200
         self.preferredPrimaryColumnWidthFraction = 0.25
         
-        
-        let horizontallyRegularTraitCollection = UITraitCollection(horizontalSizeClass: .Regular)
-        self.setOverrideTraitCollection(horizontallyRegularTraitCollection, forChildViewController: self)
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
-        
+        editorView!.splitViewFailreference = self
+        editorView!.polarisFailreference = projectManager
     }
     
     // MARK: - Searchbar

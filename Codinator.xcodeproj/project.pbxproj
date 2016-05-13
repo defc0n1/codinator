@@ -25,6 +25,7 @@
 		640AFA331CDCF7D60063727D /* EditorViewControllerTextViewsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640AFA321CDCF7D50063727D /* EditorViewControllerTextViewsExtension.swift */; };
 		640AFA361CDF7BA30063727D /* CSSTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640AFA351CDF7BA30063727D /* CSSTextView.swift */; };
 		640B48641CCFEDA100A5B2AE /* EngineViewControllerColorPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640B48631CCFEDA100A5B2AE /* EngineViewControllerColorPicker.swift */; };
+		6436F35F1CE68E8C000FAEE4 /* ProjectMainViewControllerSplitViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6436F35E1CE68E8C000FAEE4 /* ProjectMainViewControllerSplitViewExtension.swift */; };
 		64380E0B1CC9195800FCF69A /* FileTemplates.m in Sources */ = {isa = PBXBuildFile; fileRef = 64380E0A1CC9195800FCF69A /* FileTemplates.m */; };
 		64380E0D1CC91E9E00FCF69A /* NewFileDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64380E0C1CC91E9E00FCF69A /* NewFileDelegate.swift */; };
 		64380E0F1CC9212000FCF69A /* CreateDirViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64380E0E1CC9212000FCF69A /* CreateDirViewController.swift */; };
@@ -123,7 +124,6 @@
 		64A0817B1BDBE25A0001CA0C /* ProjectZipImporterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64A0817A1BDBE25A0001CA0C /* ProjectZipImporterViewController.m */; };
 		64A0817E1BDBE28D0001CA0C /* WelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64A0817D1BDBE28D0001CA0C /* WelcomeViewController.m */; };
 		64A0828F1BDBE6AF0001CA0C /* QuickStartQuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64A0828E1BDBE6AF0001CA0C /* QuickStartQuide.swift */; };
-		64A082941BDBE7170001CA0C /* ProjectTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 64A082931BDBE7170001CA0C /* ProjectTableViewCell.m */; };
 		64A0829A1BDBE7610001CA0C /* AspectRatioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64A082991BDBE7610001CA0C /* AspectRatioViewController.swift */; };
 		64A082A71BDBE7CC0001CA0C /* CSLayerStealingBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = 64A082A11BDBE7CC0001CA0C /* CSLayerStealingBlurView.m */; };
 		64A082A81BDBE7CC0001CA0C /* CSNativeBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = 64A082A31BDBE7CC0001CA0C /* CSNativeBlurView.m */; };
@@ -200,6 +200,7 @@
 		640AFA321CDCF7D50063727D /* EditorViewControllerTextViewsExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditorViewControllerTextViewsExtension.swift; sourceTree = "<group>"; };
 		640AFA351CDF7BA30063727D /* CSSTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CSSTextView.swift; sourceTree = "<group>"; };
 		640B48631CCFEDA100A5B2AE /* EngineViewControllerColorPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EngineViewControllerColorPicker.swift; sourceTree = "<group>"; };
+		6436F35E1CE68E8C000FAEE4 /* ProjectMainViewControllerSplitViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectMainViewControllerSplitViewExtension.swift; sourceTree = "<group>"; };
 		64380E091CC9195800FCF69A /* FileTemplates.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileTemplates.h; sourceTree = "<group>"; };
 		64380E0A1CC9195800FCF69A /* FileTemplates.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileTemplates.m; sourceTree = "<group>"; };
 		64380E0C1CC91E9E00FCF69A /* NewFileDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewFileDelegate.swift; sourceTree = "<group>"; };
@@ -360,8 +361,6 @@
 		64A0817C1BDBE28D0001CA0C /* WelcomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WelcomeViewController.h; sourceTree = "<group>"; };
 		64A0817D1BDBE28D0001CA0C /* WelcomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WelcomeViewController.m; sourceTree = "<group>"; };
 		64A0828E1BDBE6AF0001CA0C /* QuickStartQuide.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuickStartQuide.swift; sourceTree = "<group>"; };
-		64A082921BDBE7170001CA0C /* ProjectTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectTableViewCell.h; sourceTree = "<group>"; };
-		64A082931BDBE7170001CA0C /* ProjectTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectTableViewCell.m; sourceTree = "<group>"; };
 		64A082991BDBE7610001CA0C /* AspectRatioViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AspectRatioViewController.swift; sourceTree = "<group>"; };
 		64A082A01BDBE7CC0001CA0C /* CSLayerStealingBlurView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSLayerStealingBlurView.h; sourceTree = "<group>"; };
 		64A082A11BDBE7CC0001CA0C /* CSLayerStealingBlurView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSLayerStealingBlurView.m; sourceTree = "<group>"; };
@@ -460,6 +459,7 @@
 			children = (
 				32150DCA1CA8849300B87094 /* ProjectMainViewController.swift */,
 				6407BEDE1CCD408C00B35C04 /* ProjectMainViewControllerBars.swift */,
+				6436F35E1CE68E8C000FAEE4 /* ProjectMainViewControllerSplitViewExtension.swift */,
 			);
 			path = ProjectMainController;
 			sourceTree = "<group>";
@@ -1039,7 +1039,6 @@
 			isa = PBXGroup;
 			children = (
 				64A082981BDBE7560001CA0C /* Aspect Ratio Browser */,
-				64A082911BDBE70C0001CA0C /* Subclasses */,
 				64EED4DC1CCCE59800A8BC34 /* EditorViewController */,
 				64EED4DF1CCCE7A300A8BC34 /* FilesTableViewController  */,
 				6407BEDD1CCD403900B35C04 /* ProjectMainController */,
@@ -1049,15 +1048,6 @@
 				64A083651BDD24680001CA0C /* project.storyboard */,
 			);
 			path = "Main View(s)";
-			sourceTree = "<group>";
-		};
-		64A082911BDBE70C0001CA0C /* Subclasses */ = {
-			isa = PBXGroup;
-			children = (
-				64A082921BDBE7170001CA0C /* ProjectTableViewCell.h */,
-				64A082931BDBE7170001CA0C /* ProjectTableViewCell.m */,
-			);
-			path = Subclasses;
 			sourceTree = "<group>";
 		};
 		64A082981BDBE7560001CA0C /* Aspect Ratio Browser */ = {
@@ -1489,7 +1479,6 @@
 				646EC6EB1CA8D0BE00F359C2 /* GCDWebServerDataRequest.m in Sources */,
 				3201D0181CA6EFAA00204373 /* EditorViewController.swift in Sources */,
 				646EC6F51CA8D0BE00F359C2 /* GCDWebServerURLEncodedFormRequest.m in Sources */,
-				64A082941BDBE7170001CA0C /* ProjectTableViewCell.m in Sources */,
 				64EED4E11CCCE7DF00A8BC34 /* FilesTableViewControllerNavigation.swift in Sources */,
 				646EC6E21CA8D0BE00F359C2 /* RNDecryptor.m in Sources */,
 				6407BED91CCD175B00B35C04 /* JTSImageViewController.m in Sources */,
@@ -1516,6 +1505,7 @@
 				646EC7121CA8D15700F359C2 /* LTEmitterView.swift in Sources */,
 				646EC7161CA8D15700F359C2 /* LTMorphingLabel+Evaporate.swift in Sources */,
 				64A081001BDBDC3E0001CA0C /* zip.c in Sources */,
+				6436F35F1CE68E8C000FAEE4 /* ProjectMainViewControllerSplitViewExtension.swift in Sources */,
 				64A081351BDBE07E0001CA0C /* ProjectCollectionViewCell.m in Sources */,
 				64A081781BDBE2530001CA0C /* ImportFromGitHubViewController.m in Sources */,
 				64A0833D1BDD16040001CA0C /* UnArchivingViewController.m in Sources */,

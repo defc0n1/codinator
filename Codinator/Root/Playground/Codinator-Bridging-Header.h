@@ -29,7 +29,6 @@
 
 #import "JTSImageViewController.h"
 
-#import "ProjectTableViewCell.h"
 
 #import "WelcomeViewController.h"
 

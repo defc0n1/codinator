@@ -19,7 +19,7 @@ class EditorViewController: UIViewController, UITextViewDelegate, ProjectSplitVi
     
     var text: String? {
         get {
-            if let polaris = unsafeProjectManager {
+            if let polaris = projectManager {
                 let fileExtension = polaris.selectedFileURL.pathExtension!
                 switch fileExtension {
                 case "css":
@@ -37,60 +37,63 @@ class EditorViewController: UIViewController, UITextViewDelegate, ProjectSplitVi
         }
         
         set {
-            let fileExtension = projectManager.selectedFileURL.pathExtension!
-            
-            switch fileExtension {
-            case "css":
-                cssTextView.text = newValue
-                cssTextView.undoManager!.removeAllActions()
-                jsTextView.hidden = true
-                htmlTextView.hidden = true
-                cssTextView.hidden = false
+            if let fileExtension = projectManager?.selectedFileURL.pathExtension! {
                 
-                if htmlTextView.isFirstResponder() {
-                    htmlTextView.resignFirstResponder()
-                    cssTextView.becomeFirstResponder()
+                
+                switch fileExtension {
+                case "css":
+                    cssTextView.text = newValue
+                    cssTextView.undoManager!.removeAllActions()
+                    jsTextView.hidden = true
+                    htmlTextView.hidden = true
+                    cssTextView.hidden = false
+                    
+                    if htmlTextView.isFirstResponder() {
+                        htmlTextView.resignFirstResponder()
+                        cssTextView.becomeFirstResponder()
+                    }
+                    
+                    if jsTextView.isFirstResponder() {
+                        jsTextView.resignFirstResponder()
+                        cssTextView.becomeFirstResponder()
+                    }
+                    
+                    
+                case "js":
+                    jsTextView.text = newValue
+                    jsTextView.undoManager!.removeAllActions()
+                    cssTextView.hidden = true
+                    htmlTextView.hidden = true
+                    jsTextView.hidden = false
+                    
+                    if htmlTextView.isFirstResponder() {
+                        htmlTextView.resignFirstResponder()
+                        jsTextView.becomeFirstResponder()
+                    }
+                    
+                    if cssTextView.isFirstResponder() {
+                        cssTextView.resignFirstResponder()
+                        jsTextView.becomeFirstResponder()
+                    }
+                    
+                default:
+                    htmlTextView.text = newValue
+                    htmlTextView.undoManager!.removeAllActions()
+                    jsTextView.hidden = true
+                    cssTextView.hidden = true
+                    htmlTextView.hidden = false
+                    
+                    if jsTextView.isFirstResponder() {
+                        jsTextView.resignFirstResponder()
+                        htmlTextView.becomeFirstResponder()
+                    }
+                    
+                    if cssTextView.isFirstResponder() {
+                        cssTextView.resignFirstResponder()
+                        htmlTextView.becomeFirstResponder()
+                    }
                 }
                 
-                if jsTextView.isFirstResponder() {
-                    jsTextView.resignFirstResponder()
-                    cssTextView.becomeFirstResponder()
-                }
-                
-                
-            case "js":
-                jsTextView.text = newValue
-                jsTextView.undoManager!.removeAllActions()
-                cssTextView.hidden = true
-                htmlTextView.hidden = true
-                jsTextView.hidden = false
-                
-                if htmlTextView.isFirstResponder() {
-                    htmlTextView.resignFirstResponder()
-                    jsTextView.becomeFirstResponder()
-                }
-                
-                if cssTextView.isFirstResponder() {
-                    cssTextView.resignFirstResponder()
-                    jsTextView.becomeFirstResponder()
-                }
-                
-            default:
-                htmlTextView.text = newValue
-                htmlTextView.undoManager!.removeAllActions()
-                jsTextView.hidden = true
-                cssTextView.hidden = true
-                htmlTextView.hidden = false
-                
-                if jsTextView.isFirstResponder() {
-                    jsTextView.resignFirstResponder()
-                    htmlTextView.becomeFirstResponder()
-                }
-                
-                if cssTextView.isFirstResponder() {
-                    cssTextView.resignFirstResponder()
-                    htmlTextView.becomeFirstResponder()
-                }
             }
             
         }
@@ -99,7 +102,7 @@ class EditorViewController: UIViewController, UITextViewDelegate, ProjectSplitVi
     
     var textView: CYRTextView {
         get {
-            let fileExtension = projectManager.selectedFileURL.pathExtension!
+            let fileExtension = projectManager!.selectedFileURL.pathExtension!
             switch fileExtension {
             case "css":
                 return cssTextView
@@ -112,23 +115,44 @@ class EditorViewController: UIViewController, UITextViewDelegate, ProjectSplitVi
         }
     }
     
-    var getSplitView: ProjectSplitViewController! {
+    var splitViewFailreference: ProjectSplitViewController!
+    var getSplitView: ProjectSplitViewController? {
         
         get {
-            return self.splitViewController as! ProjectSplitViewController
+
+            if splitViewFailreference == nil {
+                if let splitVC = self.splitViewController as? ProjectSplitViewController {
+                    splitViewFailreference = splitVC
+                    return splitViewFailreference
+                }
+                else {
+                    return nil
+                }
+            }
+            else {
+                return splitViewFailreference
+            }
+            
         }
         
     }
     
-    private var unsafeProjectManager: Polaris? {
+    var polarisFailreference: Polaris!
+    var projectManager: Polaris? {
         get {
-            return getSplitView.projectManager
-        }
-    }
-    
-    var projectManager: Polaris! {
-        get {
-            return getSplitView.projectManager
+            if polarisFailreference == nil {
+                if let splitView = getSplitView {
+                    let projectManager = splitView.projectManager
+                    polarisFailreference = projectManager
+                    return projectManager
+                }
+                else {
+                    return nil
+                }
+            }
+            else {
+                return polarisFailreference
+            }
         }
     }
     
@@ -152,7 +176,7 @@ class EditorViewController: UIViewController, UITextViewDelegate, ProjectSplitVi
         view.layoutSubviews()
         
         // Subscribe to Delegates
-        getSplitView.splitViewDelegate = self
+        getSplitView?.splitViewDelegate = self
         
         // Set up notification view
         Notifications.sharedInstance.viewController = self
@@ -168,7 +192,7 @@ class EditorViewController: UIViewController, UITextViewDelegate, ProjectSplitVi
         setUpKeyboardForTextView(jsTextView)
         
         
-        getSplitView.assistantViewController!.delegate = self
+        getSplitView?.assistantViewController!.delegate = self
         
         
         // Keyboard show/hide notifications 
@@ -199,8 +223,8 @@ class EditorViewController: UIViewController, UITextViewDelegate, ProjectSplitVi
         operation.qualityOfService = .Background
         operation.completionBlock = {
             
-            let fileURL = self.projectManager.selectedFileURL
-            let root = self.projectManager.selectedFileURL.URLByDeletingLastPathComponent
+            let fileURL = self.projectManager!.selectedFileURL
+            let root = self.projectManager!.selectedFileURL.URLByDeletingLastPathComponent
             
             dispatch_async(dispatch_get_main_queue(), { 
                 if let splitViewController = self.splitViewController as? ProjectSplitViewController {
@@ -209,7 +233,7 @@ class EditorViewController: UIViewController, UITextViewDelegate, ProjectSplitVi
             })
             
             do {
-                try textView.text.writeToURL(self.projectManager.selectedFileURL, atomically: false, encoding: NSUTF8StringEncoding)
+                try textView.text.writeToURL(self.projectManager!.selectedFileURL, atomically: false, encoding: NSUTF8StringEncoding)
             } catch {
                 
             }
@@ -350,7 +374,7 @@ class EditorViewController: UIViewController, UITextViewDelegate, ProjectSplitVi
     }
     
     func searchBarTextDidEndEditing(searchBar: UISearchBar) {
-        getSplitView.searchBarDissappeared()
+        getSplitView?.searchBarDissappeared()
     }
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
@@ -358,7 +382,7 @@ class EditorViewController: UIViewController, UITextViewDelegate, ProjectSplitVi
         
         // Search algorithm
         searchForText(searchBar.text!)
-        getSplitView.searchBarDissappeared()
+        getSplitView?.searchBarDissappeared()
         
     }
     
@@ -389,8 +413,8 @@ class EditorViewController: UIViewController, UITextViewDelegate, ProjectSplitVi
         
         dealWithAddingInsetsOnKeyboard()
         
-        getSplitView.undoButton.enabled = true
-        getSplitView.redoButton.enabled = true
+        getSplitView?.undoButton.enabled = true
+        getSplitView?.redoButton.enabled = true
 
     }
     
@@ -404,8 +428,8 @@ class EditorViewController: UIViewController, UITextViewDelegate, ProjectSplitVi
         textView.scrollIndicatorInsets = insets
         
         
-        getSplitView.undoButton.enabled = false
-        getSplitView.redoButton.enabled = false
+        getSplitView?.undoButton.enabled = false
+        getSplitView?.redoButton.enabled = false
     
     }
     
@@ -421,13 +445,13 @@ class EditorViewController: UIViewController, UITextViewDelegate, ProjectSplitVi
         var insetValue: CGFloat = 0
         
         // Create insets depending: if the webivew is on screen and bigger than the webView
-        let keyboardHigher = (getSplitView.webView!.frame.height + grabberViewHeight) < keyboardHeight
+        let keyboardHigher = (getSplitView!.webView!.frame.height + grabberViewHeight) < keyboardHeight
     
         if keyboardHigher {
             
             // Make sure the webView is on screen otherwise dont include it in the calculations
-            if getSplitView.webViewOnScreen {
-                insetValue = keyboardHeight - getSplitView.webView!.frame.height - grabberViewHeight
+            if getSplitView!.webViewOnScreen {
+                insetValue = keyboardHeight - getSplitView!.webView!.frame.height - grabberViewHeight
             }
             else {
                 insetValue = keyboardHeight

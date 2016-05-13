@@ -53,7 +53,29 @@ extension EditorViewController: WUTextSuggestionDisplayControllerDataSource {
         
         
         // Get string nearby the typing area
-        let stringFromRange = (htmlTextView.text as NSString).substringWithRange( NSRange(location: htmlTextView.selectedRange.location - 10, length: 10))
+        
+        var location: Int {
+            let locationMinus10 = htmlTextView.selectedRange.location - 10
+            if  htmlTextView.selectedRange.location - 10 > 0 {
+                return locationMinus10
+            }
+            else {
+                return htmlTextView.selectedRange.location - (locationMinus10 + 10)
+            }
+        }
+        
+        var length: Int {
+            let maxLength = htmlTextView.text.characters.count - location - 10
+            if maxLength >= 10 {
+                return 10
+            }
+            else {
+                return maxLength
+            }
+        }
+        
+        
+        let stringFromRange = (htmlTextView.text as NSString).substringWithRange( NSRange(location: location, length: 10))
         
         // Find where the tag starts
         var findTag = stringFromRange.characters.enumerate().filter { $0.element == "<"}.last?.index

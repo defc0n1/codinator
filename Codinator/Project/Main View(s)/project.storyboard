@@ -10,7 +10,7 @@
         <!--Index.html-->
         <scene sceneID="a8S-8Q-aIa">
             <objects>
-                <viewController id="kIn-qZ-nWA" customClass="EditorViewController" customModule="Codinator" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="editorViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="kIn-qZ-nWA" customClass="EditorViewController" customModule="Codinator" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="lRt-A3-JG9"/>
                         <viewControllerLayoutGuide type="bottom" id="4yc-jO-0YB"/>
@@ -48,7 +48,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3Xo-8t-nBi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="22" y="-559"/>
+            <point key="canvasLocation" x="22" y="-545"/>
         </scene>
         <!--Files Table View Controller-->
         <scene sceneID="kGM-WA-h6O">

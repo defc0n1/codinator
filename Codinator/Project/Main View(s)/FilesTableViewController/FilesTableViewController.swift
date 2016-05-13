@@ -123,46 +123,25 @@ class FilesTableViewController: UIViewController, UITableViewDelegate, UITableVi
         notificationCenter.addObserver(self, selector: #selector(keyboardWillShow), name: UIKeyboardWillShowNotification, object: nil)
         notificationCenter.addObserver(self, selector: #selector(keyboardWillHide), name: UIKeyboardWillHideNotification, object: nil)
         
-        if hasntOpenIndexFileYet {
-            // Find 'index.html' and save index of it in the array itself
-            let items = self.items.enumerate().filter { $0.element.absoluteString.hasSuffix("index.html")}
-            
-            // if 'items' isn't empty sellect the corresponding cell
-            if items.isEmpty != true {
-                let indexPath = NSIndexPath(forRow: items.first!.index, inSection: 0)
-                tableView.selectRowAtIndexPath(indexPath, animated: false, scrollPosition: .Top)
-                tableView(tableView, didSelectRowAtIndexPath: indexPath)
+            if hasntOpenIndexFileYet {
+                // Find 'index.html' and save index of it in the array itself
+                let items = self.items.enumerate().filter { $0.element.absoluteString.hasSuffix("index.html")}
                 
-                // Load WebView
-                guard let webView = getSplitView.webView else {
-                    return
-                }
-                
-                guard let path = projectManager.inspectorURL.URLByAppendingPathComponent(items.first!.element.lastPathComponent!).path else {
-                    return
-                }
-                
-                webView.loadFileURL( NSURL(fileURLWithPath: path, isDirectory: false), allowingReadAccessToURL: NSURL(fileURLWithPath: path, isDirectory: true))
-              
-                
-                hasntOpenIndexFileYet = false
-            }
-            else {
-                
-                
-                if self.items.count != 0 {
-                // No index file 
-                
-                    let indexPath = NSIndexPath(forRow: 0, inSection: 0)
-                    tableView.selectRowAtIndexPath(indexPath, animated: false, scrollPosition: .Top)
-                    tableView(tableView, didSelectRowAtIndexPath: indexPath)
+                // if 'items' isn't empty sellect the corresponding cell
+                if items.isEmpty != true {
+                    
+                    if self.getSplitView.view.traitCollection.horizontalSizeClass != .Compact {
+                        let indexPath = NSIndexPath(forRow: items.first!.index, inSection: 0)
+                        tableView.selectRowAtIndexPath(indexPath, animated: false, scrollPosition: .Top)
+                        tableView(tableView, didSelectRowAtIndexPath: indexPath)
+                    }
                     
                     // Load WebView
                     guard let webView = getSplitView.webView else {
                         return
                     }
                     
-                    guard let path = projectManager.inspectorURL.URLByAppendingPathComponent(self.items.first!.lastPathComponent!).path else {
+                    guard let path = projectManager.inspectorURL.URLByAppendingPathComponent(items.first!.element.lastPathComponent!).path else {
                         return
                     }
                     
@@ -170,12 +149,37 @@ class FilesTableViewController: UIViewController, UITableViewDelegate, UITableVi
                     
                     
                     hasntOpenIndexFileYet = false
-
                 }
-                
-                
-            }
-            
+                else {
+                    
+                    
+                    if self.items.count != 0 {
+                        // No index file
+                        
+                        if self.getSplitView.view.traitCollection.horizontalSizeClass != .Compact {
+                            let indexPath = NSIndexPath(forRow: 0, inSection: 0)
+                            tableView.selectRowAtIndexPath(indexPath, animated: false, scrollPosition: .Top)
+                            tableView(tableView, didSelectRowAtIndexPath: indexPath)
+                        }
+                        
+                        // Load WebView
+                        guard let webView = getSplitView.webView else {
+                            return
+                        }
+                        
+                        guard let path = projectManager.inspectorURL.URLByAppendingPathComponent(self.items.first!.lastPathComponent!).path else {
+                            return
+                        }
+                        
+                        webView.loadFileURL( NSURL(fileURLWithPath: path, isDirectory: false), allowingReadAccessToURL: NSURL(fileURLWithPath: path, isDirectory: true))
+                        
+                        
+                        hasntOpenIndexFileYet = false
+                        
+                    }
+                    
+                    
+                }
         }
 
         

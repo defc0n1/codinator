@@ -17,7 +17,7 @@ extension ProjectMainViewController {
     @IBAction func left(sender: UIBarButtonItem) {
         if let splitViewController = getSplitView {
             
-            if isCompact == false {
+            if splitViewController.collapsed == false {
                 
                 UIView.animateWithDuration(0.4, delay: 0.0, options: .BeginFromCurrentState, animations: {
                     
@@ -34,9 +34,7 @@ extension ProjectMainViewController {
                 
             }
             else {
-                
-                Notifications.sharedInstance.alertWithMessage("Swipe from the left to the right to bring up the view", title: nil)
-                
+                splitViewController.editorView?.navigationController?.popViewControllerAnimated(true)
             }
         }
     }

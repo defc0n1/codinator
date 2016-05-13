@@ -114,8 +114,8 @@ extension FilesTableViewController {
                     if let data = NSFileManager.defaultManager().contentsAtPath(selectedURL.path!) {
                         let contents = NSString(data: data, encoding: NSUTF8StringEncoding)
                         
+                        getSplitView.showDetailViewController(getSplitView.editorView!, sender: self)
                         getSplitView.editorView!.text = contents as? String
-                        
                         getSplitView.assistantViewController?.setFilePathTo(projectManager)
                         
                     }
