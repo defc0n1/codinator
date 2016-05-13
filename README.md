@@ -30,4 +30,4 @@ Some of the features that make Codinator unique:
 
 ##License
 
-http://creativecommons.org/licenses/by-sa/4.0/
+http://creativecommons.org/licenses/by-nc-sa/4.0/
