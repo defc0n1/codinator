@@ -117,7 +117,6 @@ extension FilesTableViewController {
                         getSplitView.showDetailViewController(getSplitView.editorView!, sender: self)
                         getSplitView.editorView!.text = contents as? String
                         getSplitView.assistantViewController?.setFilePathTo(projectManager)
-                        
                     }
                     
                 }

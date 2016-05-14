@@ -12,29 +12,9 @@ class FilesTableViewController: UIViewController, UITableViewDelegate, UITableVi
     
     @IBOutlet var tableView: UITableView!
     @IBOutlet weak var toolBar: UIToolbar!
-
-    @IBOutlet var navigateBackButton: UIBarButtonItem!
-    @IBOutlet var fixedSpace: UIBarButtonItem!
     
     
     var navigationHidden = true
-    func enableNavigationButton(enable: Bool) {
-//        if enable {
-//                if navigationHidden == true {
-//                navigationHidden = false
-//                self.toolBar.items?.insert(fixedSpace, atIndex: 0)
-//                self.toolBar.items?.insert(navigateBackButton, atIndex: 0)
-//            }
-//        }
-//        else {
-//            if navigationHidden == false {
-//                navigationHidden = true
-//                self.toolBar.items?.removeFirst()
-//                self.toolBar.items?.removeFirst()
-//            }
-//        }
-    }
-    
     
     
     var documentInteractionController: UIDocumentInteractionController?
@@ -95,29 +75,20 @@ class FilesTableViewController: UIViewController, UITableViewDelegate, UITableVi
             navigationHidden = false
         }
         
-        if self.navigationController?.viewControllers.count > 0{
-            navigateBackButton.enabled = true
-        }
-        else {
-            navigateBackButton.enabled = false
-        }
-        
-        
-        
     }
 
     
     var hasntOpenIndexFileYet = true
     
     var count = 0
+    
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
         if count > 0 {
             projectManager.inspectorURL = inspectorURL
         }
-        
-        
+                
         // Keyboard show/hide notifications
         let notificationCenter = NSNotificationCenter.defaultCenter()
         notificationCenter.addObserver(self, selector: #selector(keyboardWillShow), name: UIKeyboardWillShowNotification, object: nil)
@@ -187,9 +158,6 @@ class FilesTableViewController: UIViewController, UITableViewDelegate, UITableVi
     
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(reloadData), name: "relaodData", object: nil)
-        if self.navigationController?.viewControllers.count == 1 {
-            navigateBackButton.enabled = false
-        }
     }
     
     

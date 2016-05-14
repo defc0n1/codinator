@@ -99,12 +99,6 @@
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" barStyle="black" translatesAutoresizingMaskIntoConstraints="NO" id="X7N-uv-V53">
                                 <rect key="frame" x="0.0" y="556" width="600" height="44"/>
                                 <items>
-                                    <barButtonItem enabled="NO" image="back" id="SWc-s5-WDk">
-                                        <connections>
-                                            <action selector="navigateBackDidPush:" destination="bHI-NH-V6D" id="JQO-yz-fbQ"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem width="8" style="plain" systemItem="fixedSpace" id="wLI-kn-vFX"/>
                                     <barButtonItem systemItem="add" id="xbO-Ii-cR5">
                                         <connections>
                                             <action selector="add:" destination="bHI-NH-V6D" id="MQA-qu-edg"/>
@@ -132,8 +126,6 @@
                     </view>
                     <navigationItem key="navigationItem" id="Qmc-eB-E5K"/>
                     <connections>
-                        <outlet property="fixedSpace" destination="wLI-kn-vFX" id="cKr-dd-Ft6"/>
-                        <outlet property="navigateBackButton" destination="SWc-s5-WDk" id="e4K-bC-CZi"/>
                         <outlet property="tableView" destination="E0h-hy-aAh" id="oBf-hl-Uyu"/>
                         <outlet property="toolBar" destination="X7N-uv-V53" id="pPX-Xm-CNj"/>
                         <segue destination="R7f-Cr-R2b" kind="presentation" identifier="newFile" modalPresentationStyle="formSheet" id="FnJ-BD-ofr"/>

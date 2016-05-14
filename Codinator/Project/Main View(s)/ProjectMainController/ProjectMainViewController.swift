@@ -29,7 +29,10 @@ class ProjectMainViewController: UIViewController, UISplitViewControllerDelegate
     @IBOutlet var bottomView: UIView!
     @IBOutlet var bottomConstraint: NSLayoutConstraint!
     @IBOutlet var grabberView: UIView!
-    @IBOutlet weak var leftButton: UIBarButtonItem!
+    
+    @IBOutlet var leftButton: UIBarButtonItem!
+    @IBOutlet var bottomButton: UIBarButtonItem!
+    @IBOutlet var rightButton: UIBarButtonItem!
     
     
     var webView: WKWebView?
@@ -94,8 +97,6 @@ class ProjectMainViewController: UIViewController, UISplitViewControllerDelegate
         getSplitView.undoButton = undoButton
         getSplitView.redoButton = redoButton
         
-    
-
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -105,22 +106,12 @@ class ProjectMainViewController: UIViewController, UISplitViewControllerDelegate
     
     
     @IBAction func back(sender: UIBarButtonItem) {
-        
-        if getSplitView?.projectManager.projectUserDirectoryURL() == getSplitView?.projectManager.inspectorURL && self.view.traitCollection.horizontalSizeClass != .Compact {
-            getSplitView?.projectManager.close()
+        if getSplitView.filesTableView?.navigationController?.viewControllers.count == 1 {
             self.navigationController?.popViewControllerAnimated(true)
         }
         else {
-            
-            if getSplitView.filesTableView?.count <= 1 {
-                getSplitView?.projectManager.close()
-                self.navigationController?.popViewControllerAnimated(true)
-            }else {
-                getSplitView.filesTableView?.navigationController?.popViewControllerAnimated(true)
-            }
+            getSplitView.filesTableView?.navigationController?.popViewControllerAnimated(true)
         }
-        
-        
     }
     
     @IBAction func search(sender: UIBarButtonItem) {
@@ -161,6 +152,26 @@ class ProjectMainViewController: UIViewController, UISplitViewControllerDelegate
         super.traitCollectionDidChange(previousTraitCollection)
         
         
+        if self.isCompact {
+            var rightItems: [UIBarButtonItem] = self.navigationItem.rightBarButtonItems!
+            
+            if rightItems.count == 5 {
+                rightItems.removeLast()
+                
+                self.navigationItem.rightBarButtonItems = rightItems
+            }
+        }
+        else {
+            var rightItems: [UIBarButtonItem] = self.navigationItem.rightBarButtonItems!
+            
+            if rightItems.count == 4 {
+                rightItems.insert(leftButton, atIndex: rightItems.count)
+                self.navigationItem.rightBarButtonItems = rightItems
+            }
+        }
+        
+        
+        
         if self.view.frame.width >= 480 {
             
             if removedOnce {
@@ -179,16 +190,12 @@ class ProjectMainViewController: UIViewController, UISplitViewControllerDelegate
             
         }
         
-
-        
-
-        
         
     }
     
     override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
-        
+
         if size.width >= 480 {
             
             if removedOnce {
