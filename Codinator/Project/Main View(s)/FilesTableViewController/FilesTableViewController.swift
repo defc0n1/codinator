@@ -112,11 +112,9 @@ class FilesTableViewController: UIViewController, UITableViewDelegate, UITableVi
                         return
                     }
                     
-                    guard let path = projectManager.inspectorURL.URLByAppendingPathComponent(items.first!.element.lastPathComponent!).path else {
-                        return
-                    }
+                    let url = projectManager.inspectorURL.URLByAppendingPathComponent(items.first!.element.lastPathComponent!)
                     
-                    webView.loadFileURL( NSURL(fileURLWithPath: path, isDirectory: false), allowingReadAccessToURL: NSURL(fileURLWithPath: path, isDirectory: true))
+                    webView.loadFileURL(url, allowingReadAccessToURL: url.URLByDeletingLastPathComponent!)
                     
                     
                     hasntOpenIndexFileYet = false
@@ -127,23 +125,25 @@ class FilesTableViewController: UIViewController, UITableViewDelegate, UITableVi
                     if self.items.count != 0 {
                         // No index file
                         
-                        if self.getSplitView.view.traitCollection.horizontalSizeClass != .Compact {
-                            let indexPath = NSIndexPath(forRow: 0, inSection: 0)
-                            tableView.selectRowAtIndexPath(indexPath, animated: false, scrollPosition: .Top)
-                            tableView(tableView, didSelectRowAtIndexPath: indexPath)
+                        if getSplitView.collapsed == false {
+                            
+                            if self.getSplitView.view.traitCollection.horizontalSizeClass != .Compact {
+                                let indexPath = NSIndexPath(forRow: 0, inSection: 0)
+                                tableView.selectRowAtIndexPath(indexPath, animated: false, scrollPosition: .Top)
+                                tableView(tableView, didSelectRowAtIndexPath: indexPath)
+                            }
+                            
+                            // Load WebView
+                            guard let webView = getSplitView.webView else {
+                                return
+                            }
+                            
+                            guard let path = projectManager.inspectorURL.URLByAppendingPathComponent(self.items.first!.lastPathComponent!).path else {
+                                return
+                            }
+                            
+                            webView.loadFileURL( NSURL(fileURLWithPath: path, isDirectory: false), allowingReadAccessToURL: NSURL(fileURLWithPath: path, isDirectory: true))
                         }
-                        
-                        // Load WebView
-                        guard let webView = getSplitView.webView else {
-                            return
-                        }
-                        
-                        guard let path = projectManager.inspectorURL.URLByAppendingPathComponent(self.items.first!.lastPathComponent!).path else {
-                            return
-                        }
-                        
-                        webView.loadFileURL( NSURL(fileURLWithPath: path, isDirectory: false), allowingReadAccessToURL: NSURL(fileURLWithPath: path, isDirectory: true))
-                        
                         
                         hasntOpenIndexFileYet = false
                         
