@@ -54,7 +54,7 @@ extension FilesTableViewController: UIViewControllerPreviewingDelegate {
                 return nil
             }
             previewVC.delegate = self
-            previewVC.previewPath = path.path
+            previewVC.previewURL = path
             previewingContext.sourceRect = cell.frame
             
             return previewVC

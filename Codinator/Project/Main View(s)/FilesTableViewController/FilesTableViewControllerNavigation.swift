@@ -104,18 +104,12 @@ extension FilesTableViewController {
                     
                 default:
                     
-                    guard let webView = getSplitView.webView else {
-                        return
-                    }
-                    
-                    webView.loadFileURL(selectedURL, allowingReadAccessToURL: projectManager!.selectedFileURL)
-                    
-                    
                     if let data = NSFileManager.defaultManager().contentsAtPath(selectedURL.path!) {
                         let contents = NSString(data: data, encoding: NSUTF8StringEncoding)
                         
                         getSplitView.showDetailViewController(getSplitView.editorView!, sender: self)
                         getSplitView.editorView!.text = contents as? String
+                        getSplitView.webView!.loadFileURL(selectedURL, allowingReadAccessToURL: projectManager!.projectURL())
                         getSplitView.assistantViewController?.setFilePathTo(projectManager)
                     }
                     

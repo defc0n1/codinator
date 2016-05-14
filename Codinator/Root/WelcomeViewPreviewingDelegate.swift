@@ -38,7 +38,7 @@ extension WelcomeViewController: UIViewControllerPreviewingDelegate, PeekShortPr
             
             //        previewVC.delegate = self
             previewVC.isProjects = true
-            previewVC.previewPath = path
+            previewVC.previewURL = NSURL(fileURLWithPath: path)
             previewingContext.sourceRect = cell.frame
             
             

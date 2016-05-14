@@ -13,7 +13,7 @@ import WebKit
 class AspectRatioViewController: UIViewController {
     
     var webView: WKWebView!
-    var previewPath: String!
+    var previewURL: NSURL!
     
 
     
@@ -45,12 +45,8 @@ class AspectRatioViewController: UIViewController {
     
         
     
-        
-        let url = NSURL(fileURLWithPath: previewPath)
         // Load url
-        webView.loadFileURL(url, allowingReadAccessToURL: NSURL(fileURLWithPath:previewPath, isDirectory: true))
-
-        
+        webView.loadFileURL(previewURL, allowingReadAccessToURL: previewURL.URLByDeletingLastPathComponent!)
     }
 
     

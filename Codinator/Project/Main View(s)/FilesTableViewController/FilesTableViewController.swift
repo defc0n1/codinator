@@ -393,7 +393,7 @@ class FilesTableViewController: UIViewController, UITableViewDelegate, UITableVi
                 let viewController = (segue.destinationViewController as! UINavigationController).viewControllers.first as! AspectRatioViewController
                 
                 if projectManager.deleteURL?.path!.characters.count >= 2 {
-                    viewController.previewPath = projectManager.deleteURL.path
+                    viewController.previewURL = projectManager.deleteURL
                     projectManager.deleteURL = NSURL(string: "")
                 }
                 else {
@@ -402,24 +402,24 @@ class FilesTableViewController: UIViewController, UITableViewDelegate, UITableVi
                         if tmpPath.path!.isEmpty {
                             
                             if projectManager.inspectorURL.lastPathComponent != "index.html" {
-                                viewController.previewPath = projectManager.inspectorURL.URLByAppendingPathComponent("index.html").path
+                                viewController.previewURL = projectManager.inspectorURL.URLByAppendingPathComponent("index.html")
                             }
                             else {
-                                viewController.previewPath = projectManager.inspectorURL.path
+                                viewController.previewURL = projectManager.inspectorURL
                             }
                             
                         }
                         else {
-                            viewController.previewPath = projectManager.tmpFileURL.path
+                            viewController.previewURL = projectManager.tmpFileURL
                             projectManager.tmpFileURL = NSURL(string: "")
                         }
                     }
                     else {
                         if projectManager.inspectorURL.lastPathComponent != "index.html" {
-                            viewController.previewPath = projectManager.inspectorURL.URLByAppendingPathComponent("index.html").path
+                            viewController.previewURL = projectManager.inspectorURL.URLByAppendingPathComponent("index.html")
                         }
                         else {
-                            viewController.previewPath = projectManager.inspectorURL.path
+                            viewController.previewURL = projectManager.inspectorURL
                         }
                     
                     }
