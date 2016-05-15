@@ -64,6 +64,7 @@
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ebl-Pb-dJX">
                                                     <rect key="frame" x="11" y="8" width="158" height="118"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="Ebl-Pb-dJX" secondAttribute="height" multiplier="4:3" id="DP5-Ow-VQ3"/>
                                                     </constraints>
@@ -1689,7 +1690,7 @@ BODY()
                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                         </variation>
                                     </textView>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="4Nf-3U-zue">
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Nf-3U-zue">
                                         <rect key="frame" x="147" y="0.0" width="146" height="155"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <string key="text">

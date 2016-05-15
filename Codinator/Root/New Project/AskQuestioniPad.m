@@ -92,7 +92,8 @@ BOOL done;
     
     
     if ([[[LAContext alloc] init] canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:nil]) {
-        useTouchIDSwitch.enabled = true;
+        useTouchIDSwitch.enabled = YES;
+        useTouchIDSwitch.on = YES;
     }
     
 }

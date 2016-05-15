@@ -14,8 +14,6 @@ class FilesTableViewController: UIViewController, UITableViewDelegate, UITableVi
     @IBOutlet weak var toolBar: UIToolbar!
     
     
-    var navigationHidden = true
-    
     
     var documentInteractionController: UIDocumentInteractionController?
     
@@ -65,14 +63,6 @@ class FilesTableViewController: UIViewController, UITableViewDelegate, UITableVi
         
         if traitCollection.forceTouchCapability == .Available {
             registerForPreviewingWithDelegate(self, sourceView: self.tableView)
-        }
-        
-        if self.view.traitCollection.horizontalSizeClass != .Compact {
-            self.toolBar.items?.removeFirst()
-            self.toolBar.items?.removeFirst()
-        }
-        else {
-            navigationHidden = false
         }
         
     }

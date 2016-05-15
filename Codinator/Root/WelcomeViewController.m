@@ -349,8 +349,7 @@
         }];
 
     };
-//    
-//    
+
     [[NSOperationQueue mainQueue] addOperation:backgroundOperation];
     
 }
@@ -485,7 +484,17 @@
         
         if ([[projectsArray[indexPath.row] lastPathComponent] containsString:@".zip"]) {
             
-            cell.imageView.image = [UIImage imageNamed:@"zip"];
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                
+                UIImage *image = [UIImage imageNamed:@"zip"];
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    cell.imageView.image = image;
+                });
+                
+                
+            });
+            
             cell.name.text = [projectsArray[indexPath.row] lastPathComponent];
             
         }
@@ -497,9 +506,17 @@
             
             [self dealWithiCloudDownloadForCell:cell forIndexPath:indexPath andFilePath:path];
             
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+               
+                UIImage *image = [self projectRocketBlueprintIconForProjectPath:[projectsDirPath stringByAppendingPathComponent:[projectsArray[indexPath.row] lastPathComponent]]];
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    cell.imageView.image = image;
+                });
+                
+                
+            });
             
-            
-            cell.imageView.image = [self projectRocketBlueprintIconForProjectPath:[projectsDirPath stringByAppendingPathComponent:[projectsArray[indexPath.row] lastPathComponent]]];
             cell.name.text = [[projectsArray[indexPath.row] lastPathComponent] stringByDeletingPathExtension];
 
         }
@@ -519,8 +536,16 @@
         NSString const *playgroudPaths = [root stringByAppendingPathComponent:@"Playground"];
         NSString *path = [playgroudPaths stringByAppendingPathComponent:[playgroundsArray[indexPath.row] lastPathComponent]];
         
-        
-        cell.imageView.image = [self.appDelegate.thumbnailManager thumbnailForFileAtPath:path];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            
+            UIImage *image = [self.appDelegate.thumbnailManager thumbnailForFileAtPath:path];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                cell.imageView.image = image;
+            });
+            
+            
+        });
         
         if ([path.pathExtension isEqualToString:@"icloud"]) {
             cell.loadingIndicator.hidden = NO;
@@ -647,10 +672,42 @@
             
             if ([requiresTouchID isEqualToString:@"YES"]) {
              
+                LAContext *context = [[LAContext alloc] init];
                 
-                
-                
-                
+                if ([context canEvaluatePolicy: LAPolicyDeviceOwnerAuthenticationWithBiometrics error:nil])
+                {
+                    [context evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics localizedReason:@"Unlock project" reply:^(BOOL success, NSError *authenticationError){
+                        if (success) {
+                            [document openWithCompletionHandler:^(BOOL success) {
+                                
+                                if (success) {
+                                    
+                                    projectIsOpened = YES;
+                                    
+                                    self.projectsPath = path;
+                                    dispatch_async(dispatch_get_main_queue(), ^{
+                                        [self performSegueWithIdentifier:@"project" sender:nil];
+                                    });
+                                }
+                                else{
+                                    NSString *message = [NSString stringWithFormat:@"%@ can't be opened right now...", path.lastPathComponent];
+                                    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error" message:message preferredStyle:UIAlertControllerStyleAlert];
+                                    UIAlertAction *closeAlert = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
+                                    [alert addAction:closeAlert];
+                                    
+                                    dispatch_async(dispatch_get_main_queue(), ^{
+                                    [self presentViewController:alert animated:YES completion:nil];
+                                    });
+                                        
+                                }
+                                
+                            }];
+                        }
+                    }];
+                }
+                else {
+                    [[Notifications sharedInstance] alertWithMessage:@"This project is locked and can only be unlocked on a device with TouchID" title:@"Project Locked" viewController:self];
+                }
                 
                 
             }
@@ -825,14 +882,7 @@
                 
                 
             }];
-            
-//            UIAlertAction *moveAction = [UIAlertAction actionWithTitle:@"Move file into a project" style:UIAlertActionStyleDefault handler:^(UIAlertAction * __nonnull action) {
-//            
-//                ///move FILE DIALOGE
-//                
-//            
-//            }];
-//        
+                   
         
             NSOperation *backgroundOperation = [[NSOperation alloc] init];
             backgroundOperation.queuePriority = NSOperationQueuePriorityVeryHigh;
@@ -845,11 +895,6 @@
                 
                 [popup addAction:renameAction];
                 [popup addAction:deleteAction];
-
-//                if (indexPath.section == 1) {
-//                    [popup addAction:moveAction];
-//                }
-                
                 
                 
                 UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction * __nonnull action) {

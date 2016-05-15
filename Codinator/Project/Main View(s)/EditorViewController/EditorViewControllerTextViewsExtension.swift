@@ -66,44 +66,44 @@ extension EditorViewController {
     
     func setUpJSTextViewKeyboard(textView: JsTextView) {
         textView.inputAssistantItem.allowsHidingShortcuts = false
-        let tabSnippet = UIBarButtonItem(image: UIImage(named: "tab"), style: UIBarButtonItemStyle.Plain, target: self, action: #selector(EditorViewController._tab))
+        let tabSnippet = UIBarButtonItem(image: UIImage(named: "tab")!, style: UIBarButtonItemStyle.Plain, target: self, action: #selector(EditorViewController._tab))
 
-        let stringSnippet = UIBarButtonItem(image: UIImage(named: "quoteSign"), style: UIBarButtonItemStyle.Plain, target: self, action: #selector(EditorViewController._string))
-        //WARNING: - $
-        let openSnippet = UIBarButtonItem(image: UIImage(named: "bracketOpenSC"), style: UIBarButtonItemStyle.Plain, target: self, action: #selector(PlaygroundViewController.insertOpenBracket))
-        let closeSnippet = UIBarButtonItem(image: UIImage(named: "bracketCloseSC"), style: UIBarButtonItemStyle.Plain, target: self, action: #selector(PlaygroundViewController.insertCloseBracket))
-        // WARNING: ;
-        let equalSnippet = UIBarButtonItem(image: UIImage(named: "equal"), style: UIBarButtonItemStyle.Plain, target: self, action: #selector(EditorViewController._equal))
-        // WARNING: '
-        // WARNING +
-        // WARNING  {
-        // WARNING }
+        let stringSnippet = UIBarButtonItem(image: UIImage(named: "quoteSign")!, style: UIBarButtonItemStyle.Plain, target: self, action: #selector(EditorViewController._string))
+        let dollarSnippet = UIBarButtonItem(image: UIImage(named: "dollar")!, style: UIBarButtonItemStyle.Plain, target: self, action: #selector(EditorViewController._dollar))
+        let openSnippet = UIBarButtonItem(image: UIImage(named: "bracketOpenSC")!, style: UIBarButtonItemStyle.Plain, target: self, action: #selector(EditorViewController._insertOpenBracket))
+        let closeSnippet = UIBarButtonItem(image: UIImage(named: "bracketCloseSC")!, style: UIBarButtonItemStyle.Plain, target: self, action: #selector(EditorViewController._insertCloseBracket))
+        let commaSnippet = UIBarButtonItem(image: UIImage(named: "comma")!, style: UIBarButtonItemStyle.Plain, target: self, action: #selector(EditorViewController._comma))
+        let equalSnippet = UIBarButtonItem(image: UIImage(named: "equal")!, style: UIBarButtonItemStyle.Plain, target: self, action: #selector(EditorViewController._equal))
+        let apostropheSnippet = UIBarButtonItem(image: UIImage(named: "apostrophe")!, style: UIBarButtonItemStyle.Plain, target: self, action: #selector(EditorViewController._apostrophe))
+        let plusSnippet = UIBarButtonItem(image: UIImage(named: "plus")!, style: UIBarButtonItemStyle.Plain, target: self, action: #selector(EditorViewController._plus))
+        let clojureOpenSnippet = UIBarButtonItem(image: UIImage(named: "clojureOpen")!, style: UIBarButtonItemStyle.Plain, target: self, action: #selector(EditorViewController._clojureOpen))
+        let clojureCloseSnippet = UIBarButtonItem(image: UIImage(named: "clojureClose")!, style: UIBarButtonItemStyle.Plain, target: self, action: #selector(EditorViewController._clojureClose))
         
         
         let leadingGroup = UIBarButtonItemGroup(barButtonItems: [tabSnippet], representativeItem: nil)
         textView.inputAssistantItem.leadingBarButtonGroups.insert(leadingGroup, atIndex: 0)
 
-        let trailingGroup = UIBarButtonItemGroup(barButtonItems: [stringSnippet, openSnippet, closeSnippet, equalSnippet], representativeItem: nil)
+        let trailingGroup = UIBarButtonItemGroup(barButtonItems: [stringSnippet, dollarSnippet, openSnippet, closeSnippet, commaSnippet, equalSnippet, apostropheSnippet, plusSnippet, clojureOpenSnippet, clojureCloseSnippet], representativeItem: nil)
         textView.inputAssistantItem.trailingBarButtonGroups = [trailingGroup]
 
     }
     
     func setUpCSSTextViewKeyboard(textView: CSSTextView) {
         textView.inputAssistantItem.allowsHidingShortcuts = false
-        let tabSnippet = UIBarButtonItem(image: UIImage(named: "tab"), style: UIBarButtonItemStyle.Plain, target: self, action: #selector(EditorViewController._tab))
+        let tabSnippet = UIBarButtonItem(image: UIImage(named: "tab")!, style: UIBarButtonItemStyle.Plain, target: self, action: #selector(EditorViewController._tab))
         
-        // WARNING: ;
-        // WARNING  {
-        // WARNING }
-        // WARNING -
-        let doubleDotsSnippet = UIBarButtonItem(image: UIImage(named: "doubleDotsSC"), style: UIBarButtonItemStyle.Plain, target: self, action: #selector(PlaygroundViewController.insertDoublePoint))
-        let hashSnippet = UIBarButtonItem(image: UIImage(named: "hash"), style: UIBarButtonItemStyle.Plain, target: self, action: #selector(EditorViewController._hash))
+        let commaSnippet = UIBarButtonItem(image: UIImage(named: "comma")!, style: UIBarButtonItemStyle.Plain, target: self, action: #selector(EditorViewController._comma))
+        let clojureOpenSnippet = UIBarButtonItem(image: UIImage(named: "clojureOpen")!, style: UIBarButtonItemStyle.Plain, target: self, action: #selector(EditorViewController._clojureOpen))
+        let clojureCloseSnippet = UIBarButtonItem(image: UIImage(named: "clojureClose")!, style: UIBarButtonItemStyle.Plain, target: self, action: #selector(EditorViewController._clojureClose))
+        let minusSnippet = UIBarButtonItem(image: UIImage(named: "minus")!, style: UIBarButtonItemStyle.Plain, target: self, action: #selector(EditorViewController._minus))
+        let doubleDotsSnippet = UIBarButtonItem(image: UIImage(named: "doubleDotsSC")!, style: UIBarButtonItemStyle.Plain, target: self, action: #selector(EditorViewController._doublePoint))
+        let hashSnippet = UIBarButtonItem(image: UIImage(named: "hash")!, style: UIBarButtonItemStyle.Plain, target: self, action: #selector(EditorViewController._hash))
 
         
         let leadingGroup = UIBarButtonItemGroup(barButtonItems: [tabSnippet], representativeItem: nil)
         textView.inputAssistantItem.leadingBarButtonGroups.insert(leadingGroup, atIndex: 0)
 
-        let trailingGroup = UIBarButtonItemGroup(barButtonItems: [doubleDotsSnippet, hashSnippet], representativeItem: nil)
+        let trailingGroup = UIBarButtonItemGroup(barButtonItems: [commaSnippet ,clojureOpenSnippet, clojureCloseSnippet, minusSnippet, doubleDotsSnippet, hashSnippet], representativeItem: nil)
         textView.inputAssistantItem.trailingBarButtonGroups = [trailingGroup]
 
         
@@ -136,6 +136,14 @@ extension EditorViewController {
         self.textView.insertText("    ")
     }
     
+    @objc private func _insertOpenBracket() {
+        self.textView.insertText("(")
+    }
+
+    @objc private func _insertCloseBracket() {
+        self.textView.insertText(")")
+    }
+    
     @objc private func _closeTag() {
         self.textView.insertText(">")
     }
@@ -160,6 +168,36 @@ extension EditorViewController {
         self.textView.insertText("%")
     }
     
+    @objc private func _clojureOpen() {
+        self.textView.insertText("{")
+    }
+
+    @objc private func _doublePoint() {
+        self.textView.insertText(":")
+    }
     
+    @objc private func _clojureClose() {
+        self.textView.insertText("}")
+    }
+
+    @objc private func _plus() {
+        self.textView.insertText("+")
+    }
+    
+    @objc private func _minus() {
+        self.textView.insertText("-")
+    }
+
+    @objc private func _comma() {
+        self.textView.insertText(";")
+    }
+    @objc private func _dollar() {
+        self.textView.insertText("$")
+    }
+
+    @objc private func _apostrophe() {
+        self.textView.insertText("'")
+    }
+
     
 }

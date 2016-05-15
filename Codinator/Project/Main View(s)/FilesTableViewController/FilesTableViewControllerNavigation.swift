@@ -63,9 +63,8 @@ extension FilesTableViewController {
                     
                     
                     count += 1
-                    
-                    controller.navigationHidden = false
                     self.navigationController?.showViewController(controller, sender: self)
+                
                 }
                 
             } else {
