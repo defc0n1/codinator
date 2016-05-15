@@ -14,6 +14,8 @@
 #import "FileTemplates.h"
 #import "Codinator-Swift.h"
 
+@import LocalAuthentication;
+
 @interface AskQuestioniPad() <UITextFieldDelegate>{
 
     Polaris *projectManager;
@@ -74,7 +76,10 @@ BOOL done;
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"yyyy"];
     NSString *yearString = [formatter stringFromDate:[NSDate date]];
-    copyrightTextField.text = yearString;
+    
+    
+    NSString *name = [[[[[[UIDevice currentDevice] name] stringByReplacingOccurrencesOfString:@"'s iPad Pro" withString:@""] stringByReplacingOccurrencesOfString:@"'s iPad" withString:@""] stringByReplacingOccurrencesOfString:@"'s iPhone" withString:@""] stringByReplacingOccurrencesOfString:@"'s iPod" withString:@""];
+    copyrightTextField.text = [NSString stringWithFormat:@"(c) %@ %@", yearString, name];
     
     [self checkNext];
     
@@ -82,6 +87,13 @@ BOOL done;
     [webPageNameTextField addTarget:self
                   action:@selector(textFieldDidChange)
         forControlEvents:UIControlEventEditingChanged];
+    
+    
+    
+    
+    if ([[[LAContext alloc] init] canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:nil]) {
+        useTouchIDSwitch.enabled = true;
+    }
     
 }
 
@@ -170,18 +182,14 @@ BOOL done;
         
         
         [self createProject];
-        [self performSelector:@selector(animateProgressView) withObject:self afterDelay:0.5];
-        [self performSelector:@selector(animateProgressView) withObject:self afterDelay:0.6];
-        [self performSelector:@selector(animateProgressView) withObject:self afterDelay:0.7];
-        [self performSelector:@selector(animateProgressView) withObject:self afterDelay:0.8];
-        [self performSelector:@selector(animateProgressView) withObject:self afterDelay:0.9];
-
+        [self performSelector:@selector(animateProgressView) withObject:self afterDelay:0.25];
+        [self performSelector:@selector(animateProgressView) withObject:self afterDelay:0.3];
     }
 
 }
 
 - (void)animateProgressView{
-    [progressView setProgress:progressView.progress + 0.2 animated:YES];
+    [progressView setProgress:progressView.progress + 0.5 animated:YES];
     NSLog(@"%f",progressView.progress);
     
     if (progressView.progress == 1.0) {
@@ -363,6 +371,13 @@ BOOL done;
                 usePHP = @"NO";
             }
             
+            NSString *useTouchID;
+            if (useTouchIDSwitch.on) {
+                useTouchID = @"YES";
+            }
+            else {
+                useTouchID = @"NO";
+            }
             
             
             [projectManager saveValue:webPageNameTextField.text forKey:@"ProjectName"];
@@ -371,7 +386,8 @@ BOOL done;
             [projectManager saveValue:useFTP forKey:@"UseFTP"];
             [projectManager saveValue:usePHP forKey:@"UsePHP"];
             [projectManager saveValue:@"1" forKey:@"version"];
-            
+            [projectManager saveValue:useTouchID forKey:@"TouchID"];
+            [projectManager saveValue:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"] forKey:@"CodinatorVersion"];
             
         }
         else{

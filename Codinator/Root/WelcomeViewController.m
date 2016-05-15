@@ -9,6 +9,7 @@
 
 @import CoreSpotlight;
 @import MobileCoreServices;
+@import LocalAuthentication;
 
 #import "AppDelegate.h"
 
@@ -636,27 +637,50 @@
             
             document = [[CodinatorDocument alloc] initWithFileURL:[NSURL fileURLWithPath:path]];
             
-            [document openWithCompletionHandler:^(BOOL success) {
-                
-                if (success) {
-                    
-                    projectIsOpened = YES;
-                    
-                    self.projectsPath = path;
-                    [self performSegueWithIdentifier:@"project" sender:nil];
-                    
-                }
-                else{
-                    NSString *message = [NSString stringWithFormat:@"%@ can't be opened right now...", path.lastPathComponent];
-                    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error" message:message preferredStyle:UIAlertControllerStyleAlert];
-                    UIAlertAction *closeAlert = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
-                    [alert addAction:closeAlert];
-                    [self presentViewController:alert animated:YES completion:nil];
-                    
-                }
-                
-            }];
+            Polaris *projectManager = [[Polaris alloc] initWithProjectPath:path currentView:nil WithWebServer:NO UploadServer:NO andWebDavServer:NO];
             
+            NSString *requiresTouchID = [projectManager getSettingsDataForKey:@"TouchID"];
+            NSLog(@"Requires TouchID: %@", requiresTouchID);
+            
+            [projectManager close];
+            
+            
+            if ([requiresTouchID isEqualToString:@"YES"]) {
+             
+                
+                
+                
+                
+                
+                
+            }
+            else {
+            
+                [document openWithCompletionHandler:^(BOOL success) {
+                    
+                    if (success) {
+                        
+                        projectIsOpened = YES;
+                        
+                        self.projectsPath = path;
+                        [self performSegueWithIdentifier:@"project" sender:nil];
+                        
+                    }
+                    else{
+                        NSString *message = [NSString stringWithFormat:@"%@ can't be opened right now...", path.lastPathComponent];
+                        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error" message:message preferredStyle:UIAlertControllerStyleAlert];
+                        UIAlertAction *closeAlert = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
+                        [alert addAction:closeAlert];
+                        [self presentViewController:alert animated:YES completion:nil];
+                        
+                    }
+                    
+                }];
+                
+                
+            }
+            
+
         }
         
         

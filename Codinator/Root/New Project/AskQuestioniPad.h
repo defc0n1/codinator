@@ -26,6 +26,7 @@
     IBOutlet UIButton *useVersionControllButtonYes;
     IBOutlet UIButton *useVersionControllButtonNo;
 
+    IBOutlet UISwitch *useTouchIDSwitch;
 
     
     

@@ -7,8 +7,11 @@
 //
 
 import UIKit
+import StoreKit
+import MessageUI
+import Twitter
 
-class SettingsTableViewController: UITableViewController {
+class SettingsTableViewController: UITableViewController, SKStoreProductViewControllerDelegate, MFMailComposeViewControllerDelegate {
 
     @IBOutlet var cells: [UITableViewCell]!
     
@@ -26,6 +29,11 @@ class SettingsTableViewController: UITableViewController {
     
     let userDefauls = NSUserDefaults.standardUserDefaults()
 
+    
+    
+    @IBOutlet var extraCells: [UITableViewCell]!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -42,6 +50,11 @@ class SettingsTableViewController: UITableViewController {
         self.useWebServerSwitch.on = userDefauls.boolForKey(kWebServer);
         self.useWebDavServerSwitch.on = userDefauls.boolForKey(kWebDavServer);
         self.useUploadServerSwitch.on = userDefauls.boolForKey(kUploadServer);
+       
+        
+        extraCells.forEach {
+            $0.contentView.superview?.backgroundColor = tableView.backgroundColor
+        }
         
     }
 
@@ -79,6 +92,64 @@ class SettingsTableViewController: UITableViewController {
     
     
     
+    // MARK: - Did push cells
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        if indexPath.section == 2 {
+            tableView.deselectRowAtIndexPath(indexPath, animated: true)
+
+            switch indexPath.row {
+            case 0:
+                if (MFMailComposeViewController.canSendMail()){
+                    
+                    let mailController = MFMailComposeViewController()
+                    mailController.setSubject("Codinator Feedback")
+                    mailController.setMessageBody("Hey Vladimir, \n", isHTML: false)
+                    
+                    mailController.setToRecipients(["vladidanila@icloud.com"])
+                    
+                    mailController.mailComposeDelegate = self
+                    mailController.view.tintColor = self.view.tintColor
+                    
+                    self.presentViewController(mailController, animated: true, completion: nil)
+                    
+                }
+                
+        
+            case 1:
+                let storeProductViewController = SKStoreProductViewController()
+                storeProductViewController.delegate = self
+                let dict = [ SKStoreProductParameterITunesItemIdentifier : "1024671232"]
+                storeProductViewController.loadProductWithParameters(dict, completionBlock: nil)
+                self.presentViewController(storeProductViewController, animated: true, completion: nil)
+                
+                
+            case 2:
+                if (SLComposeViewController.isAvailableForServiceType(SLServiceTypeTwitter)){
+                    
+                    let tweetSheet = SLComposeViewController(forServiceType: SLServiceTypeTwitter)
+                    tweetSheet.setInitialText("#Codinator is amazing. Editing projects on the go has never been easier. You really should try it out!")
+                    tweetSheet.addURL(NSURL(string: "https://itunes.apple.com/us/app/codinator/id1024671232?ls=1&mt=8"))
+                    
+                    tweetSheet.view.tintColor = self.view.tintColor
+                    
+                    self.presentViewController(tweetSheet, animated: true, completion: nil)
+                    
+                    
+                }
+                
+            default:
+                break
+            }
+            
+            
+        }
+        
+    }
+    
+    
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -86,5 +157,14 @@ class SettingsTableViewController: UITableViewController {
 
 
     
+    // MARK: - Delegates
+    
+    func productViewControllerDidFinish(viewController: SKStoreProductViewController) {
+        viewController.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
+        controller.dismissViewControllerAnimated(true, completion: nil)
+    }
     
 }
