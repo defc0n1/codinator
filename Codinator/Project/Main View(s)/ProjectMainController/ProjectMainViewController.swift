@@ -72,9 +72,8 @@ class ProjectMainViewController: UIViewController, UISplitViewControllerDelegate
         // webView
         getSplitView.webView = webView
         getSplitView.projectManager = Polaris(projectPath: path, currentView: nil, withWebServer: NSUserDefaults.standardUserDefaults().boolForKey("CnWebServer"), uploadServer: NSUserDefaults.standardUserDefaults().boolForKey("CnUploadServer"), andWebDavServer: NSUserDefaults.standardUserDefaults().boolForKey("CnWebDavServer"))
-    
+        getSplitView.mainViewController = self
         
-                
         getSplitView.delegate = self
 
     }
@@ -114,8 +113,14 @@ class ProjectMainViewController: UIViewController, UISplitViewControllerDelegate
         }
     }
     
-    @IBAction func search(sender: UIBarButtonItem) {
-        getSplitView?.dealWithSearchBar()
+    @IBAction func search(sender: UIBarButtonItem) {        
+        if let _ = getSplitView.filesTableView!.navigationController?.viewControllers.last as? EditorViewController {
+            getSplitView?.dealWithSearchBar()
+        }
+        else {
+            
+            Notifications.sharedInstance.alertWithMessage(nil, title: "Open a file", viewController: self)
+        }
     }
     
     
@@ -123,14 +128,18 @@ class ProjectMainViewController: UIViewController, UISplitViewControllerDelegate
     @IBAction func shareDidPush(sender: UIBarButtonItem) {
         
         // Create an NSURL for the file you want to send to another app
-        let fileUrl = getSplitView!.projectManager.selectedFileURL
-        
-
-        // Create the interaction controller
-        documentInteractionController = UIDocumentInteractionController(URL: fileUrl)
-        
-        // Present the app picker display
-        documentInteractionController!.presentOptionsMenuFromBarButtonItem(sender, animated: true)
+        if let fileUrl = getSplitView!.projectManager.selectedFileURL {
+            
+            // Create the interaction controller
+            documentInteractionController = UIDocumentInteractionController(URL: fileUrl)
+            
+            // Present the app picker display
+            documentInteractionController!.presentOptionsMenuFromBarButtonItem(sender, animated: true)
+   
+        }
+        else {
+            Notifications.sharedInstance.alertWithMessage(nil, title: "Select a file first", viewController: self)
+        }
     }
     
 

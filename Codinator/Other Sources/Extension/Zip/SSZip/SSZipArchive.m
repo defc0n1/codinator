@@ -474,7 +474,14 @@
                     NSString *tempName = [fullFilePath stringByAppendingPathComponent:@".DS_Store"];
                     [@"" writeToFile:tempName atomically:YES encoding:NSUTF8StringEncoding error:nil];
                     [zipArchive writeFileAtPath:tempName withFileName:[fileName stringByAppendingPathComponent:@".DS_Store"]];
-                    [[NSFileManager defaultManager] removeItemAtPath:tempName error:nil];
+                    
+                    @try {
+                        [[NSFileManager defaultManager] removeItemAtPath:tempName error:nil];
+                    } @catch (NSException *exception) {
+                        
+                    } @finally {
+                      
+                    }
                 }
             }
         }

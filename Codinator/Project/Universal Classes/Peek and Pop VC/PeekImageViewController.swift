@@ -12,7 +12,7 @@ import UIKit
 class PeekImageViewController: UIViewController {
 
     
-    var delegate: PeekProtocol?
+    weak var delegate: PeekProtocol?
     
     var isDir = false
     

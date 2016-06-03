@@ -112,7 +112,6 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated{
-    
     [super viewDidAppear:true];
     
     //Root Path
@@ -263,14 +262,6 @@
 
 
 - (void)setUp {
-    
-    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"CNFirstRunEver"]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
-            [self performSegueWithIdentifier:@"setUp" sender:nil];
-        });
-        
-    }
-    
     NSString *macroKey = @"MacroInitBOOL";
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
 
@@ -467,7 +458,12 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
 
-    return CGSizeMake(166, 155)/*CGSizeMake(170, 155)*/;
+    if (self.view.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassCompact) {
+        return CGSizeMake(164, 155);
+    }
+    else {
+        return CGSizeMake(166, 155);
+    }
 }
 
 
@@ -1197,7 +1193,11 @@
 
 
 
+#pragma mark - Trait Collection
 
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    [self reload];
+}
 
 
 

@@ -50,6 +50,7 @@ extension EditorViewController {
         let tabSnippet = UIBarButtonItem(image: UIImage(named: "tab"), style: UIBarButtonItemStyle.Plain, target: self, action: #selector(EditorViewController._tab))
         
         let tagOpeningSnippet = UIBarButtonItem(image: UIImage(named: "smallerThan"), style: UIBarButtonItemStyle.Plain, target: self, action: #selector(EditorViewController._openTag))
+        let tagCloseSymbolnippet = UIBarButtonItem(image: UIImage(named: "tagCloseSymbol"), style: UIBarButtonItemStyle.Plain, target: self, action: #selector(EditorViewController._closeTagHTML))
         let tagClosingSnippet = UIBarButtonItem(image: UIImage(named: "greaterThan"), style: UIBarButtonItemStyle.Plain, target: self, action: #selector(EditorViewController._closeTag))
         let equalSnippet = UIBarButtonItem(image: UIImage(named: "equal"), style: UIBarButtonItemStyle.Plain, target: self, action: #selector(EditorViewController._equal))
         let stringSnippet = UIBarButtonItem(image: UIImage(named: "quoteSign"), style: UIBarButtonItemStyle.Plain, target: self, action: #selector(EditorViewController._string))
@@ -59,9 +60,8 @@ extension EditorViewController {
         let leadingGroup = UIBarButtonItemGroup(barButtonItems: [tabSnippet], representativeItem: nil)
         textView.inputAssistantItem.leadingBarButtonGroups.insert(leadingGroup, atIndex: 0)
         
-        let trailingGroup = UIBarButtonItemGroup(barButtonItems: [tagOpeningSnippet, tagClosingSnippet, equalSnippet, stringSnippet, percentSnippet, hashSnippet], representativeItem: nil)
+        let trailingGroup = UIBarButtonItemGroup(barButtonItems: [tagOpeningSnippet, tagCloseSymbolnippet, tagClosingSnippet, equalSnippet, stringSnippet, percentSnippet, hashSnippet], representativeItem: nil)
         textView.inputAssistantItem.trailingBarButtonGroups = [trailingGroup]
-
     }
     
     func setUpJSTextViewKeyboard(textView: JsTextView) {
@@ -197,6 +197,10 @@ extension EditorViewController {
 
     @objc private func _apostrophe() {
         self.textView.insertText("'")
+    }
+
+    @objc private func _closeTagHTML() {
+        self.textView.insertText("/")
     }
 
     

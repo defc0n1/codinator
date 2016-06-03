@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol PeekProtocol {
+protocol PeekProtocol: class {
     func print()
     func move()
     func rename()
@@ -17,7 +17,7 @@ protocol PeekProtocol {
 }
 
 
-protocol PeekShortProtocol {
+protocol PeekShortProtocol: class {
     func rename()
     func delete()
 }

@@ -16,7 +16,7 @@ class CreateFileViewController: UIViewController, UITextFieldDelegate {
     var items: [String]?
     var path: String?
     
-    var delegate: NewFilesDelegate?
+    weak var delegate: NewFilesDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -78,7 +78,7 @@ class CreateFileViewController: UIViewController, UITextFieldDelegate {
         
         
         self.dismissViewControllerAnimated(true) { 
-            self.delegate?.reloadData()
+            self.delegate?.reloadDataWithSelection(true)
         }
         
         

@@ -17,7 +17,7 @@ class ColorPickerViewController: UIViewController{
     
     
     @IBOutlet weak var colorPickerView: HRColorPickerView!
-    var delegate: SnippetsDelegate?
+    weak var delegate: SnippetsDelegate?
     var colorDelegate: ColorProtocol?
     
     var color: UIColor?

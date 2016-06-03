@@ -71,22 +71,6 @@
 		646EC6F91CA8D0BE00F359C2 /* Polaris.m in Sources */ = {isa = PBXBuildFile; fileRef = 646EC6D91CA8D0BE00F359C2 /* Polaris.m */; };
 		646EC6FB1CA8D0BE00F359C2 /* Thumbnail.m in Sources */ = {isa = PBXBuildFile; fileRef = 646EC6DC1CA8D0BE00F359C2 /* Thumbnail.m */; };
 		646EC6FC1CA8D0BE00F359C2 /* UIColor+HexString.m in Sources */ = {isa = PBXBuildFile; fileRef = 646EC6DE1CA8D0BE00F359C2 /* UIColor+HexString.m */; };
-		646EC7101CA8D15700F359C2 /* LTCharacterLimbo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646EC6FE1CA8D15700F359C2 /* LTCharacterLimbo.swift */; };
-		646EC7111CA8D15700F359C2 /* LTEasing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646EC6FF1CA8D15700F359C2 /* LTEasing.swift */; };
-		646EC7121CA8D15700F359C2 /* LTEmitterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646EC7001CA8D15700F359C2 /* LTEmitterView.swift */; };
-		646EC7131CA8D15700F359C2 /* LTMorphingEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646EC7011CA8D15700F359C2 /* LTMorphingEffect.swift */; };
-		646EC7141CA8D15700F359C2 /* LTMorphingLabel+Anvil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646EC7021CA8D15700F359C2 /* LTMorphingLabel+Anvil.swift */; };
-		646EC7151CA8D15700F359C2 /* LTMorphingLabel+Burn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646EC7031CA8D15700F359C2 /* LTMorphingLabel+Burn.swift */; };
-		646EC7161CA8D15700F359C2 /* LTMorphingLabel+Evaporate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646EC7041CA8D15700F359C2 /* LTMorphingLabel+Evaporate.swift */; };
-		646EC7171CA8D15700F359C2 /* LTMorphingLabel+Fall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646EC7051CA8D15700F359C2 /* LTMorphingLabel+Fall.swift */; };
-		646EC7181CA8D15700F359C2 /* LTMorphingLabel+Pixelate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646EC7061CA8D15700F359C2 /* LTMorphingLabel+Pixelate.swift */; };
-		646EC7191CA8D15700F359C2 /* LTMorphingLabel+Sparkle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646EC7071CA8D15700F359C2 /* LTMorphingLabel+Sparkle.swift */; };
-		646EC71A1CA8D15700F359C2 /* LTMorphingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646EC7091CA8D15700F359C2 /* LTMorphingLabel.swift */; };
-		646EC71B1CA8D15700F359C2 /* NSString+LTMorphingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646EC70A1CA8D15700F359C2 /* NSString+LTMorphingLabel.swift */; };
-		646EC71C1CA8D15700F359C2 /* Fire.png in Resources */ = {isa = PBXBuildFile; fileRef = 646EC70C1CA8D15700F359C2 /* Fire.png */; };
-		646EC71D1CA8D15700F359C2 /* Fragment.png in Resources */ = {isa = PBXBuildFile; fileRef = 646EC70D1CA8D15700F359C2 /* Fragment.png */; };
-		646EC71E1CA8D15700F359C2 /* Smoke.png in Resources */ = {isa = PBXBuildFile; fileRef = 646EC70E1CA8D15700F359C2 /* Smoke.png */; };
-		646EC71F1CA8D15700F359C2 /* Sparkle.png in Resources */ = {isa = PBXBuildFile; fileRef = 646EC70F1CA8D15700F359C2 /* Sparkle.png */; };
 		646EC7251CA8D3EF00F359C2 /* NeuronTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646EC7241CA8D3EF00F359C2 /* NeuronTextView.swift */; };
 		646EC7271CADD2A800F359C2 /* UIAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646EC7261CADD2A800F359C2 /* UIAlertViewController.swift */; };
 		646EC7291CADD80900F359C2 /* JsTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646EC7281CADD80900F359C2 /* JsTextView.swift */; };
@@ -119,7 +103,6 @@
 		64A081461BDBE13A0001CA0C /* EngineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64A081451BDBE13A0001CA0C /* EngineViewController.m */; };
 		64A081491BDBE14B0001CA0C /* HighlighterEngineCustomizerRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64A081481BDBE14B0001CA0C /* HighlighterEngineCustomizerRootViewController.m */; };
 		64A0814B1BDBE1660001CA0C /* MadeByViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64A0814A1BDBE1660001CA0C /* MadeByViewController.swift */; };
-		64A0814F1BDBE1C80001CA0C /* GetReadyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64A0814E1BDBE1C80001CA0C /* GetReadyViewController.swift */; };
 		64A081781BDBE2530001CA0C /* ImportFromGitHubViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64A081771BDBE2530001CA0C /* ImportFromGitHubViewController.m */; };
 		64A0817B1BDBE25A0001CA0C /* ProjectZipImporterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64A0817A1BDBE25A0001CA0C /* ProjectZipImporterViewController.m */; };
 		64A0817E1BDBE28D0001CA0C /* WelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64A0817D1BDBE28D0001CA0C /* WelcomeViewController.m */; };
@@ -163,7 +146,6 @@
 		64A083661BDD24680001CA0C /* project.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 64A083651BDD24680001CA0C /* project.storyboard */; };
 		64B3840C1CC912B000B8B340 /* CreateSubpageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64B3840B1CC912B000B8B340 /* CreateSubpageViewController.swift */; };
 		64B67C8F1C7F53440040E574 /* SettingsEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 64B67C8E1C7F53440040E574 /* SettingsEngine.m */; };
-		64E77DDB1CCE750E003FE752 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E77DDA1CCE750E003FE752 /* SettingsViewController.swift */; };
 		64E77DDF1CCE752E003FE752 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E77DDE1CCE752E003FE752 /* SettingsTableViewController.swift */; };
 		64EED4D91CCAF40200A8BC34 /* ColorPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64EED4D81CCAF40200A8BC34 /* ColorPickerViewController.swift */; };
 		64EED4DB1CCC3CC400A8BC34 /* ExportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64EED4DA1CCC3CC400A8BC34 /* ExportViewController.swift */; };
@@ -277,23 +259,6 @@
 		646EC6DC1CA8D0BE00F359C2 /* Thumbnail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Thumbnail.m; sourceTree = "<group>"; };
 		646EC6DD1CA8D0BE00F359C2 /* UIColor+HexString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+HexString.h"; sourceTree = "<group>"; };
 		646EC6DE1CA8D0BE00F359C2 /* UIColor+HexString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+HexString.m"; sourceTree = "<group>"; };
-		646EC6FE1CA8D15700F359C2 /* LTCharacterLimbo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LTCharacterLimbo.swift; sourceTree = "<group>"; };
-		646EC6FF1CA8D15700F359C2 /* LTEasing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LTEasing.swift; sourceTree = "<group>"; };
-		646EC7001CA8D15700F359C2 /* LTEmitterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LTEmitterView.swift; sourceTree = "<group>"; };
-		646EC7011CA8D15700F359C2 /* LTMorphingEffect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LTMorphingEffect.swift; sourceTree = "<group>"; };
-		646EC7021CA8D15700F359C2 /* LTMorphingLabel+Anvil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LTMorphingLabel+Anvil.swift"; sourceTree = "<group>"; };
-		646EC7031CA8D15700F359C2 /* LTMorphingLabel+Burn.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LTMorphingLabel+Burn.swift"; sourceTree = "<group>"; };
-		646EC7041CA8D15700F359C2 /* LTMorphingLabel+Evaporate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LTMorphingLabel+Evaporate.swift"; sourceTree = "<group>"; };
-		646EC7051CA8D15700F359C2 /* LTMorphingLabel+Fall.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LTMorphingLabel+Fall.swift"; sourceTree = "<group>"; };
-		646EC7061CA8D15700F359C2 /* LTMorphingLabel+Pixelate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LTMorphingLabel+Pixelate.swift"; sourceTree = "<group>"; };
-		646EC7071CA8D15700F359C2 /* LTMorphingLabel+Sparkle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LTMorphingLabel+Sparkle.swift"; sourceTree = "<group>"; };
-		646EC7081CA8D15700F359C2 /* LTMorphingLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTMorphingLabel.h; sourceTree = "<group>"; };
-		646EC7091CA8D15700F359C2 /* LTMorphingLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LTMorphingLabel.swift; sourceTree = "<group>"; };
-		646EC70A1CA8D15700F359C2 /* NSString+LTMorphingLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSString+LTMorphingLabel.swift"; sourceTree = "<group>"; };
-		646EC70C1CA8D15700F359C2 /* Fire.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Fire.png; sourceTree = "<group>"; };
-		646EC70D1CA8D15700F359C2 /* Fragment.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Fragment.png; sourceTree = "<group>"; };
-		646EC70E1CA8D15700F359C2 /* Smoke.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Smoke.png; sourceTree = "<group>"; };
-		646EC70F1CA8D15700F359C2 /* Sparkle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Sparkle.png; sourceTree = "<group>"; };
 		646EC7241CA8D3EF00F359C2 /* NeuronTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NeuronTextView.swift; sourceTree = "<group>"; };
 		646EC7261CADD2A800F359C2 /* UIAlertViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIAlertViewController.swift; sourceTree = "<group>"; };
 		646EC7281CADD80900F359C2 /* JsTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsTextView.swift; sourceTree = "<group>"; };
@@ -353,7 +318,6 @@
 		64A081471BDBE14B0001CA0C /* HighlighterEngineCustomizerRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HighlighterEngineCustomizerRootViewController.h; sourceTree = "<group>"; };
 		64A081481BDBE14B0001CA0C /* HighlighterEngineCustomizerRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HighlighterEngineCustomizerRootViewController.m; sourceTree = "<group>"; };
 		64A0814A1BDBE1660001CA0C /* MadeByViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MadeByViewController.swift; sourceTree = "<group>"; };
-		64A0814E1BDBE1C80001CA0C /* GetReadyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetReadyViewController.swift; sourceTree = "<group>"; };
 		64A081761BDBE2530001CA0C /* ImportFromGitHubViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImportFromGitHubViewController.h; sourceTree = "<group>"; };
 		64A081771BDBE2530001CA0C /* ImportFromGitHubViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImportFromGitHubViewController.m; sourceTree = "<group>"; };
 		64A081791BDBE25A0001CA0C /* ProjectZipImporterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectZipImporterViewController.h; sourceTree = "<group>"; };
@@ -430,7 +394,6 @@
 		64B3840B1CC912B000B8B340 /* CreateSubpageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateSubpageViewController.swift; sourceTree = "<group>"; };
 		64B67C8D1C7F53440040E574 /* SettingsEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsEngine.h; sourceTree = "<group>"; };
 		64B67C8E1C7F53440040E574 /* SettingsEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsEngine.m; sourceTree = "<group>"; };
-		64E77DDA1CCE750E003FE752 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		64E77DDE1CCE752E003FE752 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		64EED4D81CCAF40200A8BC34 /* ColorPickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorPickerViewController.swift; sourceTree = "<group>"; };
 		64EED4DA1CCC3CC400A8BC34 /* ExportViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExportViewController.swift; sourceTree = "<group>"; };
@@ -603,39 +566,6 @@
 			path = "Web Server";
 			sourceTree = "<group>";
 		};
-		646EC6FD1CA8D15700F359C2 /* LTMorphingLabel */ = {
-			isa = PBXGroup;
-			children = (
-				646EC6FE1CA8D15700F359C2 /* LTCharacterLimbo.swift */,
-				646EC6FF1CA8D15700F359C2 /* LTEasing.swift */,
-				646EC7001CA8D15700F359C2 /* LTEmitterView.swift */,
-				646EC7011CA8D15700F359C2 /* LTMorphingEffect.swift */,
-				646EC7021CA8D15700F359C2 /* LTMorphingLabel+Anvil.swift */,
-				646EC7031CA8D15700F359C2 /* LTMorphingLabel+Burn.swift */,
-				646EC7041CA8D15700F359C2 /* LTMorphingLabel+Evaporate.swift */,
-				646EC7051CA8D15700F359C2 /* LTMorphingLabel+Fall.swift */,
-				646EC7061CA8D15700F359C2 /* LTMorphingLabel+Pixelate.swift */,
-				646EC7071CA8D15700F359C2 /* LTMorphingLabel+Sparkle.swift */,
-				646EC7081CA8D15700F359C2 /* LTMorphingLabel.h */,
-				646EC7091CA8D15700F359C2 /* LTMorphingLabel.swift */,
-				646EC70A1CA8D15700F359C2 /* NSString+LTMorphingLabel.swift */,
-				646EC70B1CA8D15700F359C2 /* Particles */,
-			);
-			name = LTMorphingLabel;
-			path = "Codinator/Other Sources/LTMorphingLabel";
-			sourceTree = SOURCE_ROOT;
-		};
-		646EC70B1CA8D15700F359C2 /* Particles */ = {
-			isa = PBXGroup;
-			children = (
-				646EC70C1CA8D15700F359C2 /* Fire.png */,
-				646EC70D1CA8D15700F359C2 /* Fragment.png */,
-				646EC70E1CA8D15700F359C2 /* Smoke.png */,
-				646EC70F1CA8D15700F359C2 /* Sparkle.png */,
-			);
-			path = Particles;
-			sourceTree = "<group>";
-		};
 		64A080AB1BDBD9D60001CA0C = {
 			isa = PBXGroup;
 			children = (
@@ -698,7 +628,6 @@
 				64A0830D1BDD14DC0001CA0C /* Syntax */,
 				64A082FD1BDD13F20001CA0C /* Keyboard */,
 				64A082B61BDBE88E0001CA0C /* AFNetworking */,
-				646EC6FD1CA8D15700F359C2 /* LTMorphingLabel */,
 				64A0829F1BDBE7BB0001CA0C /* CSNotificationView */,
 				64A081DD1BDBE4C40001CA0C /* ImageViewer */,
 				64A080D71BDBDBEF0001CA0C /* Extension */,
@@ -814,22 +743,12 @@
 				64A0811B1BDBDFB50001CA0C /* Playground */,
 				64A0811A1BDBDFA30001CA0C /* Settings */,
 				64A081191BDBDF950001CA0C /* Related Subclasses */,
-				64A081181BDBDF670001CA0C /* First Start */,
 				326F029F1CA1EE1700CA61C7 /* MainStoryboard.storyboard */,
 				64A0817C1BDBE28D0001CA0C /* WelcomeViewController.h */,
 				64A0817D1BDBE28D0001CA0C /* WelcomeViewController.m */,
 				645FA87C1CCE06140098A0BD /* WelcomeViewPreviewingDelegate.swift */,
 			);
 			path = Root;
-			sourceTree = "<group>";
-		};
-		64A081181BDBDF670001CA0C /* First Start */ = {
-			isa = PBXGroup;
-			children = (
-				64A0814E1BDBE1C80001CA0C /* GetReadyViewController.swift */,
-			);
-			name = "First Start";
-			path = "First start";
 			sourceTree = "<group>";
 		};
 		64A081191BDBDF950001CA0C /* Related Subclasses */ = {
@@ -847,7 +766,6 @@
 				64A081381BDBE0A20001CA0C /* Support */,
 				64A081371BDBE09D0001CA0C /* Credits */,
 				64A081361BDBE0910001CA0C /* General */,
-				64E77DDA1CCE750E003FE752 /* SettingsViewController.swift */,
 				64E77DDE1CCE752E003FE752 /* SettingsTableViewController.swift */,
 				6468B0AB1CD3A472007ED55C /* CloudSettingsTableViewController.swift */,
 			);
@@ -1376,12 +1294,16 @@
 				TargetAttributes = {
 					64A080B31BDBD9D60001CA0C = {
 						CreatedOnToolsVersion = 7.1;
+						DevelopmentTeam = L6QAR75AH5;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
-								enabled = 0;
+								enabled = 1;
+							};
+							com.apple.BackgroundModes = {
+								enabled = 1;
 							};
 							com.apple.iCloud = {
-								enabled = 0;
+								enabled = 1;
 							};
 						};
 					};
@@ -1416,12 +1338,8 @@
 				64A082B11BDBE81F0001CA0C /* extra.storyboard in Resources */,
 				646EC6E61CA8D0BE00F359C2 /* GCDWebUploader.bundle in Resources */,
 				64A080C41BDBD9D60001CA0C /* Assets.xcassets in Resources */,
-				646EC71F1CA8D15700F359C2 /* Sparkle.png in Resources */,
 				64A0833C1BDD16040001CA0C /* UnZip.storyboard in Resources */,
-				646EC71D1CA8D15700F359C2 /* Fragment.png in Resources */,
-				646EC71E1CA8D15700F359C2 /* Smoke.png in Resources */,
 				326F02A01CA1EE1700CA61C7 /* MainStoryboard.storyboard in Resources */,
-				646EC71C1CA8D15700F359C2 /* Fire.png in Resources */,
 				64A082B01BDBE81F0001CA0C /* History.storyboard in Resources */,
 				64A082B21BDBE81F0001CA0C /* core.storyboard in Resources */,
 			);
@@ -1451,7 +1369,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				646EC6FC1CA8D0BE00F359C2 /* UIColor+HexString.m in Sources */,
-				646EC7171CA8D15700F359C2 /* LTMorphingLabel+Fall.swift in Sources */,
 				64B67C8F1C7F53440040E574 /* SettingsEngine.m in Sources */,
 				64A0810B1BDBDC840001CA0C /* UZKFileInfo.m in Sources */,
 				64A080EB1BDBDBFE0001CA0C /* HRColorInfoView.m in Sources */,
@@ -1471,10 +1388,8 @@
 				3201D00B1CA6E02600204373 /* FilesTableViewController.swift in Sources */,
 				64A082D01BDBE89A0001CA0C /* AFURLRequestSerialization.m in Sources */,
 				646EC6EA1CA8D0BE00F359C2 /* GCDWebServerConnection.m in Sources */,
-				646EC7131CA8D15700F359C2 /* LTMorphingEffect.swift in Sources */,
 				64A080E91BDBDBFE0001CA0C /* HRBrightnessSlider.m in Sources */,
 				64A083541BDD16900001CA0C /* Selector.swift in Sources */,
-				646EC7111CA8D15700F359C2 /* LTEasing.swift in Sources */,
 				646EC6EF1CA8D0BE00F359C2 /* GCDWebServerFileResponse.m in Sources */,
 				646EC6EB1CA8D0BE00F359C2 /* GCDWebServerDataRequest.m in Sources */,
 				3201D0181CA6EFAA00204373 /* EditorViewController.swift in Sources */,
@@ -1482,7 +1397,6 @@
 				64EED4E11CCCE7DF00A8BC34 /* FilesTableViewControllerNavigation.swift in Sources */,
 				646EC6E21CA8D0BE00F359C2 /* RNDecryptor.m in Sources */,
 				6407BED91CCD175B00B35C04 /* JTSImageViewController.m in Sources */,
-				646EC71A1CA8D15700F359C2 /* LTMorphingLabel.swift in Sources */,
 				640B48641CCFEDA100A5B2AE /* EngineViewControllerColorPicker.swift in Sources */,
 				64380E0F1CC9212000FCF69A /* CreateDirViewController.swift in Sources */,
 				64A082CA1BDBE89A0001CA0C /* AFHTTPRequestOperation.m in Sources */,
@@ -1493,7 +1407,6 @@
 				64A081431BDBE12A0001CA0C /* FontSettingsViewController.m in Sources */,
 				646EC6E71CA8D0BE00F359C2 /* GCDWebUploader.m in Sources */,
 				6444D1B31CA7205E002BAD23 /* PlaygroundFileCreator.swift in Sources */,
-				64A0814F1BDBE1C80001CA0C /* GetReadyViewController.swift in Sources */,
 				64A0817E1BDBE28D0001CA0C /* WelcomeViewController.m in Sources */,
 				64A0828F1BDBE6AF0001CA0C /* QuickStartQuide.swift in Sources */,
 				64B3840C1CC912B000B8B340 /* CreateSubpageViewController.swift in Sources */,
@@ -1502,8 +1415,6 @@
 				64A081491BDBE14B0001CA0C /* HighlighterEngineCustomizerRootViewController.m in Sources */,
 				64380E111CC9258200FCF69A /* CreateFileViewController.swift in Sources */,
 				640AFA331CDCF7D60063727D /* EditorViewControllerTextViewsExtension.swift in Sources */,
-				646EC7121CA8D15700F359C2 /* LTEmitterView.swift in Sources */,
-				646EC7161CA8D15700F359C2 /* LTMorphingLabel+Evaporate.swift in Sources */,
 				64A081001BDBDC3E0001CA0C /* zip.c in Sources */,
 				6436F35F1CE68E8C000FAEE4 /* ProjectMainViewControllerSplitViewExtension.swift in Sources */,
 				64A081351BDBE07E0001CA0C /* ProjectCollectionViewCell.m in Sources */,
@@ -1537,7 +1448,6 @@
 				646EC6ED1CA8D0BE00F359C2 /* GCDWebServerErrorResponse.m in Sources */,
 				64A080EC1BDBDBFE0001CA0C /* HRColorMapView.m in Sources */,
 				64A082CE1BDBE89A0001CA0C /* AFSecurityPolicy.m in Sources */,
-				646EC7101CA8D15700F359C2 /* LTCharacterLimbo.swift in Sources */,
 				645FA87B1CCDFB170098A0BD /* PeekWebViewController.swift in Sources */,
 				640AFA361CDF7BA30063727D /* CSSTextView.swift in Sources */,
 				645FA87D1CCE06140098A0BD /* WelcomeViewPreviewingDelegate.swift in Sources */,
@@ -1545,10 +1455,8 @@
 				6444D1B21CA7205E002BAD23 /* NewPlaygroundViewController.swift in Sources */,
 				6407BED71CCD175B00B35C04 /* JTSAnimatedGIFUtility.m in Sources */,
 				64FD18B41CC7BFF600A4A3B7 /* Notifications.swift in Sources */,
-				646EC71B1CA8D15700F359C2 /* NSString+LTMorphingLabel.swift in Sources */,
 				64FD18B61CC815E500A4A3B7 /* ArchiveViewController.swift in Sources */,
 				64A082A81BDBE7CC0001CA0C /* CSNativeBlurView.m in Sources */,
-				646EC7141CA8D15700F359C2 /* LTMorphingLabel+Anvil.swift in Sources */,
 				64A082CC1BDBE89A0001CA0C /* AFHTTPSessionManager.m in Sources */,
 				64A082F41BDCD8C80001CA0C /* HistoryWebViewController.m in Sources */,
 				646E15721CAC3C7400330BAD /* HighlighterFoundation.swift in Sources */,
@@ -1556,7 +1464,6 @@
 				64A083311BDD15660001CA0C /* CYRLayoutManager.m in Sources */,
 				64A083081BDD142B0001CA0C /* VWASAccessoryView.m in Sources */,
 				645FA8771CCDF2EE0098A0BD /* PeekProtocol.swift in Sources */,
-				646EC7181CA8D15700F359C2 /* LTMorphingLabel+Pixelate.swift in Sources */,
 				6407BEDA1CCD175B00B35C04 /* JTSSimpleImageDownloader.m in Sources */,
 				64A0810A1BDBDC840001CA0C /* UZKArchive.m in Sources */,
 				64A080FF1BDBDC3E0001CA0C /* unzip.c in Sources */,
@@ -1568,8 +1475,6 @@
 				646EC6E91CA8D0BE00F359C2 /* GCDWebServer.m in Sources */,
 				647F33921CCDDC8600CA537D /* FilesTableViewControllerPreviewing.swift in Sources */,
 				64A080B91BDBD9D60001CA0C /* main.m in Sources */,
-				64E77DDB1CCE750E003FE752 /* SettingsViewController.swift in Sources */,
-				646EC7191CA8D15700F359C2 /* LTMorphingLabel+Sparkle.swift in Sources */,
 				64A0829A1BDBE7610001CA0C /* AspectRatioViewController.swift in Sources */,
 				6407BEDC1CCD175B00B35C04 /* UIImage+JTSImageEffects.m in Sources */,
 				646D488E1CCE2BEF0093056B /* PlaygroundDocument.m in Sources */,
@@ -1593,7 +1498,6 @@
 				64A083321BDD15660001CA0C /* CYRTextStorage.m in Sources */,
 				6458FDC21CA8987C005B2B93 /* HTMLTextView.swift in Sources */,
 				646EC6DF1CA8D0BE00F359C2 /* CodinatorDocument.m in Sources */,
-				646EC7151CA8D15700F359C2 /* LTMorphingLabel+Burn.swift in Sources */,
 				6407BEE11CCD899D00B35C04 /* FileMoverViewController.swift in Sources */,
 				64A080EF1BDBDBFE0001CA0C /* UIImage+CoreGraphics.m in Sources */,
 				64A082F01BDCD8BB0001CA0C /* HistoryViewController.m in Sources */,

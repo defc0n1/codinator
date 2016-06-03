@@ -9,7 +9,7 @@
 import UIKit
 
 
-protocol SnippetsDelegate {
+protocol SnippetsDelegate: class {
     func snippetWasCoppied(status: String)
     func colorDidChange(color: UIColor)
 }
@@ -22,7 +22,7 @@ class ImgSnippetsViewController: UIViewController,UITextFieldDelegate {
     @IBOutlet var width: UITextField!
     @IBOutlet var height: UITextField!
    
-    var delegate: SnippetsDelegate?
+    weak var delegate: SnippetsDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -84,7 +84,7 @@ class LinkSnippetsViewController :UIViewController,UITextFieldDelegate{
     @IBOutlet var textField: UITextField!
     @IBOutlet var nameTextField: UITextField!
     
-    var delegate: SnippetsDelegate?
+    weak var delegate: SnippetsDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -153,7 +153,7 @@ class ListSnippetsViewController :UIViewController{
     @IBOutlet var stepper: UIStepper!
     @IBOutlet var enumNumberLabel: UILabel!
     
-    var delegate: SnippetsDelegate?
+    weak var delegate: SnippetsDelegate?
     
     @IBAction func stepperDidPush(sender: AnyObject) {
         let integer = Int(stepper.value)

@@ -19,7 +19,7 @@ class FileMoverViewController: UIViewController, UITableViewDelegate, UITableVie
     let fileManager = NSFileManager.defaultManager()
     
     
-    var delegate: NewFilesDelegate?
+    weak var delegate: NewFilesDelegate?
     
     @IBOutlet weak var backButton: UIBarButtonItem!
     var backButtonEnabled: Bool {
@@ -69,7 +69,7 @@ class FileMoverViewController: UIViewController, UITableViewDelegate, UITableVie
             do {
                 try fileManager.moveItemAtURL(fileUrl!, toURL: destinationUrl!)
                 self.dismissViewControllerAnimated(true, completion: {
-                    self.delegate?.reloadData()
+                    self.delegate?.reloadDataWithSelection(true)
                 })
             } catch let error as NSError {
                 Notifications.sharedInstance.alertWithMessage(error.localizedDescription, title: "Error", viewController: self)

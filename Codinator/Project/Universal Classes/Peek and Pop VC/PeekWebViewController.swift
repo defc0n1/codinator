@@ -10,7 +10,7 @@ import UIKit
 
 class PeekWebViewController: AspectRatioViewController {
 
-    var delegate: PeekProtocol?
+    weak var delegate: PeekProtocol?
     
     var projectsDelegate: PeekShortProtocol?
     var isProjects = false

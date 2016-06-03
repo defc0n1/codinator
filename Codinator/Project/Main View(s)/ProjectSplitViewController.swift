@@ -28,7 +28,7 @@ class ProjectSplitViewController: UISplitViewController{
     var splitViewDelegate: ProjectSplitViewControllerDelegate?
 
     
-    var assistantViewController: AssistantViewController?
+    weak var assistantViewController: AssistantViewController?
     
     
     var filesTableView: FilesTableViewController? {
@@ -82,6 +82,7 @@ class ProjectSplitViewController: UISplitViewController{
         }
     }
     
+    var mainViewController: ProjectMainViewController!
     
     override func viewDidLoad() {
         super.viewDidLoad()

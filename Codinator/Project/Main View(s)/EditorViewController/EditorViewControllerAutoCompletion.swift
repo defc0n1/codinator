@@ -12,7 +12,7 @@ extension EditorViewController: WUTextSuggestionDisplayControllerDataSource {
     
     
     func textSuggestionDisplayController(textSuggestionDisplayController: WUTextSuggestionDisplayController!, suggestionDisplayItemsForSuggestionType suggestionType: WUTextSuggestionType, query suggestionQuery: String!) -> [AnyObject]! {
-        if suggestionType == WUTextSuggestionType.At {
+        if suggestionType == .Tag {
             var suggestionDisplayItems : [WUTextSuggestionDisplayItem] = []
             for name in self.filteredNamesUsingQuery(suggestionQuery) {
                 let item = WUTextSuggestionDisplayItem(title: name)
@@ -79,18 +79,36 @@ extension EditorViewController: WUTextSuggestionDisplayControllerDataSource {
         
         // Find where the tag starts
         var findTag = stringFromRange.characters.enumerate().filter { $0.element == "<"}.last?.index
+        var findCloseBracket = stringFromRange.characters.enumerate().filter { $0.element == "/"}.last?.index
         
-        if (findTag == nil) {
+        
+        if findTag == nil {
             findTag = 0
         }
         
-        // Try to find the distance between the cursor and the beginning of the tag. Since we don't want to delete the tag we do +1
+        if findCloseBracket == nil {
+            findCloseBracket = 0
+        }
+        
+        
+        // Try to find the distance between the cursor and the beginning of the tag | close character (/). Since we don't want to delete the tag we do +1
         let itemsToDeleteTillTag = stringFromRange.characters.count - findTag! - 1
+        let itemsToDeleteTillCloseTag = stringFromRange.characters.count - findCloseBracket! - 1
         
         // Delete the charachters that are after the tag
-        for _ in 1...itemsToDeleteTillTag {
-            htmlTextView.deleteBackward()
+        let needsOpenAndCloseTag = findTag > findCloseBracket
+        
+        if needsOpenAndCloseTag {
+            for _ in 1...itemsToDeleteTillTag {
+                htmlTextView.deleteBackward()
+            }
         }
+        else {
+            for _ in 1...itemsToDeleteTillCloseTag {
+                htmlTextView.deleteBackward()
+            }
+        }
+
         
         
         
@@ -110,9 +128,9 @@ extension EditorViewController: WUTextSuggestionDisplayControllerDataSource {
         
         // Check if tag needs closing tag or not and insert the tag
         switch checkString {
-        case "h1>", "h2>", "h3>",  "h4>", "h5>", "h6>", "head>", "body>", "!Documentype html>", "center>", "tr>", "title>", "li>", "section>", "header>", "footer>", "ul>", "del>", "em>", "sub>", "sup>", "var>", "small>", "strong>", "code>", "blackquote>", "p>","h1> ", "h2> ", "h3> ",  "h4>", "h5> ", "h6> ", "head> ", "body> ", "!Documentype html> ", "center> ", "tr> ", "title> ", "li> ", "section> ", "header> ", "footer> ", "ul> ", "del> ", "em> ", "sub> ", "sup> ", "var> ", "small> ", "strong> ", "code> ", "blackquote> ", "p> ":
+        case "h1>", "h2>", "h3>",  "h4>", "h5>", "h6>", "head>", "body>", "!Documentype html>", "center>", "tr>", "title>", "li>", "section>", "header>", "footer>", "ul>", "del>", "em>", "sub>", "sup>", "var>", "small>", "strong>", "code>", "blackquote>", "p>", "big>","h1> ", "h2> ", "h3> ",  "h4>", "h5> ", "h6> ", "head> ", "body> ", "!Documentype html> ", "center> ", "tr> ", "title> ", "li> ", "section> ", "header> ", "footer> ", "ul> ", "del> ", "em> ", "sub> ", "sup> ", "var> ", "small> ", "strong> ", "code> ", "blackquote> ", "p> ", "big> ":
             
-            let br = "</\(checkString)"
+            let br = needsOpenAndCloseTag ? "</\(checkString)" : ""
             
             htmlTextView.insertText(checkString + br)
             

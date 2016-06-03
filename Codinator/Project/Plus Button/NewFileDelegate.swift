@@ -8,8 +8,8 @@
 
 import Foundation
 
-protocol NewFilesDelegate {
-    func reloadData()
+protocol NewFilesDelegate: class {
+    func reloadDataWithSelection(selection: Bool)
 }
 
 class NewFiles: NSObject {

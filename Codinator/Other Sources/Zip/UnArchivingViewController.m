@@ -22,8 +22,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    filePathToZipFile = [[NSUserDefaults standardUserDefaults] stringForKey:@"ImagePath"];
-    [self performSelector:@selector(start) withObject:self afterDelay:1.0];
+    if (filePathToZipFile) {
+        [self performSelector:@selector(start) withObject:self afterDelay:1.0];
+    }
+    else {
+        [self dismissViewControllerAnimated:true completion:nil];
+    }
 }
 
 -(void)start{

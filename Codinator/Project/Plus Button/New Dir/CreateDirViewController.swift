@@ -10,7 +10,7 @@ import UIKit
 
 class CreateDirViewController: UIViewController, UITextFieldDelegate {
 
-    var delegate: NewFilesDelegate?
+    weak var delegate: NewFilesDelegate?
     var projectManager: Polaris!
     @IBOutlet var textField: UITextField!
     
@@ -37,7 +37,7 @@ class CreateDirViewController: UIViewController, UITextFieldDelegate {
             }
             
             self.dismissViewControllerAnimated(true, completion: { 
-                self.delegate?.reloadData()
+                self.delegate?.reloadDataWithSelection(true)
             })
             
         }

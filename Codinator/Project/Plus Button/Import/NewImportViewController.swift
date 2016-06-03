@@ -23,7 +23,7 @@ class NewImportViewController: UIViewController,UINavigationControllerDelegate,U
     var webUploaderURL: String!
     var inspectorPath: String!
 
-    var delegate: NewFilesDelegate?
+    weak var delegate: NewFilesDelegate?
     
     
 
@@ -67,7 +67,7 @@ class NewImportViewController: UIViewController,UINavigationControllerDelegate,U
             let reloadDataBase = UIAlertAction(title: "Reload File-Database ", style: .Default) { (UIAlertAction) -> Void in
                 
                 self.dismissViewControllerAnimated(true, completion: {
-                    self.delegate?.reloadData()
+                    self.delegate?.reloadDataWithSelection(true)
                 })
                 
             }
@@ -172,7 +172,7 @@ class NewImportViewController: UIViewController,UINavigationControllerDelegate,U
         
         
         picker.dismissViewControllerAnimated(true, completion: {
-            self.delegate?.reloadData()
+            self.delegate?.reloadDataWithSelection(true)
             self.dismissViewControllerAnimated(true, completion: nil)
         })
     }
@@ -242,7 +242,7 @@ class NewImportViewController: UIViewController,UINavigationControllerDelegate,U
         }
     
         self.dismissViewControllerAnimated(true, completion: {
-            self.delegate?.reloadData()
+            self.delegate?.reloadDataWithSelection(true)
         })
     }
     

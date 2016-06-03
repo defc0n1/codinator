@@ -41,7 +41,24 @@ extension ProjectMainViewController {
     
     @IBAction func right(sender: UIBarButtonItem) {
         
-        if isCompact {
+        
+        if getSplitView.collapsed == true {
+            
+            // If a file is selected
+            if getSplitView.projectManager.selectedFileURL != nil {
+                let viewController = self.storyboard?.instantiateViewControllerWithIdentifier("utilities") as! AssistantViewController
+                viewController.projectManager = getSplitView.projectManager
+                viewController.prevVC = getSplitView
+                viewController.renameDelegate = getSplitView.filesTableView
+                self.navigationController?.pushViewController(viewController, animated: true)
+            }
+            else {
+                
+                // No file selected 
+                Notifications.sharedInstance.alertWithMessage(nil, title: "Select a file first", viewController: self)
+            }
+        }
+        else if isCompact {
             
             // View hidden
             if assistantGrabberConstraint.constant <= 50 {

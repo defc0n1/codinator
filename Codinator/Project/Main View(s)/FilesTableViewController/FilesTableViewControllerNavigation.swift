@@ -94,10 +94,17 @@ extension FilesTableViewController {
                     
                     
                 case "zip":
-                    break
+                    let unzipStoryBoard = UIStoryboard(name: "UnZip", bundle: nil)
+                    
+                    let viewController = unzipStoryBoard.instantiateInitialViewController() as! UnArchivingViewController
+                    viewController.modalPresentationStyle = .OverFullScreen
+                    
+                    viewController.filePathToZipFile = selectedURL.path
+                    
+                    self.presentViewController(viewController, animated: true, completion: nil)
                     
                 case "pdf":
-                    projectManager.tmpFileURL = projectManager.selectedFileURL
+                    projectManager.tmpFileURL = projectManager.selectedFileURL!
                     self.performSegueWithIdentifier("run", sender: self)
                     
                     
@@ -173,7 +180,7 @@ extension FilesTableViewController {
             
             let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
             
-            let pathExtension = self.projectManager.deleteURL.pathExtension!
+            let pathExtension = self.projectManager.deleteURL!.pathExtension!
             
             
             if pathExtension != "" {
@@ -200,7 +207,7 @@ extension FilesTableViewController {
             }
             else {
 
-                alertController.title = projectManager.deleteURL.lastPathComponent
+                alertController.title = projectManager.deleteURL!.lastPathComponent
                 alertController.message = "What do you want to do with the file?"
                 
                 getSplitView.preferredDisplayMode = .PrimaryHidden

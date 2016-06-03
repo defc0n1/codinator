@@ -20,7 +20,7 @@ class EditorViewController: UIViewController, UITextViewDelegate, ProjectSplitVi
     var text: String? {
         get {
             if let polaris = projectManager {
-                let fileExtension = polaris.selectedFileURL.pathExtension!
+                let fileExtension = polaris.selectedFileURL!.pathExtension!
                 switch fileExtension {
                 case "css":
                     return cssTextView.text
@@ -37,7 +37,7 @@ class EditorViewController: UIViewController, UITextViewDelegate, ProjectSplitVi
         }
         
         set {
-            if let fileExtension = projectManager?.selectedFileURL.pathExtension! {
+            if let fileExtension = projectManager?.selectedFileURL!.pathExtension! {
                 
                 
                 switch fileExtension {
@@ -102,7 +102,7 @@ class EditorViewController: UIViewController, UITextViewDelegate, ProjectSplitVi
     
     var textView: CYRTextView {
         get {
-            let fileExtension = projectManager!.selectedFileURL.pathExtension!
+            let fileExtension = projectManager!.selectedFileURL!.pathExtension!
             switch fileExtension {
             case "css":
                 return cssTextView
@@ -168,7 +168,7 @@ class EditorViewController: UIViewController, UITextViewDelegate, ProjectSplitVi
         let suggestionDisplayController = WUTextSuggestionDisplayController()
         suggestionDisplayController.dataSource = self
         let suggestionController = WUTextSuggestionController(textView: htmlTextView, suggestionDisplayController: suggestionDisplayController)
-        suggestionController.suggestionType = .At
+        suggestionController.suggestionType = .Tag
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(range), name: "range", object: nil)
 
         
@@ -224,16 +224,16 @@ class EditorViewController: UIViewController, UITextViewDelegate, ProjectSplitVi
         operation.completionBlock = {
             
             let fileURL = self.projectManager!.selectedFileURL
-            let root = self.projectManager!.selectedFileURL.URLByDeletingLastPathComponent
+            let root = self.projectManager!.selectedFileURL!.URLByDeletingLastPathComponent
             
             dispatch_async(dispatch_get_main_queue(), { 
                 if let splitViewController = self.splitViewController as? ProjectSplitViewController {
-                    splitViewController.webView!.loadFileURL(fileURL, allowingReadAccessToURL: root!)
+                    splitViewController.webView!.loadFileURL(fileURL!, allowingReadAccessToURL: root!)
                 }
             })
             
             do {
-                try textView.text.writeToURL(self.projectManager!.selectedFileURL, atomically: false, encoding: NSUTF8StringEncoding)
+                try textView.text.writeToURL(self.projectManager!.selectedFileURL!, atomically: false, encoding: NSUTF8StringEncoding)
             } catch {
                 
             }

@@ -104,7 +104,7 @@ NSString * const WUTextSuggestionControllerTextInputTextPropertyKey = @"text";
 
 - (NSRegularExpression *)textCheckingRegularExpression {
     if (!_textCheckingRegularExpression) {
-        _textCheckingRegularExpression = [NSRegularExpression regularExpressionWithPattern:@"[<]([^\\s/:：@#]?)+$?" options:NSRegularExpressionCaseInsensitive error:NULL];
+        _textCheckingRegularExpression = [NSRegularExpression regularExpressionWithPattern:@"([<|/]([^\\s/:：@#>]?)+$?)" options:NSRegularExpressionCaseInsensitive error:NULL];
     }
     return _textCheckingRegularExpression;
 }
@@ -129,17 +129,11 @@ NSString * const WUTextSuggestionControllerTextInputTextPropertyKey = @"text";
     if (word.length >= 1 && range.location != NSNotFound) {
         NSString *first = [word substringToIndex:1];
         NSString *rest = [word substringFromIndex:1];
-        if (([first isEqualToString:@"<"] || [first isEqualToString:@"<"]) && (self.suggestionType & WUTextSuggestionTypeAt)) {
+        if (([first isEqualToString:@"<"] || [first isEqualToString:@"/"]) && (self.suggestionType & WUTextSuggestionTypeTag)) {
             self.suggesting = YES;
             self.suggestionRange = NSMakeRange(range.location + 1, range.length - 1);
             if (self.shouldReloadSuggestionsBlock) {
-                self.shouldReloadSuggestionsBlock(WUTextSuggestionTypeAt,rest,self.suggestionRange);
-            }
-        } else if ([first isEqualToString:@"/"] && (self.suggestionType & WUTextSuggestionTypeHashTag)) {
-            self.suggesting = YES;
-            self.suggestionRange = NSMakeRange(range.location + 1, range.length - 1);
-            if (self.shouldReloadSuggestionsBlock) {
-                self.shouldReloadSuggestionsBlock(WUTextSuggestionTypeHashTag,rest,self.suggestionRange);
+                self.shouldReloadSuggestionsBlock(WUTextSuggestionTypeTag,rest,self.suggestionRange);
             }
         } else {
             self.suggestionRange = NSMakeRange(NSNotFound, 0);

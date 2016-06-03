@@ -54,7 +54,7 @@ class FilesTableViewController: UIViewController, UITableViewDelegate, UITableVi
         }
         
         
-        reloadData()
+        reloadDataWithSelection(true)
         
     
         let insets = UIEdgeInsetsMake(0, 0, toolBar.frame.height, 0)
@@ -75,8 +75,11 @@ class FilesTableViewController: UIViewController, UITableViewDelegate, UITableVi
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
+        
+        // Execute this only if FilesTableVC wasn't newly created
         if count > 0 {
-            projectManager.inspectorURL = inspectorURL
+            projectManager.inspectorURL = inspectorURL!
+            selectFileWithName("index.html")
         }
                 
         // Keyboard show/hide notifications
@@ -111,8 +114,12 @@ class FilesTableViewController: UIViewController, UITableViewDelegate, UITableVi
                 }
                 else {
                     
+                    guard let filePath = self.items.first?.lastPathComponent! else {
+                        return
+                    }
                     
-                    if self.items.count != 0 {
+                    
+                    if self.items.count != 0 && filePath.hasSuffix("png") == false && filePath.hasSuffix("jpg") == false && self.items.first?.pathExtension != "" {
                         // No index file
                         
                         if getSplitView.collapsed == false {
@@ -128,7 +135,7 @@ class FilesTableViewController: UIViewController, UITableViewDelegate, UITableVi
                                 return
                             }
                             
-                            guard let path = projectManager.inspectorURL.URLByAppendingPathComponent(self.items.first!.lastPathComponent!).path else {
+                            guard let path = projectManager.inspectorURL.URLByAppendingPathComponent(filePath).path else {
                                 return
                             }
                             
@@ -147,7 +154,7 @@ class FilesTableViewController: UIViewController, UITableViewDelegate, UITableVi
         getSplitView.assistantViewController?.renameDelegate = self
     
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(reloadData), name: "relaodData", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(FilesTableViewController._reloadData), name: "relaodData", object: nil)
     }
     
     
@@ -160,20 +167,22 @@ class FilesTableViewController: UIViewController, UITableViewDelegate, UITableVi
     
     // MARK: - Assistant View
     
-    func selectFileWithName(name: String) {
-        reloadData()
+    
+    // returns true if found
+    func selectFileWithName(name: String) -> Bool {
+        reloadDataWithSelection(false)
         
         // Find 'name' and save index of it in the array itself
         let items = self.items.enumerate().filter { $0.element.absoluteString.hasSuffix(name)}
         
         // if 'items' isn't empty sellect the corresponding cell
-        if items.isEmpty != true {
+        if items.isEmpty == false {
             let indexPath = NSIndexPath(forRow: items.first!.index, inSection: 0)
             tableView.selectRowAtIndexPath(indexPath, animated: false, scrollPosition: .Top)
             tableView(tableView, didSelectRowAtIndexPath: indexPath)
         }
         
-        
+        return items.isEmpty == false
         
     }
     
@@ -245,7 +254,7 @@ class FilesTableViewController: UIViewController, UITableViewDelegate, UITableVi
         }
         
         let export = UIAlertAction(title: "Export", style: .Default) { (action : UIAlertAction) in
-            Notifications.sharedInstance.alertWithMessage("Archive the Project first.\nAfterwards open up the History window and use the export manager.", title: "Export")
+            Notifications.sharedInstance.alertWithMessage("Archive the Project first.\nAfterwards open up the History window and use the export manager.", title: "Export", viewController: self)
         }
         
         let localServer = UIAlertAction(title: "Local Server", style: .Default) { (action : UIAlertAction) in
@@ -273,9 +282,6 @@ class FilesTableViewController: UIViewController, UITableViewDelegate, UITableVi
         
         popup.popoverPresentationController?.barButtonItem = sender
 
-        //        self.presentViewController(popup, animated: true, completion: {
-//            popup.view.tintColor = UIColor.purpleColor()
-//        })
         
         if getSplitView.displayMode != .PrimaryOverlay {
             self.presentViewController(popup, animated: true, completion: nil)
@@ -305,48 +311,48 @@ class FilesTableViewController: UIViewController, UITableViewDelegate, UITableVi
     var keyboardHeight: CGFloat = 0
     
     func keyboardWillShow(notification: NSNotification) {
-//        let userInfo = notification.userInfo!
-//        keyboardHeight = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue().height
-        
-
     }
     
     func keyboardWillHide(notification: NSNotification) {
-//        keyboardHeight = 0
-//        
-//        var insets = tableView.contentInset
-//        insets.bottom = 0
-//        
-//        tableView.contentInset = insets
-//        tableView.scrollIndicatorInsets = insets
-        
     }
 
-    
 
     
     
     // MARK: - File Database
-    
-    func reloadData() {
-        
-        
-        if let items = projectManager!.contentsOfDirectoryAtPath(inspectorURL?.path) {
-            self.items = items.map { $0 as! NSURL}
-        }
 
-         let ip = tableView.indexPathForSelectedRow
+    func _reloadData() {
         
-        tableView.reloadData()
+        self.items = projectManager!.contentsOfDirectoryAtPath(inspectorURL!.path!).map { $0 as! NSURL}
         
+            let ip = tableView.indexPathForSelectedRow
+            
         if let indexPath = ip {
             tableView(tableView, didSelectRowAtIndexPath: indexPath)
             tableView.selectRowAtIndexPath(indexPath, animated: false, scrollPosition: .Top )
         }
-
+        
+        tableView.reloadData()
         
     }
     
+    
+    func reloadDataWithSelection(selection: Bool) {
+    
+        self.items = projectManager!.contentsOfDirectoryAtPath(inspectorURL!.path!).map { $0 as! NSURL}
+        
+        if selection == true {
+            let ip = tableView.indexPathForSelectedRow
+            
+            if let indexPath = ip {
+                tableView(tableView, didSelectRowAtIndexPath: indexPath)
+                tableView.selectRowAtIndexPath(indexPath, animated: false, scrollPosition: .Top )
+            }
+        }
+     
+        tableView.reloadData()
+        
+    }
     
 
     // MARK: - Storyboards
@@ -382,12 +388,18 @@ class FilesTableViewController: UIViewController, UITableViewDelegate, UITableVi
             case "run":
                 let viewController = (segue.destinationViewController as! UINavigationController).viewControllers.first as! AspectRatioViewController
                 
-                if projectManager.deleteURL?.path!.characters.count >= 2 {
-                    viewController.previewURL = projectManager.deleteURL
+                            
+                
+                // If path is not equal to "" path and if url is not nil
+                let useDeleteURL = (projectManager.deleteURL?.path != NSURL(string: "")?.path) && (projectManager.deleteURL != nil)
+                
+                
+            
+                if useDeleteURL {
+                    viewController.previewURL = projectManager.deleteURL!
                     projectManager.deleteURL = NSURL(string: "")
                 }
                 else {
-                
                     if let tmpPath = projectManager.tmpFileURL {
                         if tmpPath.path!.isEmpty {
                             
@@ -401,7 +413,7 @@ class FilesTableViewController: UIViewController, UITableViewDelegate, UITableVi
                         }
                         else {
                             viewController.previewURL = projectManager.tmpFileURL
-                            projectManager.tmpFileURL = NSURL(string: "")
+                            projectManager.tmpFileURL = nil
                         }
                     }
                     else {

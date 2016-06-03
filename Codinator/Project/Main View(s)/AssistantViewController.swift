@@ -9,8 +9,10 @@
 import UIKit
 
 
-protocol AssistantViewControllerDelegate {
-    func selectFileWithName(name: String)
+protocol AssistantViewControllerDelegate: class {
+    
+    /// Selects a file, retruns true if the files exists
+    func selectFileWithName(name: String) -> Bool
 }
 
 
@@ -18,8 +20,8 @@ class AssistantViewController: UIViewController, SnippetsDelegate, UITextFieldDe
 
     @IBOutlet weak var scrollView: UIScrollView!
     
-    @IBOutlet weak var fileNameTextField: UITextField!
-    @IBOutlet weak var fileExtensionTextField: UITextField!
+    @IBOutlet var fileNameTextField: UITextField?
+    @IBOutlet var fileExtensionTextField: UITextField?
     
     @IBOutlet weak var pathLabel: UILabel!
     
@@ -33,21 +35,29 @@ class AssistantViewController: UIViewController, SnippetsDelegate, UITextFieldDe
     @IBOutlet weak var snippetsSegmentControl: UISegmentedControl!
     
     
-    var delegate: SnippetsDelegate?
+    weak var delegate: SnippetsDelegate?
     var renameDelegate: AssistantViewControllerDelegate?
+    
+    var projectManager: Polaris?
+    var prevVC: UIViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-
-        let insets = UIEdgeInsets(top: 0, left: 0, bottom: snippetsViewHeightConstraint.constant, right: 0)
         
-        scrollView.scrollIndicatorInsets = insets
-        scrollView.contentInset = insets
+        if let polaris = projectManager {
+            self.setFilePathTo(polaris)
+            self.navigationItem.title = "Utilities"
+        }
+        else {
+            let insets = UIEdgeInsets(top: 0, left: 0, bottom: snippetsViewHeightConstraint.constant, right: 0)
+            
+            scrollView.scrollIndicatorInsets = insets
+            scrollView.contentInset = insets
+        }
         
-        
-        fileNameTextField.delegate = self
-        fileExtensionTextField.delegate = self
+       
+        fileNameTextField?.delegate = self
+        fileExtensionTextField?.delegate = self
     
     }
     
@@ -56,14 +66,13 @@ class AssistantViewController: UIViewController, SnippetsDelegate, UITextFieldDe
         
         fileUrl = projectManager.selectedFileURL
         
-        let name = projectManager.selectedFileURL.lastPathComponent!
-        fileNameTextField.text = (name as NSString).stringByDeletingPathExtension
-        fileExtensionTextField.text = (name as NSString).pathExtension
-                
+        fileNameTextField!.text = fileUrl?.URLByDeletingPathExtension?.lastPathComponent
+        fileExtensionTextField!.text = fileUrl?.pathExtension
+        
         pathLabel.text = projectManager.fakePathForFileSelectedFile()
         
         do {
-            let attributes = try NSFileManager.defaultManager().attributesOfItemAtPath(projectManager.selectedFileURL.path!)
+            let attributes = try NSFileManager.defaultManager().attributesOfItemAtPath(projectManager.selectedFileURL!.path!)
             
             
             let dateFormatter = NSDateFormatter()
@@ -137,7 +146,7 @@ class AssistantViewController: UIViewController, SnippetsDelegate, UITextFieldDe
     
     var previosText: String?
     func textFieldDidBeginEditing(textField: UITextField) {
-        if fileExtensionTextField.text == "" && fileNameTextField.text == "" {
+        if fileExtensionTextField!.text == "" && fileNameTextField!.text == "" {
             textField.resignFirstResponder()
         }
         else {
@@ -150,17 +159,17 @@ class AssistantViewController: UIViewController, SnippetsDelegate, UITextFieldDe
         
         if previosText != textField.text {
             
-            if fileNameTextField.text == "" {
+            if fileNameTextField?.text == "" {
                 Notifications.sharedInstance.alertWithMessage(nil, title: "Filename cant be empty", viewController: self)
-                fileNameTextField.becomeFirstResponder()
+                fileNameTextField?.becomeFirstResponder()
             }
             else {
                 let fileManager = NSFileManager.defaultManager()
                 
                 do {
-                    try fileManager.moveItemAtURL(fileUrl!, toURL: fileUrl!.URLByDeletingLastPathComponent!.URLByAppendingPathComponent(fileNameTextField.text! + "." + fileExtensionTextField.text!))
+                    try fileManager.moveItemAtURL(fileUrl!, toURL: fileUrl!.URLByDeletingLastPathComponent!.URLByAppendingPathComponent(fileNameTextField!.text! + "." + fileExtensionTextField!.text!))
                     
-                    self.renameDelegate?.selectFileWithName(fileNameTextField.text! + "." + fileExtensionTextField.text!)
+                    self.renameDelegate?.selectFileWithName(fileNameTextField!.text! + "." + fileExtensionTextField!.text!)
                     
                 } catch let error as NSError {
                     Notifications.sharedInstance.alertWithMessage(error.localizedDescription, title: "Something went wrong!", viewController: self)
@@ -197,6 +206,17 @@ class AssistantViewController: UIViewController, SnippetsDelegate, UITextFieldDe
         default:
             break
         }
+    }
+   
+    // MARK: - Trait collection
+    
+    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
+        
+        if size.width > 507 && projectManager != nil && prevVC != nil {
+            prevVC?.navigationController?.popViewControllerAnimated(true)
+        }
+    
     }
     
 

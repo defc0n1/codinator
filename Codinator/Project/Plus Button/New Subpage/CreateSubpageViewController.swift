@@ -13,7 +13,7 @@ class CreateSubpageViewController: UIViewController, UITextFieldDelegate {
     var projectManager: Polaris!
     @IBOutlet var textField: UITextField!
     
-    var delegate: NewFilesDelegate?
+    weak var delegate: NewFilesDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,7 +61,7 @@ class CreateSubpageViewController: UIViewController, UITextFieldDelegate {
             }
             
             
-            delegate?.reloadData()
+            delegate?.reloadDataWithSelection(true)
             self.dismissViewControllerAnimated(true, completion: nil)
             
             

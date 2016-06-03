@@ -13,6 +13,6 @@
     IBOutlet UIProgressView *progressView;
 }
 
-@property (nonatomic, strong)NSString* filePathToZipFile;
+@property (nonatomic, strong) NSString *filePathToZipFile;
 
 @end
