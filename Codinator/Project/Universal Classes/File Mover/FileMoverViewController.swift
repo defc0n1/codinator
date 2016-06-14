@@ -12,11 +12,11 @@ class FileMoverViewController: UIViewController, UITableViewDelegate, UITableVie
 
     @IBOutlet weak var tableView: UITableView!
     
-    var fileUrl: NSURL?
+    var fileUrl: URL?
     
-    var items: [NSURL]?
+    var items: [URL]?
     
-    let fileManager = NSFileManager.defaultManager()
+    let fileManager = FileManager.default()
     
     
     weak var delegate: NewFilesDelegate?
@@ -34,19 +34,19 @@ class FileMoverViewController: UIViewController, UITableViewDelegate, UITableVie
         super.viewDidLoad()
 
         do {
-            inspectorUrl = fileUrl!.URLByDeletingLastPathComponent!
-            items = try fileManager.contentsOfDirectoryAtURL(inspectorUrl!, includingPropertiesForKeys: [], options: .SkipsHiddenFiles)
+            inspectorUrl = try! fileUrl!.deletingLastPathComponent()
+            items = try fileManager.contentsOfDirectory(at: inspectorUrl!, includingPropertiesForKeys: [], options: .skipsHiddenFiles)
             tableView.reloadData()
             
         } catch let error as NSError {
             Notifications.sharedInstance.alertWithMessage(error.localizedDescription, title: "Error", viewController: self)
-            self.dismissViewControllerAnimated(true, completion: nil)
+            self.dismiss(animated: true, completion: nil)
         }
     }
 
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        backButton.enabled = backButtonEnabled
+        backButton.isEnabled = backButtonEnabled
     }
     
     override func didReceiveMemoryWarning() {
@@ -58,17 +58,17 @@ class FileMoverViewController: UIViewController, UITableViewDelegate, UITableVie
     // MARK: - Buttons
     
     @IBAction func cancelDidPush() {
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func moveFile() {
         
-        let destinationUrl = inspectorUrl?.URLByAppendingPathComponent(fileUrl!.lastPathComponent!)
+        let destinationUrl = try! inspectorUrl?.appendingPathComponent(fileUrl!.lastPathComponent!)
         if fileUrl?.absoluteString != destinationUrl?.absoluteString {
             
             do {
-                try fileManager.moveItemAtURL(fileUrl!, toURL: destinationUrl!)
-                self.dismissViewControllerAnimated(true, completion: {
+                try fileManager.moveItem(at: fileUrl!, to: destinationUrl!)
+                self.dismiss(animated: true, completion: {
                     self.delegate?.reloadDataWithSelection(true)
                 })
             } catch let error as NSError {
@@ -82,52 +82,52 @@ class FileMoverViewController: UIViewController, UITableViewDelegate, UITableVie
     
     }
     
-    @IBAction func backDidPush(sender: UIBarButtonItem) {
-        inspectorUrl = inspectorUrl?.URLByDeletingLastPathComponent
+    @IBAction func backDidPush(_ sender: UIBarButtonItem) {
+        inspectorUrl = try! inspectorUrl?.deletingLastPathComponent()
         
         do {
-            items = try fileManager.contentsOfDirectoryAtURL(inspectorUrl!, includingPropertiesForKeys: [], options: .SkipsHiddenFiles)
+            items = try fileManager.contentsOfDirectory(at: inspectorUrl!, includingPropertiesForKeys: [], options: .skipsHiddenFiles)
             tableView.reloadData()
             
         } catch let error as NSError {
             Notifications.sharedInstance.alertWithMessage(error.localizedDescription, title: "Error", viewController: self)
-            self.dismissViewControllerAnimated(true, completion: nil)
+            self.dismiss(animated: true, completion: nil)
         }
         
-        backButton.enabled = backButtonEnabled
+        backButton.isEnabled = backButtonEnabled
     }
     
 
     // MARK: - Table View
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return items!.count
     }
     
     
-    var inspectorUrl: NSURL?
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
+    var inspectorUrl: URL?
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
 
         
         
         let bgColorView = UIView()
-        bgColorView.backgroundColor = UIColor.blackColor()
+        bgColorView.backgroundColor = UIColor.black()
         cell.selectedBackgroundView = bgColorView
         cell.backgroundColor = tableView.backgroundColor
         
         
-        if let text = items![indexPath.row].lastPathComponent {
+        if let text = items![(indexPath as NSIndexPath).row].lastPathComponent {
             cell.textLabel?.text = text
-            cell.textLabel?.textColor = UIColor.whiteColor()
+            cell.textLabel?.textColor = UIColor.white()
             
-            if let path = inspectorUrl?.URLByAppendingPathComponent(text) {
+            if let path = try! inspectorUrl?.appendingPathComponent(text) {
                 let manager = Thumbnail()
-                cell.imageView?.image = manager.thumbnailForFileAtPath(path.path)
+                cell.imageView?.image = manager.thumbnailForFile(atPath: path.path)
             }
         }
         
@@ -137,27 +137,27 @@ class FileMoverViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         
-        let selectedUrl = inspectorUrl?.URLByAppendingPathComponent(items![indexPath.row].lastPathComponent!, isDirectory: true)
+        let selectedUrl = try! inspectorUrl?.appendingPathComponent(items![(indexPath as NSIndexPath).row].lastPathComponent!, isDirectory: true)
         
         
         var isDirectory : ObjCBool = ObjCBool(false)
         
-        if (NSFileManager.defaultManager().fileExistsAtPath(selectedUrl!.path!, isDirectory: &isDirectory) && Bool(isDirectory) == true) {
+        if (FileManager.default().fileExists(atPath: selectedUrl!.path!, isDirectory: &isDirectory) && Bool(isDirectory) == true) {
             
             do {
                 inspectorUrl = selectedUrl
-                items = try fileManager.contentsOfDirectoryAtURL(inspectorUrl!, includingPropertiesForKeys: [], options: .SkipsHiddenFiles)
+                items = try fileManager.contentsOfDirectory(at: inspectorUrl!, includingPropertiesForKeys: [], options: .skipsHiddenFiles)
                 tableView.reloadData()
                 
             } catch let error as NSError {
                 Notifications.sharedInstance.alertWithMessage(error.localizedDescription, title: "Error", viewController: self)
-                self.dismissViewControllerAnimated(true, completion: nil)
+                self.dismiss(animated: true, completion: nil)
             }
             
-            backButton.enabled = backButtonEnabled
+            backButton.isEnabled = backButtonEnabled
             
         }
         

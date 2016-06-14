@@ -10,6 +10,8 @@
 #import "NSUserDefaults+Additions.h"
 #import "SettingsEngine.h"
 
+#import "Codinator-Swift.h"
+
 @interface FontSettingsViewController ()
 
 
@@ -50,10 +52,9 @@ BOOL madeChanges;
 
 - (void)loadFont{
     
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     NSString *key = [NSString stringWithFormat:@"Font: %li", (long)self.selectedType];
    
-    self.font = [userDefaults fontForKey:key];
+    self.font = [FontDefaults fontWithKey:key];
     self.previewLabel.font = self.font;
     self.previewLabel.text = @"<h1>Lorem ipsum</h1>";
 
@@ -97,11 +98,9 @@ BOOL madeChanges;
     }
     
     
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     NSString *key = [NSString stringWithFormat:@"Font: %li", (long)self.selectedType];
     
-    [userDefaults setFont:self.font forKey:key];
-
+    [FontDefaults setWithFont:self.font key:key];
     self.previewLabel.font = self.font;
 }
 

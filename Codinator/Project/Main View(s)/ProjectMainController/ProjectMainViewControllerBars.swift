@@ -14,18 +14,18 @@ extension ProjectMainViewController {
     // MARK: - Panels
     
     
-    @IBAction func left(sender: UIBarButtonItem) {
+    @IBAction func left(_ sender: UIBarButtonItem) {
         if let splitViewController = getSplitView {
             
-            if splitViewController.collapsed == false {
+            if splitViewController.isCollapsed == false {
                 
-                UIView.animateWithDuration(0.4, delay: 0.0, options: .BeginFromCurrentState, animations: {
+                UIView.animate(withDuration: 0.4, delay: 0.0, options: .beginFromCurrentState, animations: {
                     
                     
-                    if splitViewController.preferredDisplayMode == .PrimaryHidden {
-                        splitViewController.preferredDisplayMode = .AllVisible
+                    if splitViewController.preferredDisplayMode == .primaryHidden {
+                        splitViewController.preferredDisplayMode = .allVisible
                     } else {
-                        splitViewController.preferredDisplayMode = .PrimaryHidden
+                        splitViewController.preferredDisplayMode = .primaryHidden
                     }
                     
                     }, completion: { (completion: Bool) in
@@ -34,19 +34,19 @@ extension ProjectMainViewController {
                 
             }
             else {
-                splitViewController.editorView?.navigationController?.popViewControllerAnimated(true)
+                _ = splitViewController.editorView?.navigationController?.popViewController(animated: true)
             }
         }
     }
     
-    @IBAction func right(sender: UIBarButtonItem) {
+    @IBAction func right(_ sender: UIBarButtonItem) {
         
         
-        if getSplitView.collapsed == true {
+        if getSplitView.isCollapsed == true {
             
             // If a file is selected
             if getSplitView.projectManager.selectedFileURL != nil {
-                let viewController = self.storyboard?.instantiateViewControllerWithIdentifier("utilities") as! AssistantViewController
+                let viewController = self.storyboard?.instantiateViewController(withIdentifier: "utilities") as! AssistantViewController
                 viewController.projectManager = getSplitView.projectManager
                 viewController.prevVC = getSplitView
                 viewController.renameDelegate = getSplitView.filesTableView
@@ -64,7 +64,7 @@ extension ProjectMainViewController {
             if assistantGrabberConstraint.constant <= 50 {
                 assistantGrabberConstraint.constant = 216
                 
-                UIView.animateWithDuration(0.4) {
+                UIView.animate(withDuration: 0.4) {
                     self.view.layoutIfNeeded()
                 }
 
@@ -74,7 +74,7 @@ extension ProjectMainViewController {
             else {
                 assistantGrabberConstraint.constant = 0
                 
-                UIView.animateWithDuration(0.4) {
+                UIView.animate(withDuration: 0.4) {
                     self.view.layoutIfNeeded()
                 }
             }
@@ -83,14 +83,14 @@ extension ProjectMainViewController {
         }
         else {
             
-            if assistantView.hidden == true {
-                self.assistantView.hidden = false
-                self.assistantGrabberView.hidden = false
+            if assistantView.isHidden == true {
+                self.assistantView.isHidden = false
+                self.assistantGrabberView.isHidden = false
                 
-                assistantGrabberConstraint.active = true
-                assistantConstraint.active = false
+                assistantGrabberConstraint.isActive = true
+                assistantConstraint.isActive = false
                 
-                UIView.animateWithDuration(0.4, delay: 0.0, options: .BeginFromCurrentState, animations: {
+                UIView.animate(withDuration: 0.4, delay: 0.0, options: .beginFromCurrentState, animations: {
                     self.view.layoutIfNeeded()
                     }, completion: { (completion: Bool) in
                         
@@ -98,14 +98,14 @@ extension ProjectMainViewController {
                         
                 })
             } else {
-                assistantGrabberConstraint.active = false
-                assistantConstraint.active = true
+                assistantGrabberConstraint.isActive = false
+                assistantConstraint.isActive = true
                 
-                UIView.animateWithDuration(0.4, delay: 0.0, options: .BeginFromCurrentState, animations: {
+                UIView.animate(withDuration: 0.4, delay: 0.0, options: .beginFromCurrentState, animations: {
                     self.view.layoutIfNeeded()
                     }, completion: { (completion: Bool) in
-                        self.assistantGrabberView.hidden = true
-                        self.assistantView.hidden = true
+                        self.assistantGrabberView.isHidden = true
+                        self.assistantView.isHidden = true
                         
                         
                 })
@@ -115,7 +115,7 @@ extension ProjectMainViewController {
     }
     
     
-    @IBAction func bottom(sender: UIBarButtonItem) {
+    @IBAction func bottom(_ sender: UIBarButtonItem) {
         
         if isCompact {
             
@@ -124,7 +124,7 @@ extension ProjectMainViewController {
                 getSplitView?.webViewDidChange()
                 
                 
-                UIView.animateWithDuration(0.4) {
+                UIView.animate(withDuration: 0.4) {
                     self.view.layoutIfNeeded()
                 }
             }
@@ -135,34 +135,34 @@ extension ProjectMainViewController {
                 getSplitView?.webViewDidChange()
                 
                 
-                UIView.animateWithDuration(0.4) {
+                UIView.animate(withDuration: 0.4) {
                     self.view.layoutIfNeeded()
                 }
             }
             
         }
         else {
-            if bottomView.hidden == true {
-                self.bottomView.hidden = false
-                self.grabberView.hidden = false
+            if bottomView.isHidden == true {
+                self.bottomView.isHidden = false
+                self.grabberView.isHidden = false
                 
-                grabberConstraint.active = true
-                bottomConstraint.active = false
+                grabberConstraint.isActive = true
+                bottomConstraint.isActive = false
                 
-                UIView.animateWithDuration(0.4, delay: 0.0, options: .BeginFromCurrentState, animations: {
+                UIView.animate(withDuration: 0.4, delay: 0.0, options: .beginFromCurrentState, animations: {
                     self.view.layoutIfNeeded()
                     }, completion: { (completion: Bool) in
                         self.getSplitView?.webViewDidChange()
                 })
             } else {
-                grabberConstraint.active = false
-                bottomConstraint.active = true
+                grabberConstraint.isActive = false
+                bottomConstraint.isActive = true
                 
-                UIView.animateWithDuration(0.4, delay: 0.0, options: .BeginFromCurrentState, animations: {
+                UIView.animate(withDuration: 0.4, delay: 0.0, options: .beginFromCurrentState, animations: {
                     self.view.layoutIfNeeded()
                     }, completion: { (completion: Bool) in
-                        self.bottomView.hidden = true
-                        self.grabberView.hidden = true
+                        self.bottomView.isHidden = true
+                        self.grabberView.isHidden = true
                         
                         self.getSplitView?.webViewDidChange()
                         
@@ -176,11 +176,11 @@ extension ProjectMainViewController {
     
     
     func hidesRightPanel() {
-        assistantGrabberConstraint.active = false
-        assistantConstraint.active = true
+        assistantGrabberConstraint.isActive = false
+        assistantConstraint.isActive = true
         
-        self.assistantGrabberView.hidden = true
-        self.assistantView.hidden = true
+        self.assistantGrabberView.isHidden = true
+        self.assistantView.isHidden = true
         
         self.view.layoutIfNeeded()
         
@@ -188,11 +188,11 @@ extension ProjectMainViewController {
     }
     
     func showRightPanel() {
-        self.assistantView.hidden = false
-        self.assistantGrabberView.hidden = false
+        self.assistantView.isHidden = false
+        self.assistantGrabberView.isHidden = false
         
-        assistantGrabberConstraint.active = true
-        assistantConstraint.active = false
+        assistantGrabberConstraint.isActive = true
+        assistantConstraint.isActive = false
         
         self.view.layoutIfNeeded()
     }
@@ -201,24 +201,24 @@ extension ProjectMainViewController {
     
     // MARK: - Grabbers
     
-    @IBAction func assistantGrabber(sender: UIPanGestureRecognizer) {
+    @IBAction func assistantGrabber(_ sender: UIPanGestureRecognizer) {
         
-        assistantGrabberConstraint.constant = view.frame.width - sender.locationInView(view).x
+        assistantGrabberConstraint.constant = view.frame.width - sender.location(in: view).x
         
         self.view.layoutIfNeeded()
-        UIView.animateWithDuration(0.4) {
+        UIView.animate(withDuration: 0.4) {
             self.view.layoutIfNeeded()
         }
         
     }
     
-    @IBAction func grabber(sender: UIPanGestureRecognizer) {
+    @IBAction func grabber(_ sender: UIPanGestureRecognizer) {
         getSplitView?.webViewDidChange()
         
-        grabberConstraint.constant = view.frame.height - sender.locationInView(view).y
+        grabberConstraint.constant = view.frame.height - sender.location(in: view).y
         
         self.view.layoutIfNeeded()
-        UIView.animateWithDuration(0.4) {
+        UIView.animate(withDuration: 0.4) {
             self.view.layoutIfNeeded()
         }
     }

@@ -16,7 +16,9 @@
 
 
 - (instancetype)initWithTextView:(UITextView *)textView {
-	if (self = [super init]) {
+    
+    UIVisualEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+	if (self = [super initWithEffect:blurEffect]) {
 		
 		textView_ = textView;
         textView_.autocorrectionType = UITextAutocorrectionTypeNo;
@@ -32,8 +34,6 @@
 		NSInteger margin = 10.1;
 		NSInteger size = 50;
         
-        UIVisualEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
-        self = [self initWithEffect:blurEffect];
         self.frame = CGRectMake(0, 0, textView.frame.size.width + 90, size);
         self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
 

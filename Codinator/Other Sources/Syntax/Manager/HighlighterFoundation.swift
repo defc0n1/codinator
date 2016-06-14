@@ -51,14 +51,14 @@ class HighlighterFoundation: UITextView {
     
     let cursorVelocity: CGFloat = 1/8
     
-    let lineColor: UIColor = UIColor.blackColor()
+    let lineColor: UIColor = UIColor.black()
     let bgColor: UIColor = UIColor(white: 0, alpha: 1)
     
     var lineCursorEnabled = true
     
     var startRange: NSRange?
     
-    var displayLineNumber = NSUserDefaults.standardUserDefaults().boolForKey("CnLineNumber")
+    var displayLineNumber = UserDefaults.standard().bool(forKey: "CnLineNumber")
     var lineNumberLayoutManager: CYRLayoutManager?
     
     
@@ -76,7 +76,7 @@ class HighlighterFoundation: UITextView {
         let layoutManager = CYRLayoutManager()
         
         
-        let textContainer = NSTextContainer(size: CGSizeMake(CGFloat.max, CGFloat.max))
+        let textContainer = NSTextContainer(size: CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude))
         
         //  Wrap text to the text view's frame
         textContainer.widthTracksTextView = true
@@ -92,7 +92,7 @@ class HighlighterFoundation: UITextView {
         lineNumberLayoutManager = layoutManager
 
         
-        self.contentMode = .Redraw
+        self.contentMode = .redraw
         self.setUp()
         
     }
@@ -101,8 +101,8 @@ class HighlighterFoundation: UITextView {
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)!
-        scrollEnabled = false
-        editable = false
+        isScrollEnabled = false
+        isEditable = false
     }
     
     
@@ -113,11 +113,11 @@ class HighlighterFoundation: UITextView {
         //WARNING: - Observers arre missing 
         
         // Setup defaults 
-        self.font = UIFont.systemFontOfSize(16.0)
-        self.textColor = UIColor.whiteColor()
+        self.font = UIFont.systemFont(ofSize: 16.0)
+        self.textColor = UIColor.white()
         
-        self.autocapitalizationType = .None
-        self.autocorrectionType = .No
+        self.autocapitalizationType = .none
+        self.autocorrectionType = .no
         self.lineCursorEnabled = true
         
         if displayLineNumber {
@@ -149,7 +149,7 @@ class HighlighterFoundation: UITextView {
     
     // MARK: - Line drawing
 
-    override func drawRect(rect: CGRect) {
+    override func draw(_ rect: CGRect) {
 
         if self.displayLineNumber {
             
@@ -157,33 +157,33 @@ class HighlighterFoundation: UITextView {
             let context = UIGraphicsGetCurrentContext()
             
             let bounds = self.bounds
-            let height = max(CGRectGetHeight(bounds), self.contentSize.height) + 200
+            let height = max(bounds.height, self.contentSize.height) + 200
             
             // Set the regular fill
-            CGContextSetFillColorWithColor(context, bgColor.CGColor)
-            CGContextFillRect(context, CGRectMake(bounds.origin.x, bounds.origin.y, self.lineNumberLayoutManager!.gutterWidth, height))
+            context?.setFillColor(bgColor.cgColor)
+            context?.fill(CGRect(x: bounds.origin.x, y: bounds.origin.y, width: self.lineNumberLayoutManager!.gutterWidth, height: height))
             
             // Draw line
-            CGContextSetFillColorWithColor(context, self.lineColor.CGColor)
-            CGContextFillRect(context, CGRectMake(self.lineNumberLayoutManager!.gutterWidth, bounds.origin.y, 0.5, height))
+            context?.setFillColor(self.lineColor.cgColor)
+            context?.fill(CGRect(x: self.lineNumberLayoutManager!.gutterWidth, y: bounds.origin.y, width: 0.5, height: height))
             
             if lineCursorEnabled {
                 self.lineNumberLayoutManager!.selectedRange = self.selectedRange
                 
                 let string: NSString = (self.lineNumberLayoutManager?.textStorage?.string)!
-                let tmpGlyphRange = string.paragraphRangeForRange(self.selectedRange)
+                let tmpGlyphRange = string.paragraphRange(for: self.selectedRange)
                 
-                let glyphRange = self.lineNumberLayoutManager?.glyphRangeForCharacterRange(tmpGlyphRange, actualCharacterRange: nil)
+                let glyphRange = self.lineNumberLayoutManager?.glyphRange(forCharacterRange: tmpGlyphRange, actualCharacterRange: nil)
                 
                 self.lineNumberLayoutManager?.selectedRange = glyphRange!
-                self.lineNumberLayoutManager?.invalidateDisplayForGlyphRange(glyphRange!)
+                self.lineNumberLayoutManager?.invalidateDisplay(forGlyphRange: glyphRange!)
                 
             }
             
             
         }
     
-        super.drawRect(rect)
+        super.draw(rect)
     }
     
     
@@ -191,13 +191,13 @@ class HighlighterFoundation: UITextView {
     
     // MARK: - Gestures
     
-    override func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
+    override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
      
         if let panGestureRecognizer = gestureRecognizer as? UIPanGestureRecognizer  {
             
             // Only accept horizontal pans for the code navigation to preserve correct scrolling behaviour.
             if panGestureRecognizer == singleFingerPanRecognizer || panGestureRecognizer == doubleFingerPanRecognizer {
-                let translation = panGestureRecognizer.translationInView(self)
+                let translation = panGestureRecognizer.translation(in: self)
                 return fabs(translation.x) > fabs(translation.y)
             }
             
@@ -207,22 +207,22 @@ class HighlighterFoundation: UITextView {
     }
     
     
-    func singleFingerPanHappened(sender: UIPanGestureRecognizer) {
-        if sender.state == .Began  {
+    func singleFingerPanHappened(_ sender: UIPanGestureRecognizer) {
+        if sender.state == .began  {
             startRange = self.selectedRange
         }
         
-        let cursorLocation = max(CGFloat(startRange!.location) + sender.translationInView(self).x * cursorVelocity, 0)
+        let cursorLocation = max(CGFloat(startRange!.location) + sender.translation(in: self).x * cursorVelocity, 0)
         
         self.selectedRange = NSMakeRange(Int(cursorLocation), 0)
     }
     
-    func doubleFingerPanHappened(sender: UIPanGestureRecognizer) {
-        if sender.state == .Began  {
+    func doubleFingerPanHappened(_ sender: UIPanGestureRecognizer) {
+        if sender.state == .began  {
             startRange = self.selectedRange
         }
         
-        let cursorLocation = Int(max(CGFloat(startRange!.location) + sender.translationInView(self).x * cursorVelocity, 0))
+        let cursorLocation = Int(max(CGFloat(startRange!.location) + sender.translation(in: self).x * cursorVelocity, 0))
         
         
         if cursorLocation > startRange?.location {

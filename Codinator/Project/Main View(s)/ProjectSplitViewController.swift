@@ -65,7 +65,7 @@ class ProjectSplitViewController: UISplitViewController{
                     return eView
                 }
                 else {
-                    eView = self.storyboard?.instantiateViewControllerWithIdentifier("editorViewController") as? EditorViewController
+                    eView = self.storyboard?.instantiateViewController(withIdentifier: "editorViewController") as? EditorViewController
                     return eView
                 }
             }
@@ -93,7 +93,7 @@ class ProjectSplitViewController: UISplitViewController{
         
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         editorView!.splitViewFailreference = self
@@ -127,11 +127,11 @@ class ProjectSplitViewController: UISplitViewController{
     
     // MARK: - Custom API
     
-    private func isVisible(view: UIView) -> Bool {
-        func isVisible(view: UIView, inView: UIView?) -> Bool {
+    private func isVisible(_ view: UIView) -> Bool {
+        func isVisible(_ view: UIView, inView: UIView?) -> Bool {
             guard let inView = inView else { return true }
-            let viewFrame = inView.convertRect(view.bounds, fromView: view)
-            if CGRectIntersectsRect(viewFrame, inView.bounds) {
+            let viewFrame = inView.convert(view.bounds, from: view)
+            if viewFrame.intersects(inView.bounds) {
                 return isVisible(view, inView: inView.superview)
             }
             return false

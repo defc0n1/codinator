@@ -41,6 +41,8 @@
 		645FA8791CCDF4450098A0BD /* FilesTableViewActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 645FA8781CCDF4450098A0BD /* FilesTableViewActions.swift */; };
 		645FA87B1CCDFB170098A0BD /* PeekWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 645FA87A1CCDFB170098A0BD /* PeekWebViewController.swift */; };
 		645FA87D1CCE06140098A0BD /* WelcomeViewPreviewingDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 645FA87C1CCE06140098A0BD /* WelcomeViewPreviewingDelegate.swift */; };
+		6460CF071D10449A006909E9 /* FontDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6460CF061D10449A006909E9 /* FontDefaults.swift */; };
+		646411601D105588006AC732 /* SourceCodeTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6464115F1D105588006AC732 /* SourceCodeTextView.swift */; };
 		6468B0AC1CD3A472007ED55C /* CloudSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6468B0AB1CD3A472007ED55C /* CloudSettingsTableViewController.swift */; };
 		6468B0AE1CDBC38F007ED55C /* SyntaxHighlighterDefaultColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6468B0AD1CDBC38F007ED55C /* SyntaxHighlighterDefaultColors.swift */; };
 		646D488E1CCE2BEF0093056B /* PlaygroundDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 646D488D1CCE2BEF0093056B /* PlaygroundDocument.m */; };
@@ -199,6 +201,8 @@
 		645FA8781CCDF4450098A0BD /* FilesTableViewActions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilesTableViewActions.swift; sourceTree = "<group>"; };
 		645FA87A1CCDFB170098A0BD /* PeekWebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeekWebViewController.swift; sourceTree = "<group>"; };
 		645FA87C1CCE06140098A0BD /* WelcomeViewPreviewingDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeViewPreviewingDelegate.swift; sourceTree = "<group>"; };
+		6460CF061D10449A006909E9 /* FontDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FontDefaults.swift; sourceTree = "<group>"; };
+		6464115F1D105588006AC732 /* SourceCodeTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SourceCodeTextView.swift; sourceTree = "<group>"; };
 		6468B0AB1CD3A472007ED55C /* CloudSettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudSettingsTableViewController.swift; sourceTree = "<group>"; };
 		6468B0AD1CDBC38F007ED55C /* SyntaxHighlighterDefaultColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyntaxHighlighterDefaultColors.swift; sourceTree = "<group>"; };
 		646D488C1CCE2BEF0093056B /* PlaygroundDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaygroundDocument.h; sourceTree = "<group>"; };
@@ -470,6 +474,7 @@
 				646EC69F1CA8D0BE00F359C2 /* CodinatorDocument.h */,
 				646EC6A01CA8D0BE00F359C2 /* CodinatorDocument.m */,
 				646EC6D41CA8D0BE00F359C2 /* NSUserDefaults+Additions.h */,
+				6460CF061D10449A006909E9 /* FontDefaults.swift */,
 				646EC6D51CA8D0BE00F359C2 /* NSUserDefaults+Additions.m */,
 				646D488C1CCE2BEF0093056B /* PlaygroundDocument.h */,
 				646D488D1CCE2BEF0093056B /* PlaygroundDocument.m */,
@@ -1210,6 +1215,7 @@
 				6458FDC51CA8AD34005B2B93 /* HighlighterToken.swift */,
 				6458FDC91CA8BADB005B2B93 /* HighlighterExtention.swift */,
 				646E15711CAC3C7400330BAD /* HighlighterFoundation.swift */,
+				6464115F1D105588006AC732 /* SourceCodeTextView.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -1289,12 +1295,13 @@
 		64A080AC1BDBD9D60001CA0C /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0710;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = "Vladimir Danila";
 				TargetAttributes = {
 					64A080B31BDBD9D60001CA0C = {
 						CreatedOnToolsVersion = 7.1;
 						DevelopmentTeam = L6QAR75AH5;
+						LastSwiftMigration = 0800;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
 								enabled = 1;
@@ -1375,12 +1382,14 @@
 				646EC6F61CA8D0BE00F359C2 /* NSUserDefaults+Additions.m in Sources */,
 				64380E0B1CC9195800FCF69A /* FileTemplates.m in Sources */,
 				64A082B51BDBE83E0001CA0C /* SnippetsViewController.swift in Sources */,
+				646411601D105588006AC732 /* SourceCodeTextView.swift in Sources */,
 				32150DCB1CA8849300B87094 /* ProjectMainViewController.swift in Sources */,
 				646EC6E81CA8D0BE00F359C2 /* GCDWebDAVServer.m in Sources */,
 				646EC72B1CADD8AC00F359C2 /* UIColorExtension.swift in Sources */,
 				64A083331BDD15660001CA0C /* CYRTextView.m in Sources */,
 				64A080EE1BDBDBFE0001CA0C /* HRHSVColorUtil.m in Sources */,
 				646EC6F91CA8D0BE00F359C2 /* Polaris.m in Sources */,
+				6460CF071D10449A006909E9 /* FontDefaults.swift in Sources */,
 				64A083281BDD155C0001CA0C /* WUTextSuggestionDisplayController.m in Sources */,
 				64EED4D91CCAF40200A8BC34 /* ColorPickerViewController.swift in Sources */,
 				64A082D11BDBE89A0001CA0C /* AFURLResponseSerialization.m in Sources */,
@@ -1617,12 +1626,13 @@
 				GCC_PREFIX_HEADER = Codinator/PrefixHeader.pch;
 				HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				INFOPLIST_FILE = Codinator/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.vladidanila.codinator;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Codinator/Root/Playground/Codinator-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "";
 				USE_HEADERMAP = YES;
@@ -1643,11 +1653,13 @@
 				GCC_PREFIX_HEADER = Codinator/PrefixHeader.pch;
 				HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				INFOPLIST_FILE = Codinator/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.vladidanila.codinator;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Codinator/Root/Playground/Codinator-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "";
 				USE_HEADERMAP = YES;

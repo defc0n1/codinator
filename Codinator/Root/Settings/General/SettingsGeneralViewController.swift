@@ -18,7 +18,7 @@ class SettingsGeneralViewController: UIViewController {
     @IBOutlet weak var useWebServerSwitch: UISwitch!
     @IBOutlet weak var useUploadServerSwitch: UISwitch!
     
-    let userDefauls = NSUserDefaults.standardUserDefaults()
+    let userDefauls = UserDefaults.standard()
     
     let kLineNumber = "CnLineNumber"
     let kWebServer = "CnWebServer"
@@ -29,11 +29,11 @@ class SettingsGeneralViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.showLineNumberSwitch.on = userDefauls.boolForKey(kLineNumber)
+        self.showLineNumberSwitch.isOn = userDefauls.bool(forKey: kLineNumber)
     
-        self.useWebServerSwitch.on = userDefauls.boolForKey(kWebServer);
-        self.useWebDavServerSwitch.on = userDefauls.boolForKey(kWebDavServer);
-        self.useUploadServerSwitch.on = userDefauls.boolForKey(kUploadServer);
+        self.useWebServerSwitch.isOn = userDefauls.bool(forKey: kWebServer);
+        self.useWebDavServerSwitch.isOn = userDefauls.bool(forKey: kWebDavServer);
+        self.useUploadServerSwitch.isOn = userDefauls.bool(forKey: kUploadServer);
     }
 
     
@@ -42,27 +42,27 @@ class SettingsGeneralViewController: UIViewController {
     //MARK: Switches Changed
     
     
-    @IBAction func showLineNumberSwichChanged(sender: AnyObject) {        
-        userDefauls.setBool(self.showLineNumberSwitch.on, forKey: kLineNumber)
+    @IBAction func showLineNumberSwichChanged(_ sender: AnyObject) {        
+        userDefauls.set(self.showLineNumberSwitch.isOn, forKey: kLineNumber)
         userDefauls.synchronize()
     }
     
     
     
-    @IBAction func webDavSwichChanged(sender: AnyObject) {
-        userDefauls.setBool(self.useWebDavServerSwitch.on, forKey: kWebDavServer)
+    @IBAction func webDavSwichChanged(_ sender: AnyObject) {
+        userDefauls.set(self.useWebDavServerSwitch.isOn, forKey: kWebDavServer)
         userDefauls.synchronize()
     }
     
     
-    @IBAction func webServerSwichChanged(sender: AnyObject) {
-        userDefauls.setBool(self.useWebServerSwitch.on, forKey: kWebDavServer)
+    @IBAction func webServerSwichChanged(_ sender: AnyObject) {
+        userDefauls.set(self.useWebServerSwitch.isOn, forKey: kWebDavServer)
         userDefauls.synchronize()
     }
     
     
-    @IBAction func uploadServerSwichChanged(sender: AnyObject) {
-        userDefauls.setBool(self.useUploadServerSwitch.on, forKey: kWebDavServer)
+    @IBAction func uploadServerSwichChanged(_ sender: AnyObject) {
+        userDefauls.set(self.useUploadServerSwitch.isOn, forKey: kWebDavServer)
         userDefauls.synchronize()
     }
     

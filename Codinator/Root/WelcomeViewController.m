@@ -69,7 +69,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-   
+    
     UIEdgeInsets insets;
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
         insets = UIEdgeInsetsMake(10, 0, 0, 0);
@@ -82,9 +82,9 @@
     
     self.collectionView.contentInset = insets;
     
-
     
-
+    
+    
     //link to app delegate
     self.appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     
@@ -102,8 +102,8 @@
     {
         [self registerForPreviewingWithDelegate:self sourceView:self.collectionView];
     }
-
-
+    
+    
     
 }
 
@@ -157,11 +157,11 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.collectionView reloadData];
         });
-
+        
     }];
     
     
-    }
+}
 
 
 
@@ -181,7 +181,7 @@
     
     [self.collectionView reloadData];
     [self indexProjects:projectsArray];
-//    [self performSelector:@selector(indexProjects:) withObject:projectsArray afterDelay:1.0];
+    //    [self performSelector:@selector(indexProjects:) withObject:projectsArray afterDelay:1.0];
 }
 
 
@@ -264,10 +264,10 @@
 - (void)setUp {
     NSString *macroKey = @"MacroInitBOOL";
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-
+    
     BOOL macro = [userDefaults boolForKey:macroKey];
-
-   
+    
+    
     if (!macro) {
         [userDefaults setBool:YES forKey:macroKey];
         
@@ -326,9 +326,9 @@
             
             [[CSSearchableIndex defaultSearchableIndex] indexSearchableItems:@[item] completionHandler:^(NSError * __nullable error) {
                 if (error) {
-                    #ifdef DEBUG
+#ifdef DEBUG
                     NSLog(@"%@",[error localizedDescription]);
-                    #endif
+#endif
                 } else {
 #ifdef DEBUG
                     NSLog(@"Indexed: %@", item.uniqueIdentifier);
@@ -338,33 +338,33 @@
             
             
         }];
-
+        
     };
-
+    
     [[NSOperationQueue mainQueue] addOperation:backgroundOperation];
     
 }
 
 - (void)restoreUserActivityState:(NSUserActivity *)activity {
-   
+    
     
     if ([activity.activityType isEqualToString:@"com.apple.corespotlightitem"]) {
         NSDictionary *userInfo = activity.userInfo;
         
         if (userInfo) {
-        
+            
             
             NSString *root = [AppDelegate storagePath];
             NSString *projectsDirPath = [root stringByAppendingPathComponent:@"Projects"];
-
+            
             NSString *projectName = userInfo[CSSearchableItemActivityIdentifier];
-
+            
             NSString *documentPath = [projectsDirPath stringByAppendingPathComponent:projectName];
             
             
             BOOL isDir;
             if ([[NSFileManager defaultManager] fileExistsAtPath:documentPath isDirectory:&isDir]) {
-      
+                
                 // Import Zip
                 if ([projectName containsString:@".zip"]) {
                     self.zipPath = [projectsDirPath stringByAppendingPathComponent:projectName];
@@ -457,7 +457,7 @@
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-
+    
     if (self.view.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassCompact) {
         return CGSizeMake(164, 155);
     }
@@ -468,8 +468,18 @@
 
 
 - (UICollectionViewCell *)collectionView:(nonnull UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath{
-
+    
+    if (!self.appDelegate.thumbnailManager) {
+        self.appDelegate.thumbnailManager = [[Thumbnail alloc] init];
+    }
+    
+    
+    // Get cell
     ProjectCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Document" forIndexPath:indexPath];
+    
+    // Set the imageView content mode to aspect fit in case that it was modified by a cell displaying an i.e png file
+    [cell.imageView setContentMode:UIViewContentModeScaleAspectFit];
+    
     
     NSString const *root = [AppDelegate storagePath];
     
@@ -477,62 +487,71 @@
     //If 'projects' is selected
     if (indexPath.section == 0) {
         
+        cell.name.text = [[projectsArray[indexPath.row] lastPathComponent] stringByDeletingPathExtension];
         
-        if ([[projectsArray[indexPath.row] lastPathComponent] containsString:@".zip"]) {
+        
+        if ([[projectsArray[indexPath.row] pathExtension] isEqualToString:@"zip"]) {
             
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
                 
                 UIImage *image = [UIImage imageNamed:@"zip"];
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
                     cell.imageView.image = image;
                 });
-                
-                
             });
             
-            cell.name.text = [projectsArray[indexPath.row] lastPathComponent];
             
         }
-        else{
+        else if ([[projectsArray[indexPath.row] pathExtension] isEqualToString:@"cnProj"]) {
             
             NSString const *projectsDirPath = [root stringByAppendingPathComponent:@"Projects"];
             NSString *path = [projectsDirPath stringByAppendingPathComponent:[projectsArray[indexPath.row] lastPathComponent]];
-
+            
             
             [self dealWithiCloudDownloadForCell:cell forIndexPath:indexPath andFilePath:path];
             
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-               
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+                
                 UIImage *image = [self projectRocketBlueprintIconForProjectPath:[projectsDirPath stringByAppendingPathComponent:[projectsArray[indexPath.row] lastPathComponent]]];
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
                     cell.imageView.image = image;
                 });
-                
-                
             });
             
-            cell.name.text = [[projectsArray[indexPath.row] lastPathComponent] stringByDeletingPathExtension];
-
+            
         }
-        
-        
+        else {
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+                
+                UIImage *image = [[self.appDelegate thumbnailManager] thumbnailForFileAtPath:[projectsArray[indexPath.row] path]];
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    
+                    NSURL *url = projectsArray[indexPath.row];
+                    NSString *path = url.path.pathExtension;
+            
+                    // If it's an image i.e png file fill the entire cell
+                    if ([path isEqualToString:@"png"] || [path isEqualToString:@"jpg"] ||  [path isEqualToString:@"gif"] || [path isEqualToString:@"PNG"] || [path isEqualToString:@"JPG"] || [path isEqualToString:@"JPEG"] || [path isEqualToString:@"GIF"]) {
+                        [cell.imageView setContentMode:UIViewContentModeScaleAspectFill];
+                    }
+                    
+                    cell.imageView.image = image;
+                });
+                
+            });
+        }
         
     }
     else{ //If 'playgrounds' section
-        
-        
-        if (!self.appDelegate.thumbnailManager) {
-            self.appDelegate.thumbnailManager = [[Thumbnail alloc] init];
-        }
         
         
         //Paths
         NSString const *playgroudPaths = [root stringByAppendingPathComponent:@"Playground"];
         NSString *path = [playgroudPaths stringByAppendingPathComponent:[playgroundsArray[indexPath.row] lastPathComponent]];
         
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
             
             UIImage *image = [self.appDelegate.thumbnailManager thumbnailForFileAtPath:path];
             
@@ -557,8 +576,8 @@
             cell.progressView.hidden = YES;
             cell.progressView.progress = .0f;
             
-            cell.name.text = [[[playgroundsArray[indexPath.row] lastPathComponent] stringByDeletingPathExtension] stringByReplacingOccurrencesOfString:@"" withString:@""];
-
+            cell.name.text = [[playgroundsArray[indexPath.row] lastPathComponent] stringByDeletingPathExtension];
+            
         }
         
     }
@@ -570,14 +589,14 @@
     UILongPressGestureRecognizer *longPressRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(tableViewCellWasLongPressed:)];
     [cell addGestureRecognizer:longPressRecognizer];
     
-
+    
     
     return cell;
 }
 
 
 - (void)dealWithiCloudDownloadForCell:(nonnull ProjectCollectionViewCell *)cell forIndexPath:(nonnull NSIndexPath *)indexPath andFilePath:(nonnull NSString *)path{
- 
+    
     NSOperation *backgroundOperation = [[NSOperation alloc] init];
     backgroundOperation.queuePriority = NSOperationQueuePriorityNormal;
     backgroundOperation.qualityOfService = NSOperationQualityOfServiceUtility;
@@ -595,11 +614,11 @@
             });
         }
         
-//        #ifdef DEBUG
-//        if (error) {
-//            NSLog(@"%@", error.localizedFailureReason);
-//        }
-//        #endif
+        //        #ifdef DEBUG
+        //        if (error) {
+        //            NSLog(@"%@", error.localizedFailureReason);
+        //        }
+        //        #endif
         
     };
     
@@ -613,13 +632,13 @@
 
 - (UIImage *)projectRocketBlueprintIconForProjectPath:(NSString *)path{
     
-
+    
     NSString *favIconPath = [path stringByAppendingPathComponent:@"Assets/favicon.png"];
     
     
     
     BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:favIconPath];
-
+    
     if (fileExists) {
         return [UIImage imageWithContentsOfFile:favIconPath];
     }
@@ -628,9 +647,9 @@
         if (!self.rocketBlueprintImage) {
             self.rocketBlueprintImage = [UIImage imageNamed:@"cnProj"];
         }
-       
+        
         return self.rocketBlueprintImage;
-       
+        
     }
 }
 
@@ -647,13 +666,13 @@
     
     if (indexPath.section == 0) { //If projects is selected
         
-        if ([[projectsArray[indexPath.row] lastPathComponent] containsString:@".zip"]) {
+        if ([[projectsArray[indexPath.row] pathExtension] isEqualToString:@"zip"]) {
             //Show project importer view
             
             self.zipPath = [projectsDirPath stringByAppendingPathComponent:[projectsArray[indexPath.row] lastPathComponent]];
             [self performSegueWithIdentifier:@"importZip" sender:self];
         }
-        else{
+        else if ([[projectsArray[indexPath.row] pathExtension] isEqualToString:@"cnProj"]){
             NSString *path = [projectsDirPath stringByAppendingPathComponent:[projectsArray[indexPath.row] lastPathComponent]];
             
             document = [[CodinatorDocument alloc] initWithFileURL:[NSURL fileURLWithPath:path]];
@@ -667,7 +686,7 @@
             
             
             if ([requiresTouchID isEqualToString:@"YES"]) {
-             
+                
                 LAContext *context = [[LAContext alloc] init];
                 
                 if ([context canEvaluatePolicy: LAPolicyDeviceOwnerAuthenticationWithBiometrics error:nil])
@@ -692,9 +711,9 @@
                                     [alert addAction:closeAlert];
                                     
                                     dispatch_async(dispatch_get_main_queue(), ^{
-                                    [self presentViewController:alert animated:YES completion:nil];
+                                        [self presentViewController:alert animated:YES completion:nil];
                                     });
-                                        
+                                    
                                 }
                                 
                             }];
@@ -708,7 +727,7 @@
                 
             }
             else {
-            
+                
                 [document openWithCompletionHandler:^(BOOL success) {
                     
                     if (success) {
@@ -733,7 +752,16 @@
                 
             }
             
-
+            
+        }
+        else {
+            
+            // is no Project nor a zip file
+            NSURL *projectURL = projectsArray[indexPath.row];
+            UIAlertController *moveFileDialogue = [self moveFileAlertControllerWithPosition:[[collectionView cellForItemAtIndexPath:indexPath] frame] sourceView:self.collectionView andSelectedFilePath:projectURL.path];
+            
+            [self presentViewController:moveFileDialogue animated:YES completion:nil];
+            
         }
         
         
@@ -775,7 +803,7 @@
             }
         }
     }
-
+    
 }
 
 
@@ -793,17 +821,15 @@
     position.size.width = 20;
     
     NSIndexPath *indexPath = [self.collectionView indexPathForItemAtPoint:p];
-
+    
     if (sender.state == UIGestureRecognizerStateBegan && indexPath) {
         
         NSString *deletePath;
-
-        
         NSString *root = [AppDelegate storagePath];
-  
         
+        BOOL isProject = indexPath.section == 0;
         
-        if (indexPath.section == 0) {
+        if (isProject) {
             NSString *projectsDirPath = [root stringByAppendingPathComponent:@"Projects"];
             deletePath = [projectsDirPath stringByAppendingPathComponent:[projectsArray[indexPath.row] lastPathComponent]];
         }
@@ -814,116 +840,193 @@
         
         
         
-            UIAlertAction *deleteAction = [UIAlertAction actionWithTitle:@"Delete" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * __nonnull action) {
-                
-                
-                NSError *error;
-                [[NSFileManager defaultManager]removeItemAtPath:deletePath error:&error];
-
-                
-                
-                if (!error) {
-                    
-                    [self reloadData];
-                
-                }
-                
-                
+        UIAlertAction *deleteAction = [UIAlertAction actionWithTitle:@"Delete" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * __nonnull action) {
+            NSError *error;
+            [[NSFileManager defaultManager]removeItemAtPath:deletePath error:&error];
+            
+            
+            if (!error) {
+                [self reloadData];
+            }
+            
+            
+        }];
+        
+        
+        
+        
+        UIAlertAction *renameAction = [UIAlertAction actionWithTitle:@"Rename" style:UIAlertActionStyleDefault handler:^(UIAlertAction * __nonnull action) {
+            
+            // RENAME FILE DIALOGE
+            NSString *message = [NSString stringWithFormat:@"Rename \"%@\"", deletePath.lastPathComponent.stringByDeletingPathExtension];
+            
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Rename" message:message preferredStyle:UIAlertControllerStyleAlert];
+            alert.view.tintColor = [UIColor blackColor];
+            
+            
+            [alert addTextFieldWithConfigurationHandler:^(UITextField * __nonnull textField) {
+                textField.placeholder = @"Projects new name";
+                textField.keyboardAppearance = UIKeyboardAppearanceDark;
+                textField.tintColor = [UIColor purpleColor];
             }];
             
-            
-            
-            UIAlertAction *renameAction = [UIAlertAction actionWithTitle:@"Rename" style:UIAlertActionStyleDefault handler:^(UIAlertAction * __nonnull action) {
-            
-                // RENAME FILE DIALOGE
-                NSString *message = [NSString stringWithFormat:@"Rename \"%@\"", deletePath.lastPathComponent.stringByDeletingPathExtension];
+            UIAlertAction *processAction = [UIAlertAction actionWithTitle:@"Rename" style:UIAlertActionStyleDefault handler:^(UIAlertAction * __nonnull action) {
                 
-                UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Rename" message:message preferredStyle:UIAlertControllerStyleAlert];
-                alert.view.tintColor = [UIColor blackColor];
+                NSString *extension = alert.textFields[0].text.pathExtension;
+                if ([extension isEqualToString:@""]) {
+                    extension = deletePath.pathExtension;
+                }
                 
+                NSString *newName = [alert.textFields[0].text.stringByDeletingPathExtension stringByAppendingPathExtension:extension];
+                NSString *newPath = [[deletePath stringByDeletingLastPathComponent] stringByAppendingPathComponent:newName];
                 
-                [alert addTextFieldWithConfigurationHandler:^(UITextField * __nonnull textField) {
-                    textField.placeholder = @"Projects new name";
-                    textField.keyboardAppearance = UIKeyboardAppearanceDark;
-                    textField.tintColor = [UIColor purpleColor];
-                }];
-                
-                UIAlertAction *processAction = [UIAlertAction actionWithTitle:@"Rename" style:UIAlertActionStyleDefault handler:^(UIAlertAction * __nonnull action) {
-              
-                    NSString *extension = @"";
-                    if (indexPath.section == 0) {
-                        extension = @"cnProj";
-                    }
-                    else {
-                        extension = @"cnPlay";
-                    }
+                // Rename file
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                     
-                    NSString *newName = [alert.textFields[0].text stringByAppendingPathExtension:extension];
-                    NSString *newPath = [[deletePath stringByDeletingLastPathComponent] stringByAppendingPathComponent:newName];
-                    
-                    Polaris *polaris = [[Polaris alloc] initWithProjectPath:deletePath currentView:nil WithWebServer:false UploadServer:false andWebDavServer:false];
-                    [polaris updateSettingsValueForKey:@"ProjectName" withValue:newName.stringByDeletingPathExtension];
+                    BOOL isDir;
+                    if ([[NSFileManager defaultManager] fileExistsAtPath:deletePath isDirectory:&isDir] && isDir && [deletePath.pathExtension isEqualToString:@"cnProj"]) {
+                        Polaris *polaris = [[Polaris alloc] initWithProjectPath:deletePath currentView:nil WithWebServer:false UploadServer:false andWebDavServer:false];
+                        [polaris updateSettingsValueForKey:@"ProjectName" withValue:newName.stringByDeletingPathExtension];
+                    }
                     
                     [[NSFileManager defaultManager] moveItemAtPath:deletePath toPath:newPath error:nil];
                     [self reloadData];
                     
+                });
+                
+            }];
+            
+            
+            UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
+            
+            [alert addAction:processAction];
+            [alert addAction:cancelAction];
+            [self presentViewController:alert animated:YES completion:nil];
+            
+            
+        }];
+        
+        
+        NSOperation *backgroundOperation = [[NSOperation alloc] init];
+        backgroundOperation.queuePriority = NSOperationQueuePriorityVeryHigh;
+        backgroundOperation.qualityOfService = NSOperationQualityOfServiceUserInteractive;
+        
+        backgroundOperation.completionBlock = ^{
+            
+            
+            UIAlertController *popup = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+            popup.view.tintColor = [UIColor blackColor];
+            
+            
+            // Move to project -> Just if is file in Project Dir
+            if (isProject && ![deletePath.pathExtension isEqualToString:@"cnProj"]) {
+                
+                UIAlertAction *moveToProj = [UIAlertAction actionWithTitle:@"Move into Project" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                        
+                        // Create a new AlertController with a list of the projects
+                        UIAlertController *fileLister = [self moveFileAlertControllerWithPosition:position sourceView:self.collectionView andSelectedFilePath:deletePath];
+                        
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [self presentViewController: fileLister animated:YES completion:nil];
+                        });
+                    });
                     
                 }];
                 
-                UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
-                
-                [alert addAction:processAction];
-                [alert addAction:cancelAction];
-                [self presentViewController:alert animated:YES completion:nil];
-                
-                
+                [popup addAction:moveToProj];
+            }
+            
+            
+            // Add previous actions
+            [popup addAction:renameAction];
+            [popup addAction:deleteAction];
+            
+            
+            
+            UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction * __nonnull action) {
+                [popup dismissViewControllerAnimated:true completion:nil];
             }];
-                   
+            
+            [popup addAction:cancel];
+            
+            
+            popup.popoverPresentationController.sourceView = self.collectionView;
+            popup.popoverPresentationController.sourceRect = position;
+            
+            dispatch_sync(dispatch_get_main_queue(), ^{
+                [self presentViewController:popup animated:YES completion:nil];
+            });
+            
+            
+        };
         
-            NSOperation *backgroundOperation = [[NSOperation alloc] init];
-            backgroundOperation.queuePriority = NSOperationQueuePriorityVeryHigh;
-            backgroundOperation.qualityOfService = NSOperationQualityOfServiceUserInteractive;
-    
-            backgroundOperation.completionBlock = ^{
         
-                UIAlertController *popup = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-                popup.view.tintColor = [UIColor blackColor];
-                
-                [popup addAction:renameAction];
-                [popup addAction:deleteAction];
-                
-                
-                UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction * __nonnull action) {
-                    [popup dismissViewControllerAnimated:true completion:nil];
-                }];
-                
-                [popup addAction:cancel];
-                
-                
-                popup.popoverPresentationController.sourceView = self.collectionView;
-                popup.popoverPresentationController.sourceRect = position;
-                
-                dispatch_sync(dispatch_get_main_queue(), ^{
-                    [self presentViewController:popup animated:YES completion:nil];
-                });
-                
-                
-            };
-    
-    
-            [[NSOperationQueue mainQueue] addOperation:backgroundOperation];
+        [[NSOperationQueue mainQueue] addOperation:backgroundOperation];
         
-    
-    
+        
+        
     }
-        
-        
-        
-        
+    
+    
+    
+    
 }
 
 
+- (UIAlertController *)moveFileAlertControllerWithPosition:(CGRect)position sourceView:(UIView *)view andSelectedFilePath:(NSString *)filePath {
+    
+    UIAlertController *fileLister = [UIAlertController alertControllerWithTitle:@"Select a Project" message:@"The file will me moved to the selected one" preferredStyle:UIAlertControllerStyleActionSheet];
 
+    
+    [projectsArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        
+        NSURL *projectURL = obj;
+        
+        if ([projectURL.pathExtension isEqualToString:@"cnProj"]) {
+            UIAlertAction *action = [UIAlertAction actionWithTitle:projectURL.lastPathComponent.stringByDeletingPathExtension style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    
+                NSError *error;
+                NSURL *newURL = [[projectURL URLByAppendingPathComponent:@"Assets" isDirectory:YES] URLByAppendingPathComponent:filePath.lastPathComponent];
+                
+                [[NSFileManager defaultManager] moveItemAtURL:[NSURL fileURLWithPath:filePath isDirectory:NO] toURL:newURL error:&error];
+                
+                if (error) {
+                    
+                    // Error message popup
+                    UIAlertController *errorAlert = [UIAlertController alertControllerWithTitle:[error localizedDescription] message:nil preferredStyle:UIAlertControllerStyleAlert];
+                    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
+                    [errorAlert addAction:cancelAction];
+                    
+                    [self presentViewController:errorAlert animated:YES completion:nil];
+                    
+                }
+                else {
+                    [self reloadData];
+                }
+                
+            }];
+            
+            [fileLister addAction:action];
+        }
+    }];
+    
+    
+    if (fileLister.actions.count == 0) {
+        fileLister = [UIAlertController alertControllerWithTitle:@"No Projects" message:nil preferredStyle:UIAlertControllerStyleAlert];
+    }
+    else {
+        fileLister.popoverPresentationController.sourceView = self.collectionView;
+        fileLister.popoverPresentationController.sourceRect = position;
+    }
+    
+    
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
+    [fileLister addAction:cancelAction];
+    
+    
+    return fileLister;
+}
 
 
 
@@ -935,7 +1038,7 @@
     NSArray *results = [self.query results];
     
     for(NSMetadataItem *item in results) {
-    
+        
         NSOperation *backgroundOperation = [[NSOperation alloc] init];
         backgroundOperation.queuePriority = NSOperationQueuePriorityNormal;
         backgroundOperation.qualityOfService = NSOperationQualityOfServiceBackground;
@@ -946,18 +1049,18 @@
             NSString *downloaded = [item valueForAttribute:NSMetadataUbiquitousItemDownloadingStatusNotDownloaded];
             
             if (!downloaded) {
-
+                
                 
                 NSURL *fileURL = [item valueForAttribute:NSMetadataItemURLKey];
                 
                 NSError *error;
                 [[NSFileManager defaultManager] startDownloadingUbiquitousItemAtURL:fileURL error:&error];
                 
-                #ifdef DEBUG
+#ifdef DEBUG
                 if (error) {
                     NSLog(@"%@", error.localizedDescription);
                 }
-                #endif
+#endif
                 
             }
             
@@ -969,7 +1072,7 @@
         [[NSOperationQueue mainQueue] addOperation:backgroundOperation];
     }
     
-
+    
     [self reloadData];
 }
 
@@ -994,7 +1097,7 @@
         
         projectsArray = [[[NSFileManager defaultManager] contentsOfDirectoryAtURL:[NSURL fileURLWithPath:projectsDirPath isDirectory:YES] includingPropertiesForKeys:[NSArray arrayWithObject:NSURLNameKey] options:NSDirectoryEnumerationSkipsHiddenFiles error:nil] mutableCopy];
         playgroundsArray = [[[NSFileManager defaultManager] contentsOfDirectoryAtURL:[NSURL fileURLWithPath:playgroundsDirPath isDirectory:YES] includingPropertiesForKeys:[NSArray arrayWithObject:NSURLNameKey] options:NSDirectoryEnumerationSkipsHiddenFiles error:nil] mutableCopy];
-
+        
         
         if (![projectsArray isEqualToArray:self.oldProjectsArray] | ![playgroundsArray isEqualToArray:self.oldPlaygroundsArray]) {
             
@@ -1004,15 +1107,15 @@
             dispatch_sync(dispatch_get_main_queue(), ^{
                 [self.collectionView reloadData];
             });
-        
+            
         }
-
+        
     };
     
     
     [[NSOperationQueue mainQueue] addOperation:backgroundOperation];
     
-
+    
     
 }
 
@@ -1024,7 +1127,7 @@
     
     NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
     NSString *build = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
-
+    
     
     NSString *versionString = [NSString stringWithFormat:@"Version: %@", version];
     NSString *buildString = [NSString stringWithFormat:@"Build (%@)", build];
@@ -1033,16 +1136,16 @@
     
     UIAlertAction *close = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
     [alert addAction:close];
-
+    
     
     UIAlertAction *settings = [UIAlertAction actionWithTitle:@"Settings" style:UIAlertActionStyleDefault handler:^(UIAlertAction * __nonnull action) {
-
+        
         [self performSegueWithIdentifier:@"settings" sender:nil];
         
     }];
-
+    
     [alert addAction:settings];
-
+    
     
     UIAlertAction *newsFeed = [UIAlertAction actionWithTitle:@"News" style:UIAlertActionStyleDefault handler:^(UIAlertAction * __nonnull action) {
         
@@ -1069,7 +1172,7 @@
     popPresenter.barButtonItem = senderButton;
     
     alert.view.tintColor = [UIColor purpleColor];
-
+    
     
     [self presentViewController:alert animated:true completion:^{
         alert.view.tintColor = [UIColor purpleColor];
@@ -1080,7 +1183,7 @@
 - (IBAction)plusDidPush:(id)sender {
     
     UIBarButtonItem *plusButton = sender;
-
+    
     
     
     UIAlertController *newDoc = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
@@ -1095,7 +1198,7 @@
         projectAlert.popoverPresentationController.barButtonItem = plusButton;
         
         UIAlertAction *createProjectAction = [UIAlertAction actionWithTitle:@"Create" style:UIAlertActionStyleDefault handler:^(UIAlertAction * __nonnull action) {
-               [self performSegueWithIdentifier:@"newProj" sender:self];
+            [self performSegueWithIdentifier:@"newProj" sender:self];
         }];
         
         
@@ -1126,7 +1229,7 @@
         
     }];
     
-
+    
     
     
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
@@ -1136,7 +1239,7 @@
     [newDoc addAction:playgroundAction];
     [newDoc addAction:cancelAction];
     //newDoc.view.tintColor = [UIColor purpleColor];
-
+    
     
     newDoc.popoverPresentationController.sourceView = self.plusButtonSuperView;
     newDoc.popoverPresentationController.barButtonItem = plusButton;
@@ -1167,11 +1270,11 @@
     if ([segue.identifier isEqualToString:@"importZip"]){
         
         ProjectZipImporterViewController *destViewController = segue.destinationViewController;
-    
+        
         
         NSString *root = [AppDelegate storagePath];
         NSString *projectsDirPath = [root stringByAppendingPathComponent:@"Projects"];
-
+        
         
         destViewController.filePathToZipFile = self.zipPath;
         destViewController.projectsPath = projectsDirPath;

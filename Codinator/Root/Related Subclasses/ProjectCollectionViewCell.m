@@ -14,7 +14,8 @@
 
 
 - (void)awakeFromNib{
-
+    [super awakeFromNib];
+    
     self.imageView.backgroundColor = [UIColor blackColor];
     self.selectedBackgroundView.backgroundColor = [UIColor darkGrayColor];
     

@@ -23,22 +23,22 @@ class NewPlaygroundViewController: UIViewController, UITextFieldDelegate{
         
         
         // Configure next Button
-        nextButton.backgroundColor = UIColor.grayColor()
-        nextButton.enabled = false
+        nextButton.backgroundColor = UIColor.gray()
+        nextButton.isEnabled = false
 
         // Configure fileNameTextField
-        fileNameTextField.attributedPlaceholder = NSAttributedString(string: "Playground name", attributes: [NSForegroundColorAttributeName: UIColor.grayColor()])
+        fileNameTextField.attributedPlaceholder = AttributedString(string: "Playground name", attributes: [NSForegroundColorAttributeName: UIColor.gray()])
         
         fileNameTextField.layer.masksToBounds = true
-        fileNameTextField.layer.borderColor = violett?.CGColor
+        fileNameTextField.layer.borderColor = violett?.cgColor
         fileNameTextField.layer.borderWidth = 1.0
         fileNameTextField.layer.cornerRadius = 5
         
-        fileNameTextField.addTarget(self, action: #selector(NewPlaygroundViewController.textFieldDidChange), forControlEvents: UIControlEvents.EditingChanged)
+        fileNameTextField.addTarget(self, action: #selector(NewPlaygroundViewController.textFieldDidChange), for: UIControlEvents.editingChanged)
 
         
-        self.nextButton.backgroundColor = UIColor.grayColor()
-        self.nextButton.setTitleColor(UIColor.darkGrayColor(), forState: UIControlState.Normal)
+        self.nextButton.backgroundColor = UIColor.gray()
+        self.nextButton.setTitleColor(UIColor.darkGray(), for: UIControlState())
         
     }
 
@@ -52,25 +52,25 @@ class NewPlaygroundViewController: UIViewController, UITextFieldDelegate{
 
     
     // Generate a new File
-    @IBAction func nextDidPush(sender: AnyObject) {
+    @IBAction func nextDidPush(_ sender: AnyObject) {
         let document = PlaygroundFileCreator.generatePlaygroundFileWithName(fileNameTextField.text!)
         let url = PlaygroundFileCreator.fileUrlForPlaygroundWithName(fileNameTextField.text!)
 
-        document.saveToURL(url, forSaveOperation: .ForOverwriting) { (success) in
+        document.save(to: url, for: .forOverwriting) { (success) in
             if success {
-                self.dismissViewControllerAnimated(true, completion: { 
-                    NSNotificationCenter.defaultCenter().postNotificationName("createdProj", object: nil, userInfo: nil)
-                    NSNotificationCenter.defaultCenter().postNotificationName("reload", object: self, userInfo: nil)
+                self.dismiss(animated: true, completion: { 
+                    NotificationCenter.default().post(name: Notification.Name(rawValue: "createdProj"), object: nil, userInfo: nil)
+                    NotificationCenter.default().post(name: Notification.Name(rawValue: "reload"), object: self, userInfo: nil)
                 })
             }
             else {
-                let alertController = UIAlertController(title: "Error", message: "Failed to create Playground", preferredStyle: .Alert)
-                let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: { (UIAlertAction) in
-                    self.dismissViewControllerAnimated(true, completion: nil)
+                let alertController = UIAlertController(title: "Error", message: "Failed to create Playground", preferredStyle: .alert)
+                let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler: { (UIAlertAction) in
+                    self.dismiss(animated: true, completion: nil)
                 })
                 alertController.addAction(cancelAction)
                 
-                self.presentViewController(alertController, animated: true, completion: nil)
+                self.present(alertController, animated: true, completion: nil)
             }
         }
         
@@ -78,8 +78,8 @@ class NewPlaygroundViewController: UIViewController, UITextFieldDelegate{
     
     
     // Close View 
-    @IBAction func closeDidPush(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func closeDidPush(_ sender: AnyObject) {
+        self.dismiss(animated: true, completion: nil)
     }
 
     
@@ -89,33 +89,33 @@ class NewPlaygroundViewController: UIViewController, UITextFieldDelegate{
     func textFieldDidChange() {
         if fileNameTextField.text?.isEmpty == true {
             fileNameTextField.layer.masksToBounds = true
-            fileNameTextField.layer.borderColor = violett?.CGColor
+            fileNameTextField.layer.borderColor = violett?.cgColor
             fileNameTextField.layer.borderWidth = 1
             fileNameTextField.layer.cornerRadius = 5
             
             // Textfield is emtpy so disable NextButton
-            nextButton.enabled = false
+            nextButton.isEnabled = false
             
-            UIView.animateWithDuration(0.2, animations: { 
-                self.nextButton.backgroundColor = UIColor.grayColor()
-                self.nextButton.setTitleColor(UIColor.darkGrayColor(), forState: UIControlState.Normal)
+            UIView.animate(withDuration: 0.2, animations: { 
+                self.nextButton.backgroundColor = UIColor.gray()
+                self.nextButton.setTitleColor(UIColor.darkGray(), for: UIControlState())
 
             })
         }
         else {
             
             // Textfield is not empty so enable NextButton
-            nextButton.enabled = true
+            nextButton.isEnabled = true
             
-            UIView.animateWithDuration(0.2, animations: {
+            UIView.animate(withDuration: 0.2, animations: {
                 self.nextButton.backgroundColor = self.violett
-                self.nextButton.setTitleColor(self.view.tintColor, forState: UIControlState.Normal)
+                self.nextButton.setTitleColor(self.view.tintColor, for: UIControlState())
             })
         }
     }
     
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return false
     }

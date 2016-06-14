@@ -37,7 +37,7 @@ class NewImportViewController: UIViewController,UINavigationControllerDelegate,U
     
     
     override var keyCommands: [UIKeyCommand]? {
-        return [UIKeyCommand(input: "W", modifierFlags: .Command, action: #selector(NewImportViewController.close2), discoverabilityTitle: "Close Window")]
+        return [UIKeyCommand(input: "W", modifierFlags: .command, action: #selector(NewImportViewController.close2), discoverabilityTitle: "Close Window")]
     }
     
     
@@ -48,42 +48,42 @@ class NewImportViewController: UIViewController,UINavigationControllerDelegate,U
 
     
     func close2(){
-        self.dismissViewControllerAnimated(true, completion:nil)
+        self.dismiss(animated: true, completion:nil)
     }
     
-    @IBAction func cancelDidPush(sender: AnyObject) {
+    @IBAction func cancelDidPush(_ sender: AnyObject) {
         close2()
     }
     
     
     
     
-    @IBAction func computerDidPush(sender: AnyObject) {
+    @IBAction func computerDidPush(_ sender: AnyObject) {
         
         
         if let webUploaderReference = webUploaderURL{
-            let controller = UIAlertController(title: "Importing", message: "Visit this URL on another device (In the same network) to transfer your files:\n\n" + webUploaderReference, preferredStyle: .Alert)
-            controller.view.tintColor = UIColor.blackColor()
-            let reloadDataBase = UIAlertAction(title: "Reload File-Database ", style: .Default) { (UIAlertAction) -> Void in
+            let controller = UIAlertController(title: "Importing", message: "Visit this URL on another device (In the same network) to transfer your files:\n\n" + webUploaderReference, preferredStyle: .alert)
+            controller.view.tintColor = UIColor.black()
+            let reloadDataBase = UIAlertAction(title: "Reload File-Database ", style: .default) { (UIAlertAction) -> Void in
                 
-                self.dismissViewControllerAnimated(true, completion: {
+                self.dismiss(animated: true, completion: {
                     self.delegate?.reloadDataWithSelection(true)
                 })
                 
             }
             
-            let cancel = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+            let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
             
             
             controller.addAction(reloadDataBase)
             controller.addAction(cancel)
             
             
-            self.presentViewController(controller, animated: true, completion: nil)
+            self.present(controller, animated: true, completion: nil)
         }
         else{
             
-            let deviceName = UIDevice.currentDevice().model
+            let deviceName = UIDevice.current().model
             Notifications.sharedInstance.alertWithMessage("Please connect your " + deviceName + " to a Wi-Fi network and make sure web uploader is enabled in Settings.", title: "Error ❌", viewController: self)
             
         }
@@ -93,12 +93,12 @@ class NewImportViewController: UIViewController,UINavigationControllerDelegate,U
     
     
 
-    @IBAction func icloudDidPush(sender: AnyObject) {
-        let documentPicker = UIDocumentPickerViewController(documentTypes: ["com.vladidanila.VWAS-HTML.html","public.data","public.text","public.rtf","public.movie","public.audio","public.image","com.adobe.pdf","com.apple.keynote.key","com.microsoft.word.doc","com.microsoft.excel.xls","com.microsoft.powerpoint.ppt","public.svg-image","com.taptrix.inkpad","public.source-code","public.script","public.shell-script","public.executable"], inMode: UIDocumentPickerMode.Import)
+    @IBAction func icloudDidPush(_ sender: AnyObject) {
+        let documentPicker = UIDocumentPickerViewController(documentTypes: ["com.vladidanila.VWAS-HTML.html","public.data","public.text","public.rtf","public.movie","public.audio","public.image","com.adobe.pdf","com.apple.keynote.key","com.microsoft.word.doc","com.microsoft.excel.xls","com.microsoft.powerpoint.ppt","public.svg-image","com.taptrix.inkpad","public.source-code","public.script","public.shell-script","public.executable"], in: UIDocumentPickerMode.import)
         
         documentPicker.delegate = self
-        documentPicker.modalPresentationStyle = UIModalPresentationStyle.PageSheet
-        self.presentViewController(documentPicker, animated: true, completion: nil)
+        documentPicker.modalPresentationStyle = UIModalPresentationStyle.pageSheet
+        self.present(documentPicker, animated: true, completion: nil)
     }
     
 
@@ -106,16 +106,16 @@ class NewImportViewController: UIViewController,UINavigationControllerDelegate,U
     // MARK: image picker
 
     
-    @IBAction func cameraDidPush(sender: AnyObject) {
+    @IBAction func cameraDidPush(_ sender: AnyObject) {
 
         
         if (textField.text!.isEmpty){
             
             textField.alpha = 0
             label.alpha = 0
-            textField.hidden = false
-            label.hidden = false
-            UIView.animateWithDuration(0.4, animations: {
+            textField.isHidden = false
+            label.isHidden = false
+            UIView.animate(withDuration: 0.4, animations: {
                 self.textField.alpha = 1
                 self.label.alpha = 1
             })
@@ -126,8 +126,8 @@ class NewImportViewController: UIViewController,UINavigationControllerDelegate,U
             let picker = UIImagePickerController()
             picker.delegate = self
             picker.allowsEditing = true
-            picker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
-            picker.modalPresentationStyle = UIModalPresentationStyle.Popover
+            picker.sourceType = UIImagePickerControllerSourceType.photoLibrary
+            picker.modalPresentationStyle = UIModalPresentationStyle.popover
         
             
 
@@ -137,7 +137,7 @@ class NewImportViewController: UIViewController,UINavigationControllerDelegate,U
             popover.sourceRect = sender.frame
             
             
-            presentViewController(picker, animated: true, completion: nil)
+            present(picker, animated: true, completion: nil)
             
 
 
@@ -145,42 +145,43 @@ class NewImportViewController: UIViewController,UINavigationControllerDelegate,U
     }
     
     
+  
+    // MARK: - WAS DEPRECATED
+    //    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
+    //
+    //        let pathToWriteFile = inspectorPath! + "/" + textField.text!
+    //        var fileUrl = URL(fileURLWithPath: pathToWriteFile)
+    //
+    //        if (fileUrl.lastPathComponent == ""){
+    //            fileUrl = try! fileUrl.appendingPathExtension("png")
+    //        }
+    //        else{
+    //            fileUrl = try! fileUrl.deletingPathExtension()
+    //            fileUrl = try! fileUrl.appendingPathExtension("png")
+    //        }
+    //
+    //
+    //
+    //        let newFileName = NewFiles.availableName(fileUrl.lastPathComponent!, nameWithoutExtension: try! fileUrl.deletingPathExtension().lastPathComponent!, Extension: fileUrl.pathExtension!, items: items)
+    //        fileUrl = try! fileUrl.deletingLastPathComponent().appendingPathComponent(newFileName)
+    //
+    //
+    //
+    //        let content = UIImagePNGRepresentation(image)
+    //
+    //        FileManager.default().createFile(atPath: (fileUrl.path)!, contents: content, attributes: nil)
+    //
+    //
+    //        picker.dismiss(animated: true, completion: {
+    //            self.delegate?.reloadDataWithSelection(true)
+    //            self.dismiss(animated: true, completion: nil)
+    //        })
+    //    }
+    //    
     
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
-        
-        let pathToWriteFile = inspectorPath! + "/" + textField.text!
-        var fileUrl = NSURL(fileURLWithPath: pathToWriteFile)
-        
-        if (fileUrl.lastPathComponent == ""){
-            fileUrl = fileUrl.URLByAppendingPathExtension("png")
-        }
-        else{
-            fileUrl = fileUrl.URLByDeletingPathExtension!
-            fileUrl = fileUrl.URLByAppendingPathExtension("png")
-        }
-        
-        
-        
-        let newFileName = NewFiles.availableName(fileUrl.lastPathComponent!, nameWithoutExtension: fileUrl.URLByDeletingPathExtension!.lastPathComponent!, Extension: fileUrl.pathExtension!, items: items)
-        fileUrl = fileUrl.URLByDeletingLastPathComponent!.URLByAppendingPathComponent(newFileName)
-        
     
-        
-        let content = UIImagePNGRepresentation(image)
-        
-        NSFileManager.defaultManager().createFileAtPath((fileUrl.path)!, contents: content, attributes: nil)
-        
-        
-        picker.dismissViewControllerAnimated(true, completion: {
-            self.delegate?.reloadDataWithSelection(true)
-            self.dismissViewControllerAnimated(true, completion: nil)
-        })
-    }
-    
-    
-    
-    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
-        picker.dismissViewControllerAnimated(true, completion: nil)
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
     }
     
     
@@ -197,26 +198,26 @@ class NewImportViewController: UIViewController,UINavigationControllerDelegate,U
     
     // MARK: textfield
     
-    func textFieldDidBeginEditing(textField: UITextField) {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
         
     }
     
-    func textFieldDidEndEditing(textField: UITextField) {
+    func textFieldDidEndEditing(_ textField: UITextField) {
        
         if (textField.tag == 2){  //Image name
             
             cameraDidPush(cameraButton)
-            textField.hidden = true
+            textField.isHidden = true
         }
         
 
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if (textField.tag == 2){  //Image name
             
             cameraDidPush(cameraButton)
-            textField.hidden = true
+            textField.isHidden = true
             textField.resignFirstResponder()
         }
         
@@ -229,19 +230,19 @@ class NewImportViewController: UIViewController,UINavigationControllerDelegate,U
     
     // MARK: cloud
     
-    func documentPicker(controller: UIDocumentPickerViewController, didPickDocumentAtURL url: NSURL) {
-        if (controller.documentPickerMode == UIDocumentPickerMode.Import){
+    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentAt url: URL) {
+        if (controller.documentPickerMode == UIDocumentPickerMode.import){
             
             let name = url.lastPathComponent!
             let pathToWriteFile = inspectorPath! + "/" + name
 
-            let content = NSData(contentsOfURL: url)
-            NSFileManager.defaultManager().createFileAtPath(pathToWriteFile, contents: content, attributes: nil)
+            let content = try? Data(contentsOf: url)
+            FileManager.default().createFile(atPath: pathToWriteFile, contents: content, attributes: nil)
             
-            content?.writeToFile(inspectorPath!, atomically: true)
+            try? content?.write(to: URL(fileURLWithPath: inspectorPath!), options: [.dataWritingAtomic])
         }
     
-        self.dismissViewControllerAnimated(true, completion: {
+        self.dismiss(animated: true, completion: {
             self.delegate?.reloadDataWithSelection(true)
         })
     }

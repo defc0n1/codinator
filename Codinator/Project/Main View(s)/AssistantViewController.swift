@@ -12,7 +12,7 @@ import UIKit
 protocol AssistantViewControllerDelegate: class {
     
     /// Selects a file, retruns true if the files exists
-    func selectFileWithName(name: String) -> Bool
+    func selectFileWithName(_ name: String) -> Bool
 }
 
 
@@ -61,30 +61,30 @@ class AssistantViewController: UIViewController, SnippetsDelegate, UITextFieldDe
     
     }
     
-    var fileUrl: NSURL?
-    func setFilePathTo(projectManager: Polaris) {
+    var fileUrl: URL?
+    func setFilePathTo(_ projectManager: Polaris) {
         
         fileUrl = projectManager.selectedFileURL
         
-        fileNameTextField!.text = fileUrl?.URLByDeletingPathExtension?.lastPathComponent
+        fileNameTextField!.text = try! fileUrl?.deletingPathExtension().lastPathComponent
         fileExtensionTextField!.text = fileUrl?.pathExtension
         
         pathLabel.text = projectManager.fakePathForFileSelectedFile()
         
         do {
-            let attributes = try NSFileManager.defaultManager().attributesOfItemAtPath(projectManager.selectedFileURL!.path!)
+            let attributes = try FileManager.default().attributesOfItem(atPath: projectManager.selectedFileURL!.path!)
             
             
-            let dateFormatter = NSDateFormatter()
-            dateFormatter.dateStyle = .ShortStyle
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateStyle = .shortStyle
             
             let fileSize = (attributes["NSFileSize"] as! Int)
-            let createdDate = attributes["NSFileCreationDate"] as! NSDate
-            let modifiedDate = attributes["NSFileModificationDate"] as! NSDate
+            let createdDate = attributes["NSFileCreationDate"] as! Date
+            let modifiedDate = attributes["NSFileModificationDate"] as! Date
             
             fileSizeLabel.text = "Size: \(fileSize) B"
-            createdLabel.text = "Created: " + dateFormatter.stringFromDate(createdDate)
-            modifiedLabel.text = "Modified: " + dateFormatter.stringFromDate(modifiedDate)
+            createdLabel.text = "Created: " + dateFormatter.string(from: createdDate)
+            modifiedLabel.text = "Modified: " + dateFormatter.string(from: modifiedDate)
             
             
         } catch {
@@ -105,20 +105,20 @@ class AssistantViewController: UIViewController, SnippetsDelegate, UITextFieldDe
     
     @IBOutlet weak var colorPicker: UIButton!
     
-    @IBAction func segmendDidChange(sender: UISegmentedControl) {
+    @IBAction func segmendDidChange(_ sender: UISegmentedControl) {
         if sender.selectedSegmentIndex == 0 {
-            enumerationButton.hidden = false
-            imageButton.hidden = false
-            linkButton.hidden = false
+            enumerationButton.isHidden = false
+            imageButton.isHidden = false
+            linkButton.isHidden = false
             
-            colorPicker.hidden = true
+            colorPicker.isHidden = true
         }
         else {
-            enumerationButton.hidden = true
-            imageButton.hidden = true
-            linkButton.hidden = true
+            enumerationButton.isHidden = true
+            imageButton.isHidden = true
+            linkButton.isHidden = true
             
-            colorPicker.hidden = false
+            colorPicker.isHidden = false
         }
     }
     
@@ -126,11 +126,11 @@ class AssistantViewController: UIViewController, SnippetsDelegate, UITextFieldDe
     
     // MARK: - Snippets delegate
     
-    func snippetWasCoppied(status: String) {
+    func snippetWasCoppied(_ status: String) {
         delegate?.snippetWasCoppied(status)
     }
     
-    func colorDidChange(color: UIColor) {
+    func colorDidChange(_ color: UIColor) {
         delegate?.colorDidChange(color)
     }
     
@@ -145,7 +145,7 @@ class AssistantViewController: UIViewController, SnippetsDelegate, UITextFieldDe
     // MARK: - TextFieldDelegate
     
     var previosText: String?
-    func textFieldDidBeginEditing(textField: UITextField) {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
         if fileExtensionTextField!.text == "" && fileNameTextField!.text == "" {
             textField.resignFirstResponder()
         }
@@ -154,7 +154,7 @@ class AssistantViewController: UIViewController, SnippetsDelegate, UITextFieldDe
         }
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         
         if previosText != textField.text {
@@ -164,12 +164,12 @@ class AssistantViewController: UIViewController, SnippetsDelegate, UITextFieldDe
                 fileNameTextField?.becomeFirstResponder()
             }
             else {
-                let fileManager = NSFileManager.defaultManager()
+                let fileManager = FileManager.default()
                 
                 do {
-                    try fileManager.moveItemAtURL(fileUrl!, toURL: fileUrl!.URLByDeletingLastPathComponent!.URLByAppendingPathComponent(fileNameTextField!.text! + "." + fileExtensionTextField!.text!))
+                    try fileManager.moveItem(at: fileUrl!, to: fileUrl!.deletingLastPathComponent().appendingPathComponent(fileNameTextField!.text! + "." + fileExtensionTextField!.text!))
                     
-                    self.renameDelegate?.selectFileWithName(fileNameTextField!.text! + "." + fileExtensionTextField!.text!)
+                    _ = self.renameDelegate?.selectFileWithName(fileNameTextField!.text! + "." + fileExtensionTextField!.text!)
                     
                 } catch let error as NSError {
                     Notifications.sharedInstance.alertWithMessage(error.localizedDescription, title: "Something went wrong!", viewController: self)
@@ -185,7 +185,7 @@ class AssistantViewController: UIViewController, SnippetsDelegate, UITextFieldDe
     
     // MARK: - Navigation
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: AnyObject?) {
         switch segue.identifier! {
         case "img":
             let vc = segue.destinationViewController as! UINavigationController
@@ -210,11 +210,11 @@ class AssistantViewController: UIViewController, SnippetsDelegate, UITextFieldDe
    
     // MARK: - Trait collection
     
-    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
         
         if size.width > 507 && projectManager != nil && prevVC != nil {
-            prevVC?.navigationController?.popViewControllerAnimated(true)
+            _ = prevVC?.navigationController?.popViewController(animated: true)
         }
     
     }

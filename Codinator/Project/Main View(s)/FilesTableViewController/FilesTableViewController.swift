@@ -17,10 +17,10 @@ class FilesTableViewController: UIViewController, UITableViewDelegate, UITableVi
     
     var documentInteractionController: UIDocumentInteractionController?
     
-    var items: [NSURL] = []
+    var items: [URL] = []
     
     
-    var inspectorURL: NSURL?
+    var inspectorURL: URL?
     var projectManager: Polaris! {
         
         get {
@@ -30,7 +30,7 @@ class FilesTableViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     
-    var indexPath: NSIndexPath?
+    var indexPath: IndexPath?
     
     var getSplitView: ProjectSplitViewController! {
         
@@ -61,8 +61,8 @@ class FilesTableViewController: UIViewController, UITableViewDelegate, UITableVi
         tableView.contentInset = insets
         tableView.scrollIndicatorInsets = insets
         
-        if traitCollection.forceTouchCapability == .Available {
-            registerForPreviewingWithDelegate(self, sourceView: self.tableView)
+        if traitCollection.forceTouchCapability == .available {
+            registerForPreviewing(with: self, sourceView: self.tableView)
         }
         
     }
@@ -72,32 +72,35 @@ class FilesTableViewController: UIViewController, UITableViewDelegate, UITableVi
     
     var count = 0
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         
         // Execute this only if FilesTableVC wasn't newly created
         if count > 0 {
             projectManager.inspectorURL = inspectorURL!
-            selectFileWithName("index.html")
+            
+            if getSplitView.isCollapsed == false {
+                _ = selectFileWithName("index.html")
+            }
         }
                 
         // Keyboard show/hide notifications
-        let notificationCenter = NSNotificationCenter.defaultCenter()
-        notificationCenter.addObserver(self, selector: #selector(keyboardWillShow), name: UIKeyboardWillShowNotification, object: nil)
-        notificationCenter.addObserver(self, selector: #selector(keyboardWillHide), name: UIKeyboardWillHideNotification, object: nil)
+        let notificationCenter = NotificationCenter.default()
+        notificationCenter.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         
             if hasntOpenIndexFileYet {
                 // Find 'index.html' and save index of it in the array itself
-                let items = self.items.enumerate().filter { $0.element.absoluteString.hasSuffix("index.html")}
+                let items = self.items.enumerated().filter { ($0.element.absoluteString?.hasSuffix("index.html"))!}
                 
                 // if 'items' isn't empty sellect the corresponding cell
                 if items.isEmpty != true {
                     
-                    if self.getSplitView.view.traitCollection.horizontalSizeClass != .Compact {
-                        let indexPath = NSIndexPath(forRow: items.first!.index, inSection: 0)
-                        tableView.selectRowAtIndexPath(indexPath, animated: false, scrollPosition: .Top)
-                        tableView(tableView, didSelectRowAtIndexPath: indexPath)
+                    if self.getSplitView.view.traitCollection.horizontalSizeClass != .compact {
+                        let indexPath = IndexPath(row: items.first!.offset, section: 0)
+                        tableView.selectRow(at: indexPath, animated: false, scrollPosition: .top)
+                        tableView(tableView, didSelectRowAt: indexPath)
                     }
                     
                     // Load WebView
@@ -105,9 +108,9 @@ class FilesTableViewController: UIViewController, UITableViewDelegate, UITableVi
                         return
                     }
                     
-                    let url = projectManager.inspectorURL.URLByAppendingPathComponent(items.first!.element.lastPathComponent!)
+                    let url = try! projectManager.inspectorURL.appendingPathComponent(items.first!.element.lastPathComponent!)
                     
-                    webView.loadFileURL(url, allowingReadAccessToURL: url.URLByDeletingLastPathComponent!)
+                    webView.loadFileURL(url, allowingReadAccessTo: try! url.deletingLastPathComponent())
                     
                     
                     hasntOpenIndexFileYet = false
@@ -122,12 +125,12 @@ class FilesTableViewController: UIViewController, UITableViewDelegate, UITableVi
                     if self.items.count != 0 && filePath.hasSuffix("png") == false && filePath.hasSuffix("jpg") == false && self.items.first?.pathExtension != "" {
                         // No index file
                         
-                        if getSplitView.collapsed == false {
+                        if getSplitView.isCollapsed == false {
                             
-                            if self.getSplitView.view.traitCollection.horizontalSizeClass != .Compact {
-                                let indexPath = NSIndexPath(forRow: 0, inSection: 0)
-                                tableView.selectRowAtIndexPath(indexPath, animated: false, scrollPosition: .Top)
-                                tableView(tableView, didSelectRowAtIndexPath: indexPath)
+                            if self.getSplitView.view.traitCollection.horizontalSizeClass != .compact {
+                                let indexPath = IndexPath(row: 0, section: 0)
+                                tableView.selectRow(at: indexPath, animated: false, scrollPosition: .top)
+                                tableView(tableView, didSelectRowAt: indexPath)
                             }
                             
                             // Load WebView
@@ -135,11 +138,11 @@ class FilesTableViewController: UIViewController, UITableViewDelegate, UITableVi
                                 return
                             }
                             
-                            guard let path = projectManager.inspectorURL.URLByAppendingPathComponent(filePath).path else {
+                            guard let path = try! projectManager.inspectorURL.appendingPathComponent(filePath).path else {
                                 return
                             }
                             
-                            webView.loadFileURL( NSURL(fileURLWithPath: path, isDirectory: false), allowingReadAccessToURL: NSURL(fileURLWithPath: path, isDirectory: true))
+                            webView.loadFileURL( URL(fileURLWithPath: path, isDirectory: false), allowingReadAccessTo: URL(fileURLWithPath: path, isDirectory: true))
                         }
                         
                         hasntOpenIndexFileYet = false
@@ -154,7 +157,7 @@ class FilesTableViewController: UIViewController, UITableViewDelegate, UITableVi
         getSplitView.assistantViewController?.renameDelegate = self
     
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(FilesTableViewController._reloadData), name: "relaodData", object: nil)
+        NotificationCenter.default().addObserver(self, selector: #selector(FilesTableViewController._reloadData), name: "relaodData", object: nil)
     }
     
     
@@ -169,17 +172,17 @@ class FilesTableViewController: UIViewController, UITableViewDelegate, UITableVi
     
     
     // returns true if found
-    func selectFileWithName(name: String) -> Bool {
+    func selectFileWithName(_ name: String) -> Bool {
         reloadDataWithSelection(false)
         
         // Find 'name' and save index of it in the array itself
-        let items = self.items.enumerate().filter { $0.element.absoluteString.hasSuffix(name)}
+        let items = self.items.enumerated().filter { ($0.element.absoluteString?.hasSuffix(name))!}
         
         // if 'items' isn't empty sellect the corresponding cell
         if items.isEmpty == false {
-            let indexPath = NSIndexPath(forRow: items.first!.index, inSection: 0)
-            tableView.selectRowAtIndexPath(indexPath, animated: false, scrollPosition: .Top)
-            tableView(tableView, didSelectRowAtIndexPath: indexPath)
+            let indexPath = IndexPath(row: items.first!.offset, section: 0)
+            tableView.selectRow(at: indexPath, animated: false, scrollPosition: .top)
+            tableView(tableView, didSelectRowAt: indexPath)
         }
         
         return items.isEmpty == false
@@ -190,87 +193,87 @@ class FilesTableViewController: UIViewController, UITableViewDelegate, UITableVi
 
     // MARK: - Action Buttons
     
-    @IBAction func add(sender: UIBarButtonItem) {
-        let newFile = UIAlertAction(title: "New File", style: .Default) { (action : UIAlertAction) in
-            self.performSegueWithIdentifier("newFile", sender: self)
+    @IBAction func add(_ sender: UIBarButtonItem) {
+        let newFile = UIAlertAction(title: "New File", style: .default) { (action : UIAlertAction) in
+            self.performSegue(withIdentifier: "newFile", sender: self)
         }
         
-        let newSubpage = UIAlertAction(title: "New Subpage", style: .Default) { (action : UIAlertAction) in
-            self.performSegueWithIdentifier("newSubpage", sender: self)
+        let newSubpage = UIAlertAction(title: "New Subpage", style: .default) { (action : UIAlertAction) in
+            self.performSegue(withIdentifier: "newSubpage", sender: self)
         }
         
-        let newDir = UIAlertAction(title: "New Directory", style: .Default) { (action : UIAlertAction) in
-            self.performSegueWithIdentifier("newDir", sender: self)
+        let newDir = UIAlertAction(title: "New Directory", style: .default) { (action : UIAlertAction) in
+            self.performSegue(withIdentifier: "newDir", sender: self)
         }
         
-        let Import = UIAlertAction(title: "Import", style: .Default) { (action : UIAlertAction) in
-            self.performSegueWithIdentifier("import", sender: self)
+        let Import = UIAlertAction(title: "Import", style: .default) { (action : UIAlertAction) in
+            self.performSegue(withIdentifier: "import", sender: self)
         }
         
-        let cancel = UIAlertAction(title: "Cancel", style: .Cancel, handler: { _ in
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in
             
-            if self.getSplitView.displayMode == .PrimaryHidden {
-                self.getSplitView.preferredDisplayMode = .PrimaryOverlay
+            if self.getSplitView.displayMode == .primaryHidden {
+                self.getSplitView.preferredDisplayMode = .primaryOverlay
             }
             
         })
 
         
         
-        let popup = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+        let popup = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         popup.addAction(newFile)
         popup.addAction(newSubpage)
         popup.addAction(newDir)
         popup.addAction(Import)
         popup.addAction(cancel)
         
-        popup.view.tintColor = UIColor.purpleColor()
+        popup.view.tintColor = UIColor.purple()
         
         popup.popoverPresentationController?.barButtonItem = sender
         
-        if getSplitView.displayMode != .PrimaryOverlay {
-            self.presentViewController(popup, animated: true, completion: nil)
+        if getSplitView.displayMode != .primaryOverlay {
+            self.present(popup, animated: true, completion: nil)
         }
         else {
             
             popup.title = "Product"
             
-            getSplitView.preferredDisplayMode = .PrimaryHidden
-            getSplitView!.rootVC.presentViewController(popup, animated: true, completion: nil)
+            getSplitView.preferredDisplayMode = .primaryHidden
+            getSplitView!.rootVC.present(popup, animated: true, completion: nil)
         }
     }
     
-    @IBAction func product(sender: UIBarButtonItem) {
-        let run = UIAlertAction(title: "Full Screen Preview", style: .Default) { (action : UIAlertAction) in
-            self.performSegueWithIdentifier("run", sender: self)
+    @IBAction func product(_ sender: UIBarButtonItem) {
+        let run = UIAlertAction(title: "Full Screen Preview", style: .default) { (action : UIAlertAction) in
+            self.performSegue(withIdentifier: "run", sender: self)
         }
         
-        let archive = UIAlertAction(title: "Commit", style: .Default) { (action : UIAlertAction) in
-            self.performSegueWithIdentifier("archive", sender: self)
+        let archive = UIAlertAction(title: "Commit", style: .default) { (action : UIAlertAction) in
+            self.performSegue(withIdentifier: "archive", sender: self)
         }
         
-        let history = UIAlertAction(title: "Commit History", style: .Default) { (action : UIAlertAction) in
-            self.performSegueWithIdentifier("history", sender: self)
+        let history = UIAlertAction(title: "Commit History", style: .default) { (action : UIAlertAction) in
+            self.performSegue(withIdentifier: "history", sender: self)
         }
         
-        let export = UIAlertAction(title: "Export", style: .Default) { (action : UIAlertAction) in
+        let export = UIAlertAction(title: "Export", style: .default) { (action : UIAlertAction) in
             Notifications.sharedInstance.alertWithMessage("Archive the Project first.\nAfterwards open up the History window and use the export manager.", title: "Export", viewController: self)
         }
         
-        let localServer = UIAlertAction(title: "Local Server", style: .Default) { (action : UIAlertAction) in
-            self.performSegueWithIdentifier("Pulse", sender: self)
+        let localServer = UIAlertAction(title: "Local Server", style: .default) { (action : UIAlertAction) in
+            self.performSegue(withIdentifier: "Pulse", sender: self)
         }
         
-        let cancel = UIAlertAction(title: "Cancel", style: .Cancel, handler: { _ in
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in
 
-            if self.getSplitView.displayMode == .PrimaryHidden {
-                self.getSplitView.preferredDisplayMode = .PrimaryOverlay
+            if self.getSplitView.displayMode == .primaryHidden {
+                self.getSplitView.preferredDisplayMode = .primaryOverlay
             }
     
         })
         
         
-        let popup = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+        let popup = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         popup.addAction(run)
         popup.addAction(archive)
         popup.addAction(history)
@@ -278,28 +281,28 @@ class FilesTableViewController: UIViewController, UITableViewDelegate, UITableVi
         popup.addAction(localServer)
         popup.addAction(cancel)
         
-        popup.view.tintColor = UIColor.purpleColor()
+        popup.view.tintColor = UIColor.purple()
         
         popup.popoverPresentationController?.barButtonItem = sender
 
         
-        if getSplitView.displayMode != .PrimaryOverlay {
-            self.presentViewController(popup, animated: true, completion: nil)
+        if getSplitView.displayMode != .primaryOverlay {
+            self.present(popup, animated: true, completion: nil)
         }
         else {
             
             popup.title = "Product"
             
-            getSplitView.preferredDisplayMode = .PrimaryHidden
-            getSplitView!.rootVC.presentViewController(popup, animated: true, completion: nil)
+            getSplitView.preferredDisplayMode = .primaryHidden
+            getSplitView!.rootVC.present(popup, animated: true, completion: nil)
         }
         
     }
     
     
-    @IBAction func navigateBackDidPush(sender: AnyObject) {
+    @IBAction func navigateBackDidPush(_ sender: AnyObject) {
         if self.navigationController?.viewControllers.count != 1 {
-            self.navigationController?.popViewControllerAnimated(true)
+            _ = self.navigationController?.popViewController(animated: true)
         }
     }
     
@@ -310,10 +313,10 @@ class FilesTableViewController: UIViewController, UITableViewDelegate, UITableVi
     let grabberViewHeight = CGFloat(10)
     var keyboardHeight: CGFloat = 0
     
-    func keyboardWillShow(notification: NSNotification) {
+    func keyboardWillShow(_ notification: Notification) {
     }
     
-    func keyboardWillHide(notification: NSNotification) {
+    func keyboardWillHide(_ notification: Notification) {
     }
 
 
@@ -323,13 +326,13 @@ class FilesTableViewController: UIViewController, UITableViewDelegate, UITableVi
 
     func _reloadData() {
         
-        self.items = projectManager!.contentsOfDirectoryAtPath(inspectorURL!.path!).map { $0 as! NSURL}
+        self.items = projectManager!.contentsOfDirectory(atPath: inspectorURL!.path!).map { $0 as! URL}
         
             let ip = tableView.indexPathForSelectedRow
             
         if let indexPath = ip {
-            tableView(tableView, didSelectRowAtIndexPath: indexPath)
-            tableView.selectRowAtIndexPath(indexPath, animated: false, scrollPosition: .Top )
+            tableView(tableView, didSelectRowAt: indexPath)
+            tableView.selectRow(at: indexPath, animated: false, scrollPosition: .top )
         }
         
         tableView.reloadData()
@@ -337,16 +340,16 @@ class FilesTableViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     
-    func reloadDataWithSelection(selection: Bool) {
+    func reloadDataWithSelection(_ selection: Bool) {
     
-        self.items = projectManager!.contentsOfDirectoryAtPath(inspectorURL!.path!).map { $0 as! NSURL}
+        self.items = projectManager!.contentsOfDirectory(atPath: inspectorURL!.path!).map { $0 as! URL}
         
         if selection == true {
             let ip = tableView.indexPathForSelectedRow
             
             if let indexPath = ip {
-                tableView(tableView, didSelectRowAtIndexPath: indexPath)
-                tableView.selectRowAtIndexPath(indexPath, animated: false, scrollPosition: .Top )
+                tableView(tableView, didSelectRowAt: indexPath)
+                tableView.selectRow(at: indexPath, animated: false, scrollPosition: .top )
             }
         }
      
@@ -357,7 +360,7 @@ class FilesTableViewController: UIViewController, UITableViewDelegate, UITableVi
 
     // MARK: - Storyboards
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: AnyObject?) {
         if let identifier = segue.identifier {
             switch identifier {
                
@@ -391,20 +394,20 @@ class FilesTableViewController: UIViewController, UITableViewDelegate, UITableVi
                             
                 
                 // If path is not equal to "" path and if url is not nil
-                let useDeleteURL = (projectManager.deleteURL?.path != NSURL(string: "")?.path) && (projectManager.deleteURL != nil)
+                let useDeleteURL = (projectManager.deleteURL?.path != URL(string: "")?.path) && (projectManager.deleteURL != nil)
                 
                 
             
                 if useDeleteURL {
                     viewController.previewURL = projectManager.deleteURL!
-                    projectManager.deleteURL = NSURL(string: "")
+                    projectManager.deleteURL = URL(string: "")
                 }
                 else {
                     if let tmpPath = projectManager.tmpFileURL {
                         if tmpPath.path!.isEmpty {
                             
                             if projectManager.inspectorURL.lastPathComponent != "index.html" {
-                                viewController.previewURL = projectManager.inspectorURL.URLByAppendingPathComponent("index.html")
+                                viewController.previewURL = try! projectManager.inspectorURL.appendingPathComponent("index.html")
                             }
                             else {
                                 viewController.previewURL = projectManager.inspectorURL
@@ -418,7 +421,7 @@ class FilesTableViewController: UIViewController, UITableViewDelegate, UITableVi
                     }
                     else {
                         if projectManager.inspectorURL.lastPathComponent != "index.html" {
-                            viewController.previewURL = projectManager.inspectorURL.URLByAppendingPathComponent("index.html")
+                            viewController.previewURL = try! projectManager.inspectorURL.appendingPathComponent("index.html")
                         }
                         else {
                             viewController.previewURL = projectManager.inspectorURL

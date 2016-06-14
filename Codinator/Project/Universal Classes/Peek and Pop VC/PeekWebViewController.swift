@@ -19,12 +19,12 @@ class PeekWebViewController: AspectRatioViewController {
         
         if isProjects {
             
-            let renameAction = UIPreviewAction(title: "Rename", style: .Default, handler: { _ in
+            let renameAction = UIPreviewAction(title: "Rename", style: .default, handler: { _ in
                 self.delegate?.rename()
                 self.projectsDelegate?.rename()
             })
             
-            let deleteAction = UIPreviewAction(title: "Delete", style: .Destructive, handler: { _ in
+            let deleteAction = UIPreviewAction(title: "Delete", style: .destructive, handler: { _ in
                 self.delegate?.delete()
                 self.projectsDelegate?.delete()
             })
@@ -33,25 +33,25 @@ class PeekWebViewController: AspectRatioViewController {
             return [renameAction, deleteAction]
         }
         else {
-            let printAction = UIPreviewAction(title: "Print", style: .Default, handler: { _ in
+            let printAction = UIPreviewAction(title: "Print", style: .default, handler: { _ in
                 self.delegate?.print()
             })
             
             
-            let moveAction = UIPreviewAction(title: "Move file", style: .Default, handler: { _ in
+            let moveAction = UIPreviewAction(title: "Move file", style: .default, handler: { _ in
                 self.delegate?.move()
             })
             
             
-            let renameAction = UIPreviewAction(title: "Rename", style: .Default, handler: { _ in
+            let renameAction = UIPreviewAction(title: "Rename", style: .default, handler: { _ in
                 self.delegate?.rename()
             })
             
-            let shareAction = UIPreviewAction(title: "Share", style: .Default, handler: { _ in
+            let shareAction = UIPreviewAction(title: "Share", style: .default, handler: { _ in
                 self.delegate?.share()
             })
             
-            let deleteAction = UIPreviewAction(title: "Delete", style: .Destructive, handler: { _ in
+            let deleteAction = UIPreviewAction(title: "Delete", style: .destructive, handler: { _ in
                 self.delegate?.delete()
             })
             
@@ -79,7 +79,7 @@ class PeekWebViewController: AspectRatioViewController {
 
 extension WKWebView {
     private struct key {
-        static let scale = unsafeBitCast(Selector("scalesPageToFit"), UnsafePointer<Void>.self)
+        static let scale = unsafeBitCast(#selector(getter: UIWebView.scalesPageToFit), to: UnsafePointer<Void>.self)
     }
     private var sourceOfUserScript: String {
         return "(function(){\n" +
@@ -109,17 +109,17 @@ extension WKWebView {
                 if objc_getAssociatedObject(self, key.scale) != nil {
                     return
                 }
-                let time = WKUserScriptInjectionTime.AtDocumentEnd
+                let time = WKUserScriptInjectionTime.atDocumentEnd
                 let script = WKUserScript(source: sourceOfUserScript, injectionTime: time, forMainFrameOnly: true)
                 configuration.userContentController.addUserScript(script)
                 objc_setAssociatedObject(self, key.scale, script, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
-                if URL != nil {
+                if url != nil {
                     evaluateJavaScript(sourceOfUserScript, completionHandler: nil)
                 }
             } else if let script = objc_getAssociatedObject(self, key.scale) as? WKUserScript {
                 objc_setAssociatedObject(self, key.scale, nil, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
                 configuration.userContentController.removeUserScript(script)
-                if URL != nil {
+                if url != nil {
                     let source = "(function(){\n" +
                         "    var head = document.getElementsByTagName('head')[0];\n" +
                         "    var nodes = head.getElementsByTagName('meta');\n" +
@@ -138,7 +138,7 @@ extension WKWebView {
     }
 }
 extension WKUserContentController {
-    public func removeUserScript(script: WKUserScript) {
+    public func removeUserScript(_ script: WKUserScript) {
         let scripts = userScripts
         removeAllUserScripts()
         scripts.forEach {

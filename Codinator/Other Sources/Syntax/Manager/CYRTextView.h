@@ -44,7 +44,7 @@
 
 - (instancetype)initWithFrame:(CGRect)frame NS_DESIGNATED_INITIALIZER;
 
-@property (nonatomic, strong) NSArray *tokens;
+@property (nonatomic, strong) NSArray <CYRToken *> *tokens;
 @property (nonatomic, strong) UIPanGestureRecognizer *singleFingerPanRecognizer;
 @property (nonatomic, strong) UIPanGestureRecognizer *doubleFingerPanRecognizer;
 

@@ -9,11 +9,11 @@
 import Foundation
 
 protocol NewFilesDelegate: class {
-    func reloadDataWithSelection(selection: Bool)
+    func reloadDataWithSelection(_ selection: Bool)
 }
 
 class NewFiles: NSObject {
-    class func availableName(name: String, nameWithoutExtension: String, Extension: String, items: [String]) -> String {
+    class func availableName(_ name: String, nameWithoutExtension: String, Extension: String, items: [String]) -> String {
         let files = items.filter { $0 == name }
         
         // If there no file names that are the same continue else count up

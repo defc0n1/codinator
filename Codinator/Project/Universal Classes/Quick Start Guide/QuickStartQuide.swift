@@ -15,8 +15,8 @@ class QuickStartQuide: UIViewController {
     @IBOutlet weak var okButton: UIButton?
     
     
-    @IBAction func closeDidPush(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func closeDidPush(_ sender: AnyObject) {
+        self.dismiss(animated: true, completion: nil)
     }
     
     override func viewDidLoad() {
@@ -24,7 +24,7 @@ class QuickStartQuide: UIViewController {
         
         self.view.layer.masksToBounds = true
         self.view.layer.cornerRadius = 13
-        self.view.layer.borderColor = UIColor(red: 55/255, green: 27/255, blue: 98/255, alpha: 1.0).CGColor
+        self.view.layer.borderColor = UIColor(red: 55/255, green: 27/255, blue: 98/255, alpha: 1.0).cgColor
         self.view.layer.borderWidth = 3
         
     }
@@ -32,11 +32,11 @@ class QuickStartQuide: UIViewController {
 
     override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
         
-        if (UIDevice.currentDevice().userInterfaceIdiom == .Phone){
-            return UIInterfaceOrientationMask.Portrait
+        if (UIDevice.current().userInterfaceIdiom == .phone){
+            return UIInterfaceOrientationMask.portrait
         }
         else{
-            return UIInterfaceOrientationMask.All
+            return UIInterfaceOrientationMask.all
         }
     
     }
@@ -58,8 +58,8 @@ class QuickStartQuidePlaygrounds: UIViewController {
         self.navigationItem.title = viewTitle
     }
     
-    @IBAction func closeDidPush(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func closeDidPush(_ sender: AnyObject) {
+        self.dismiss(animated: true, completion: nil)
     }
     
 }

@@ -53,7 +53,7 @@ class ProjectMainViewController: UIViewController, UISplitViewControllerDelegate
         let configuration = WKWebViewConfiguration()
         configuration.allowsInlineMediaPlayback = true
         configuration.allowsAirPlayForMediaPlayback = true
-        configuration.requiresUserActionForMediaPlayback = false
+        configuration.mediaTypesRequiringUserActionForPlayback = .all
         configuration.applicationNameForUserAgent = "Codinator"
         
         webView = WKWebView(frame: bottomView.frame, configuration: configuration)
@@ -63,15 +63,15 @@ class ProjectMainViewController: UIViewController, UISplitViewControllerDelegate
         bottomView.addSubview(webView!)
         
         
-        bottomView.addConstraint(NSLayoutConstraint(item: bottomView, attribute: .Top, relatedBy: .Equal, toItem: webView, attribute: .Top, multiplier: 1.0, constant: 0.0))
-        bottomView.addConstraint(NSLayoutConstraint(item: bottomView, attribute: .Bottom, relatedBy: .Equal, toItem: webView, attribute: .Bottom, multiplier: 1.0, constant: 0.0))
-        bottomView.addConstraint(NSLayoutConstraint(item: bottomView, attribute: .Left, relatedBy: .Equal, toItem: webView, attribute: .Left, multiplier: 1.0, constant: 0.0))
-        bottomView.addConstraint(NSLayoutConstraint(item: bottomView, attribute: .Right, relatedBy: .Equal, toItem: webView, attribute: .Right, multiplier: 1.0, constant: 0.0))
+        bottomView.addConstraint(NSLayoutConstraint(item: bottomView, attribute: .top, relatedBy: .equal, toItem: webView, attribute: .top, multiplier: 1.0, constant: 0.0))
+        bottomView.addConstraint(NSLayoutConstraint(item: bottomView, attribute: .bottom, relatedBy: .equal, toItem: webView, attribute: .bottom, multiplier: 1.0, constant: 0.0))
+        bottomView.addConstraint(NSLayoutConstraint(item: bottomView, attribute: .left, relatedBy: .equal, toItem: webView, attribute: .left, multiplier: 1.0, constant: 0.0))
+        bottomView.addConstraint(NSLayoutConstraint(item: bottomView, attribute: .right, relatedBy: .equal, toItem: webView, attribute: .right, multiplier: 1.0, constant: 0.0))
         
         
         // webView
         getSplitView.webView = webView
-        getSplitView.projectManager = Polaris(projectPath: path, currentView: nil, withWebServer: NSUserDefaults.standardUserDefaults().boolForKey("CnWebServer"), uploadServer: NSUserDefaults.standardUserDefaults().boolForKey("CnUploadServer"), andWebDavServer: NSUserDefaults.standardUserDefaults().boolForKey("CnWebDavServer"))
+        getSplitView.projectManager = Polaris(projectPath: path, currentView: nil, withWebServer: UserDefaults.standard().bool(forKey: "CnWebServer"), uploadServer: UserDefaults.standard().bool(forKey: "CnUploadServer"), andWebDavServer: UserDefaults.standard().bool(forKey: "CnWebDavServer"))
         getSplitView.mainViewController = self
         
         getSplitView.delegate = self
@@ -81,11 +81,11 @@ class ProjectMainViewController: UIViewController, UISplitViewControllerDelegate
     
     
     var notConfigured = true
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         
-        let projectName = getSplitView.projectManager.getSettingsDataForKey("ProjectName") as! String
+        let projectName = getSplitView.projectManager.getSettingsData(forKey: "ProjectName") as! String
             self.navigationController?.navigationBar.topItem?.title = projectName
             getSplitView.rootVC = self
         
@@ -98,22 +98,22 @@ class ProjectMainViewController: UIViewController, UISplitViewControllerDelegate
         
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.whiteColor()]
+        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.white()]
     }
     
     
-    @IBAction func back(sender: UIBarButtonItem) {
+    @IBAction func back(_ sender: UIBarButtonItem) {
         if getSplitView.filesTableView?.navigationController?.viewControllers.count == 1 {
-            self.navigationController?.popViewControllerAnimated(true)
+           _ = self.navigationController?.popViewController(animated: true)
         }
         else {
-            getSplitView.filesTableView?.navigationController?.popViewControllerAnimated(true)
+            _ = getSplitView.filesTableView?.navigationController?.popViewController(animated: true)
         }
     }
     
-    @IBAction func search(sender: UIBarButtonItem) {        
+    @IBAction func search(_ sender: UIBarButtonItem) {        
         if let _ = getSplitView.filesTableView!.navigationController?.viewControllers.last as? EditorViewController {
             getSplitView?.dealWithSearchBar()
         }
@@ -125,16 +125,16 @@ class ProjectMainViewController: UIViewController, UISplitViewControllerDelegate
     
     
     var documentInteractionController: UIDocumentInteractionController?
-    @IBAction func shareDidPush(sender: UIBarButtonItem) {
+    @IBAction func shareDidPush(_ sender: UIBarButtonItem) {
         
         // Create an NSURL for the file you want to send to another app
         if let fileUrl = getSplitView!.projectManager.selectedFileURL {
             
             // Create the interaction controller
-            documentInteractionController = UIDocumentInteractionController(URL: fileUrl)
+            documentInteractionController = UIDocumentInteractionController(url: fileUrl)
             
             // Present the app picker display
-            documentInteractionController!.presentOptionsMenuFromBarButtonItem(sender, animated: true)
+            documentInteractionController!.presentOptionsMenu(from: sender, animated: true)
    
         }
         else {
@@ -148,7 +148,7 @@ class ProjectMainViewController: UIViewController, UISplitViewControllerDelegate
 
     var isCompact: Bool {
         get {
-            return self.getSplitView.view.traitCollection.horizontalSizeClass == .Compact
+            return self.getSplitView.view.traitCollection.horizontalSizeClass == .compact
         }
     }
     
@@ -157,7 +157,7 @@ class ProjectMainViewController: UIViewController, UISplitViewControllerDelegate
     @IBOutlet var redoButton: UIBarButtonItem!
     var removedOnce = false
     var firstStartHappened = false
-    override func traitCollectionDidChange(previousTraitCollection: UITraitCollection?) {
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         
         
@@ -174,7 +174,7 @@ class ProjectMainViewController: UIViewController, UISplitViewControllerDelegate
             var rightItems: [UIBarButtonItem] = self.navigationItem.rightBarButtonItems!
             
             if rightItems.count == 4 {
-                rightItems.insert(leftButton, atIndex: rightItems.count)
+                rightItems.insert(leftButton, at: rightItems.count)
                 self.navigationItem.rightBarButtonItems = rightItems
             }
         }
@@ -202,8 +202,8 @@ class ProjectMainViewController: UIViewController, UISplitViewControllerDelegate
         
     }
     
-    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
 
         if size.width >= 480 {
             
@@ -228,7 +228,7 @@ class ProjectMainViewController: UIViewController, UISplitViewControllerDelegate
     
     
     // MARK: - Navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: AnyObject?) {
         
         if segue.identifier == "assistantView" {
             self.getSplitView!.assistantViewController = segue.destinationViewController as? AssistantViewController

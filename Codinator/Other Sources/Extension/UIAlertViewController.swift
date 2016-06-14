@@ -11,9 +11,9 @@ import Foundation
 extension UIAlertController {
     
     /// Creates a simple alert
-    class func alertWithTitle(title: String, message: String, cancelButtonTitle: String) -> UIAlertController {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        let cancel = UIAlertAction(title: cancelButtonTitle, style: .Cancel, handler: nil)
+    class func alertWithTitle(_ title: String, message: String, cancelButtonTitle: String) -> UIAlertController {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let cancel = UIAlertAction(title: cancelButtonTitle, style: .cancel, handler: nil)
         alertController.addAction(cancel)
         
         return alertController

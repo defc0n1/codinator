@@ -22,7 +22,7 @@ class PeekImageViewController: UIViewController {
         var items = [UIPreviewActionItem]()
         
         if isDir == false {
-            let printAction = UIPreviewAction(title: "Print", style: .Default, handler: { _ in
+            let printAction = UIPreviewAction(title: "Print", style: .default, handler: { _ in
             self.delegate?.print()
             })
             
@@ -30,20 +30,20 @@ class PeekImageViewController: UIViewController {
         }
         
         
-        let moveAction = UIPreviewAction(title: "Move file", style: .Default, handler: { _ in
+        let moveAction = UIPreviewAction(title: "Move file", style: .default, handler: { _ in
             self.delegate?.move()
         })
         
         
-        let renameAction = UIPreviewAction(title: "Rename", style: .Default, handler: { _ in
+        let renameAction = UIPreviewAction(title: "Rename", style: .default, handler: { _ in
              self.delegate?.rename()
         })
         
-        let shareAction = UIPreviewAction(title: "Share", style: .Default, handler: { _ in
+        let shareAction = UIPreviewAction(title: "Share", style: .default, handler: { _ in
             self.delegate?.share()
         })
         
-        let deleteAction = UIPreviewAction(title: "Delete", style: .Destructive, handler: { _ in
+        let deleteAction = UIPreviewAction(title: "Delete", style: .destructive, handler: { _ in
             self.delegate?.delete()
         })
         

@@ -41,8 +41,8 @@ class PlaygroundViewController: UIViewController, UITextViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        document = PlaygroundDocument(fileURL: NSURL(fileURLWithPath: filePath, isDirectory: false))
-        document.openWithCompletionHandler { (success) -> Void in
+        document = PlaygroundDocument(fileURL: URL(fileURLWithPath: filePath, isDirectory: false))
+        document.open { (success) -> Void in
             
             if (success){
                 if (self.document.contents.count == 3){
@@ -50,7 +50,7 @@ class PlaygroundViewController: UIViewController, UITextViewDelegate {
                     self.cssText = self.document.contents[1] as! String
                     self.jsText = self.document.contents[2] as! String
                 }
-                self.navigationItem.title = (self.document.fileURL.lastPathComponent! as NSString).stringByDeletingPathExtension + " Playground"
+                self.navigationItem.title = (self.document.fileURL.lastPathComponent! as NSString).deletingPathExtension + " Playground"
                 
             }
             else{
@@ -65,9 +65,9 @@ class PlaygroundViewController: UIViewController, UITextViewDelegate {
         
         self.applyFramesForViewSize(self.textViewSpace.frame.size)
         
-        self.neuronTextView.backgroundColor = UIColor.blackColor()
-        self.cssTextView.backgroundColor = UIColor.blackColor()
-        self.jsTextView.backgroundColor = UIColor.blackColor()
+        self.neuronTextView.backgroundColor = UIColor.black()
+        self.cssTextView.backgroundColor = UIColor.black()
+        self.jsTextView.backgroundColor = UIColor.black()
         
         
         // Add to subView
@@ -81,11 +81,11 @@ class PlaygroundViewController: UIViewController, UITextViewDelegate {
     }
 
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         applyFramesForViewSize(textViewSpace.frame.size)
-        let appearance = UIKeyboardAppearance.Dark
+        let appearance = UIKeyboardAppearance.dark
         
         self.neuronTextView.alwaysBounceVertical = true
         self.cssTextView.alwaysBounceVertical = true
@@ -95,11 +95,11 @@ class PlaygroundViewController: UIViewController, UITextViewDelegate {
         self.cssTextView.keyboardAppearance = appearance
         self.jsTextView.keyboardAppearance = appearance
         
-        self.neuronTextView.keyboardDismissMode = .Interactive
-        self.cssTextView.keyboardDismissMode = .Interactive
-        self.jsTextView.keyboardDismissMode = .Interactive
+        self.neuronTextView.keyboardDismissMode = .interactive
+        self.cssTextView.keyboardDismissMode = .interactive
+        self.jsTextView.keyboardDismissMode = .interactive
         
-        let textViewTintColor = UIColor.whiteColor()
+        let textViewTintColor = UIColor.white()
         self.neuronTextView.tintColor = textViewTintColor
         self.cssTextView.tintColor = textViewTintColor
         self.jsTextView.tintColor = textViewTintColor
@@ -107,11 +107,11 @@ class PlaygroundViewController: UIViewController, UITextViewDelegate {
         
         // Create keyboard
         
-        let snippet = UIBarButtonItem(image: UIImage(named: "tab"), style: UIBarButtonItemStyle.Plain, target: self, action: #selector(PlaygroundViewController.insertTab))
-        let snippetOne = UIBarButtonItem(image: UIImage(named: "quoteSign"), style: UIBarButtonItemStyle.Plain, target: self, action: #selector(PlaygroundViewController.insertStringSnippet))
-        let snippetTwo = UIBarButtonItem(image: UIImage(named: "bracketOpenSC"), style: UIBarButtonItemStyle.Plain, target: self, action: #selector(PlaygroundViewController.insertOpenBracket))
-        let snippetThree = UIBarButtonItem(image: UIImage(named: "bracketCloseSC"), style: UIBarButtonItemStyle.Plain, target: self, action: #selector(PlaygroundViewController.insertCloseBracket))
-        let snippetFour = UIBarButtonItem(image: UIImage(named: "doubleDotsSC"), style: UIBarButtonItemStyle.Plain, target: self, action: #selector(PlaygroundViewController.insertDoublePoint))
+        let snippet = UIBarButtonItem(image: UIImage(named: "tab"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(PlaygroundViewController.insertTab))
+        let snippetOne = UIBarButtonItem(image: UIImage(named: "quoteSign"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(PlaygroundViewController.insertStringSnippet))
+        let snippetTwo = UIBarButtonItem(image: UIImage(named: "bracketOpenSC"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(PlaygroundViewController.insertOpenBracket))
+        let snippetThree = UIBarButtonItem(image: UIImage(named: "bracketCloseSC"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(PlaygroundViewController.insertCloseBracket))
+        let snippetFour = UIBarButtonItem(image: UIImage(named: "doubleDotsSC"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(PlaygroundViewController.insertDoublePoint))
         
         let barButtonItems = [snippet,snippetOne, snippetTwo, snippetThree, snippetFour];
         
@@ -140,12 +140,12 @@ class PlaygroundViewController: UIViewController, UITextViewDelegate {
         self.jsTextView.delegate = self
         
         if (self.view.bounds.size.width <= 1000){
-            self.cssTextView.hidden = true
-            self.jsTextView.hidden = true
+            self.cssTextView.isHidden = true
+            self.jsTextView.isHidden = true
         }
         
         
-        let resizingMask: UIViewAutoresizing = [.FlexibleWidth, .FlexibleHeight, .FlexibleLeftMargin, .FlexibleRightMargin, .FlexibleBottomMargin]
+        let resizingMask: UIViewAutoresizing = [.flexibleWidth, .flexibleHeight, .flexibleLeftMargin, .flexibleRightMargin, .flexibleBottomMargin]
         
         self.neuronTextView.autoresizingMask = resizingMask
         self.cssTextView.autoresizingMask = resizingMask
@@ -153,11 +153,11 @@ class PlaygroundViewController: UIViewController, UITextViewDelegate {
         
         
         let key = "PlaygroundQSGWasDisplayedOnce"
-        let display = NSUserDefaults.standardUserDefaults().boolForKey(key)
+        let display = UserDefaults.standard().bool(forKey: key)
         
         if display == false {
-            self.performSegueWithIdentifier("QSG", sender: self)
-            NSUserDefaults.standardUserDefaults().setBool(true, forKey: key)
+            self.performSegue(withIdentifier: "QSG", sender: self)
+            UserDefaults.standard().set(true, forKey: key)
         }
      
     }
@@ -166,7 +166,7 @@ class PlaygroundViewController: UIViewController, UITextViewDelegate {
     
     //MARK: Delegates
     
-    func textViewDidChange(textView: UITextView) {
+    func textViewDidChange(_ textView: UITextView) {
         
         let tmpPath = NSTemporaryDirectory()
         
@@ -181,7 +181,7 @@ class PlaygroundViewController: UIViewController, UITextViewDelegate {
                 let cssString = self.document.contents[1] as! String
                 let jsString = self.document.contents[2] as! String
                 
-                try Neuron.neuronCode(self.neuronTextView.text, cssString: cssString, jsString: jsString).writeToFile (tmpPath + "/index.html", atomically: true, encoding: NSUTF8StringEncoding)
+                try Neuron.neuronCode(self.neuronTextView.text, cssString: cssString, jsString: jsString).write (toFile: tmpPath + "/index.html", atomically: true, encoding: String.Encoding.utf8)
                 
             }
             catch{
@@ -204,7 +204,7 @@ class PlaygroundViewController: UIViewController, UITextViewDelegate {
                 let startingHTMLString = self.document.contents[0] as! String
                 let jsString = self.document.contents[2] as! String
                 
-                try Neuron.neuronCode(startingHTMLString, cssString: cssTextView.text, jsString: jsString).writeToFile(tmpPath + "/index.html", atomically: true, encoding: NSUTF8StringEncoding)
+                try Neuron.neuronCode(startingHTMLString, cssString: cssTextView.text, jsString: jsString).write(toFile: tmpPath + "/index.html", atomically: true, encoding: String.Encoding.utf8)
                 
             }
             catch{
@@ -221,7 +221,7 @@ class PlaygroundViewController: UIViewController, UITextViewDelegate {
                 let startingHTMLString = self.document.contents[0] as! String
                 let cssString = self.document.contents[1] as! String
                 
-                try Neuron.neuronCode(startingHTMLString, cssString: cssString, jsString: self.jsTextView.text).writeToFile(tmpPath + "/index.html", atomically: true, encoding: NSUTF8StringEncoding)
+                try Neuron.neuronCode(startingHTMLString, cssString: cssString, jsString: self.jsTextView.text).write(toFile: tmpPath + "/index.html", atomically: true, encoding: String.Encoding.utf8)
                 
             }
             catch{
@@ -235,20 +235,20 @@ class PlaygroundViewController: UIViewController, UITextViewDelegate {
         }
         
         
-        let url = NSURL(fileURLWithPath: tmpPath + "/index.html", isDirectory: false)
-        let request = NSURLRequest(URL: url)
+        let url = URL(fileURLWithPath: tmpPath + "/index.html", isDirectory: false)
+        let request = URLRequest(url: url)
         
         self.webView.loadRequest(request)
         
     }
     
     var length = 0
-    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         
         if length >= 8 || text.characters.count > 8 {
             length = 0
             print("File will save..")
-            document.saveToURL(NSURL(fileURLWithPath: filePath), forSaveOperation: UIDocumentSaveOperation.ForOverwriting) { (success) -> Void in
+            document.save(to: URL(fileURLWithPath: filePath), for: UIDocumentSaveOperation.forOverwriting) { (success) -> Void in
                 if success {
                     print("Playground file was saved")
                 }
@@ -269,10 +269,10 @@ class PlaygroundViewController: UIViewController, UITextViewDelegate {
     }
     
     
-    func textViewDidEndEditing(textView: UITextView) {
+    func textViewDidEndEditing(_ textView: UITextView) {
 
 
-        UIView.animateWithDuration(0.3, delay: 0.0, options: .CurveEaseInOut, animations: { () -> Void in
+        UIView.animate(withDuration: 0.3, delay: 0.0, options: UIViewAnimationOptions(), animations: { () -> Void in
             
             let noInsets = UIEdgeInsetsMake(0, 0, 0, 0)
             textView.contentInset = noInsets
@@ -296,11 +296,11 @@ class PlaygroundViewController: UIViewController, UITextViewDelegate {
         let cssString = self.document.contents[1] as! String
         let jsString = self.document.contents[2] as! String
         
-        try! Neuron.neuronCode(startingHTMLString, cssString: cssString, jsString: jsString).writeToFile(tmpPath + "/index.html", atomically: true, encoding: NSUTF8StringEncoding)
+        try! Neuron.neuronCode(startingHTMLString, cssString: cssString, jsString: jsString).write(toFile: tmpPath + "/index.html", atomically: true, encoding: String.Encoding.utf8)
         
         
-        let url = NSURL(fileURLWithPath: tmpPath + "/index.html", isDirectory: false)
-        let request = NSURLRequest(URL: url)
+        let url = URL(fileURLWithPath: tmpPath + "/index.html", isDirectory: false)
+        let request = URLRequest(url: url)
         
         self.webView.loadRequest(request)
         
@@ -312,7 +312,7 @@ class PlaygroundViewController: UIViewController, UITextViewDelegate {
     
     
     
-    @IBAction func segmentDidChanged(sender: UISegmentedControl) {
+    @IBAction func segmentDidChanged(_ sender: UISegmentedControl) {
         neuronTextView.resignFirstResponder()
         cssTextView.resignFirstResponder()
         jsTextView.resignFirstResponder()
@@ -320,19 +320,19 @@ class PlaygroundViewController: UIViewController, UITextViewDelegate {
         switch (sender.selectedSegmentIndex){
             
         case 0:
-            self.neuronTextView.hidden = false
-            self.cssTextView.hidden = true
-            self.jsTextView.hidden = true
+            self.neuronTextView.isHidden = false
+            self.cssTextView.isHidden = true
+            self.jsTextView.isHidden = true
             break
         case 1:
-            self.neuronTextView.hidden = true
-            self.cssTextView.hidden = false
-            self.jsTextView.hidden = true
+            self.neuronTextView.isHidden = true
+            self.cssTextView.isHidden = false
+            self.jsTextView.isHidden = true
             break
         case 2:
-            self.neuronTextView.hidden = true
-            self.cssTextView.hidden = true
-            self.jsTextView.hidden = false
+            self.neuronTextView.isHidden = true
+            self.cssTextView.isHidden = true
+            self.jsTextView.isHidden = false
             break
         default:
             break
@@ -369,15 +369,15 @@ class PlaygroundViewController: UIViewController, UITextViewDelegate {
     
     //MARK: Extra
     
-    @IBAction func closeDidPush(sender: AnyObject) {
+    @IBAction func closeDidPush(_ sender: AnyObject) {
         
 //        NSOperationQueue.mainQueue().addOperationWithBlock { 
         
-        self.document.closeWithCompletionHandler { saved in
+        self.document.close { saved in
             
             if saved {
                 
-                self.navigationController?.popToRootViewControllerAnimated(true)
+                _ = self.navigationController?.popToRootViewController(animated: true)
                 
             }
             
@@ -407,83 +407,82 @@ class PlaygroundViewController: UIViewController, UITextViewDelegate {
     }
     
     
-    @IBAction func actionsDidPush(sender: UIBarButtonItem) {
+    @IBAction func actionsDidPush(_ sender: UIBarButtonItem) {
         
-        let popup = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
-        popup.view.tintColor = UIColor.orangeColor()
+        let popup = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.actionSheet)
+        popup.view.tintColor = UIColor.orange()
         
         popup.popoverPresentationController?.barButtonItem = sender
         
         
-        let printAction = UIAlertAction(title: "Print 📠", style: UIAlertActionStyle.Default) { (UIAlertAction) -> Void in
+        let printAction = UIAlertAction(title: "Print 📠", style: UIAlertActionStyle.default) { (UIAlertAction) -> Void in
             
             let pi = UIPrintInfo.printInfo()
-            pi.outputType = UIPrintInfoOutputType.General
+            pi.outputType = UIPrintInfoOutputType.general
             pi.jobName = "Print Playground"
-            pi.orientation = UIPrintInfoOrientation.Portrait
-            pi.duplex = UIPrintInfoDuplex.LongEdge
+            pi.orientation = UIPrintInfoOrientation.portrait
+            pi.duplex = UIPrintInfoDuplex.longEdge
             
             
-            let pic = UIPrintInteractionController.sharedPrintController()
+            let pic = UIPrintInteractionController.shared()
             pic.printInfo = pi
-            pic.showsPageRange = true
             pic.printFormatter = self.webView.viewPrintFormatter()
             
-            pic.presentAnimated(true, completionHandler: nil)
+            pic.present(animated: true, completionHandler: nil)
             
         }
         
-        let convertAction = UIAlertAction(title: "Copy Converted to Clipboard 📎", style: UIAlertActionStyle.Default) { (UIAlertAction) -> Void in
+        let convertAction = UIAlertAction(title: "Copy Converted to Clipboard 📎", style: UIAlertActionStyle.default) { (UIAlertAction) -> Void in
             
             
             let startingHTMLString = self.document.contents[0] as! String
             let cssString = self.document.contents[1] as! String
             let jsString = self.document.contents[2] as! String
             
-            let pasteboard = UIPasteboard.generalPasteboard()
+            let pasteboard = UIPasteboard.general()
             pasteboard.string = Neuron.neuronCode(startingHTMLString, cssString: cssString, jsString: jsString)
         }
         
         
-        let cancel = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
         popup.addAction(printAction)
         popup.addAction(convertAction)
         popup.addAction(cancel)
         
-        self.presentViewController(popup, animated: true, completion: nil)
+        self.present(popup, animated: true, completion: nil)
         
         
         
     }
     
     
-    @IBAction func documentationDidPush(sender: UIBarButtonItem) {
+    @IBAction func documentationDidPush(_ sender: UIBarButtonItem) {
         
-        let popup = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
-        popup.view.tintColor = UIColor.orangeColor()
+        let popup = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.actionSheet)
+        popup.view.tintColor = UIColor.orange()
         
         popup.popoverPresentationController?.barButtonItem = sender
         
-        let documetationAction = UIAlertAction(title: "Neuron Documentation 📚", style: UIAlertActionStyle.Default) { (UIAlertAction) -> Void in
+        let documetationAction = UIAlertAction(title: "Neuron Documentation 📚", style: UIAlertActionStyle.default) { (UIAlertAction) -> Void in
             
-            let url: NSURL = NSURL(string: "http://vwas.cf/neuron/docs")!
+            let url: URL = URL(string: "http://vwas.cf/neuron/docs")!
             
-            let safariVC: SFSafariViewController = SFSafariViewController(URL: url)
+            let safariVC: SFSafariViewController = SFSafariViewController(url: url)
             safariVC.view.tintColor = self.view.tintColor
             
-            safariVC.modalPresentationStyle = .FormSheet
+            safariVC.modalPresentationStyle = .formSheet
             
-            self.presentViewController(safariVC, animated: true, completion: nil)
+            self.present(safariVC, animated: true, completion: nil)
             
         }
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
         popup.addAction(documetationAction)
         popup.addAction(cancelAction)
         
-        self.presentViewController(popup, animated: true, completion: nil)
+        self.present(popup, animated: true, completion: nil)
         
         self.neuronTextView.frame = rootHTML
         self.cssTextView.frame = rootCSS
@@ -493,12 +492,12 @@ class PlaygroundViewController: UIViewController, UITextViewDelegate {
     
     // MARK: - Frames
     
-    func applyFramesForViewSize(size: CGSize) {
+    func applyFramesForViewSize(_ size: CGSize) {
         
         // Set up frames
         
         
-        self.rootHTML = CGRectMake(0, 0, size.width, size.height)
+        self.rootHTML = CGRect(x: 0, y: 0, width: size.width, height: size.height)
         self.rootCSS = rootHTML
         self.rootJS = rootHTML
         
@@ -513,8 +512,8 @@ class PlaygroundViewController: UIViewController, UITextViewDelegate {
     
     //MARK: Layout Managing
 
-    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
         applyFramesForViewSize(textViewSpace.frame.size)
         
     }

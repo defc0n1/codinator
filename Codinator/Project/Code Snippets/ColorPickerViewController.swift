@@ -9,7 +9,7 @@
 import UIKit
 
 protocol ColorProtocol {
-    func colorDidChange(color: UIColor)
+    func colorDidChange(_ color: UIColor)
 }
 
 class ColorPickerViewController: UIViewController{
@@ -29,11 +29,11 @@ class ColorPickerViewController: UIViewController{
             colorPickerView.color = predefinedColor
         }
         else {
-            if let color = NSUserDefaults.standardUserDefaults().colorForKey("colorPickerCn"){
+            if let color = UserDefaults.standard().color(forKey: "colorPickerCn"){
                 colorPickerView.color = color
             }
             else{
-                colorPickerView.color = UIColor.purpleColor()
+                colorPickerView.color = UIColor.purple()
             }
         }
         
@@ -41,10 +41,10 @@ class ColorPickerViewController: UIViewController{
 
     
     @IBAction func doneDidPush() {
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         delegate?.colorDidChange(colorPickerView.color)
         colorDelegate?.colorDidChange(colorPickerView.color)
     }

@@ -11,16 +11,16 @@ import Foundation
 extension FilesTableViewController: UIViewControllerPreviewingDelegate {
     
     // Peek
-    func previewingContext(previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
             
-        guard let indexPath = tableView.indexPathForRowAtPoint(location),
-            let cell = tableView.cellForRowAtIndexPath(indexPath) else {
+        guard let indexPath = tableView.indexPathForRow(at: location),
+            let cell = tableView.cellForRow(at: indexPath) else {
                 return nil
         }
         
 
-        let fileName = items[indexPath.row].lastPathComponent!
-        let path = inspectorURL!.URLByAppendingPathComponent(fileName)
+        let fileName = items[(indexPath as NSIndexPath).row].lastPathComponent!
+        let path = try! inspectorURL!.appendingPathComponent(fileName)
         
         self.projectManager.deleteURL = path
         
@@ -28,7 +28,7 @@ extension FilesTableViewController: UIViewControllerPreviewingDelegate {
     
         case "png", "jpg", "jpeg", "bmp", "":
             
-            guard let previewVC = storyboard?.instantiateViewControllerWithIdentifier("imageViewPeek") as? PeekImageViewController,
+            guard let previewVC = storyboard?.instantiateViewController(withIdentifier: "imageViewPeek") as? PeekImageViewController,
             imageView = previewVC.view.subviews.first as? UIImageView else {
                 return nil
             }
@@ -41,7 +41,7 @@ extension FilesTableViewController: UIViewControllerPreviewingDelegate {
             
             if path.pathExtension == "" {
                 let imageViewSize = cell.imageView!.frame.size
-                previewVC.preferredContentSize = CGSizeMake(imageViewSize.width * 3, imageViewSize.height * 3)
+                previewVC.preferredContentSize = CGSize(width: imageViewSize.width * 3, height: imageViewSize.height * 3)
                 previewVC.isDir = true
 
             }
@@ -50,7 +50,7 @@ extension FilesTableViewController: UIViewControllerPreviewingDelegate {
             
             
         default:
-            guard let previewVC = storyboard?.instantiateViewControllerWithIdentifier("webViewPeek") as? PeekWebViewController else {
+            guard let previewVC = storyboard?.instantiateViewController(withIdentifier: "webViewPeek") as? PeekWebViewController else {
                 return nil
             }
             previewVC.delegate = self
@@ -65,7 +65,7 @@ extension FilesTableViewController: UIViewControllerPreviewingDelegate {
     
     // Pop
     
-    func previewingContext(previewingContext: UIViewControllerPreviewing, commitViewController viewControllerToCommit: UIViewController) {
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
         let path = self.projectManager.deleteURL
         
         switch path!.pathExtension! {
@@ -79,19 +79,19 @@ extension FilesTableViewController: UIViewControllerPreviewingDelegate {
             }
             
             
-            webView.loadFileURL(path!, allowingReadAccessToURL: path!.URLByDeletingLastPathComponent!)
+            webView.loadFileURL(path!, allowingReadAccessTo: try! path!.deletingLastPathComponent())
             
             projectManager.selectedFileURL = path
             projectManager.deleteURL = nil
             
-            if let data = NSFileManager.defaultManager().contentsAtPath(path!.path!) {
-                let contents = NSString(data: data, encoding: NSUTF8StringEncoding)
+            if let data = FileManager.default().contents(atPath: path!.path!) {
+                let contents = NSString(data: data, encoding: String.Encoding.utf8.rawValue)
                 
                 getSplitView.editorView!.text = contents as? String
                 
                 getSplitView.assistantViewController?.setFilePathTo(projectManager)
                 
-                self.selectFileWithName(path!.lastPathComponent!)
+                _ = self.selectFileWithName(path!.lastPathComponent!)
                 
             }
             

@@ -11,12 +11,12 @@ import Foundation
 extension EditorViewController: WUTextSuggestionDisplayControllerDataSource {
     
     
-    func textSuggestionDisplayController(textSuggestionDisplayController: WUTextSuggestionDisplayController!, suggestionDisplayItemsForSuggestionType suggestionType: WUTextSuggestionType, query suggestionQuery: String!) -> [AnyObject]! {
-        if suggestionType == .Tag {
+    func textSuggestionDisplayController(_ textSuggestionDisplayController: WUTextSuggestionDisplayController!, suggestionDisplayItemsFor suggestionType: WUTextSuggestionType, query suggestionQuery: String!) -> [AnyObject]! {
+        if suggestionType == .tag {
             var suggestionDisplayItems : [WUTextSuggestionDisplayItem] = []
             for name in self.filteredNamesUsingQuery(suggestionQuery) {
                 let item = WUTextSuggestionDisplayItem(title: name)
-                suggestionDisplayItems.append(item)
+                suggestionDisplayItems.append(item!)
             }
             return suggestionDisplayItems
         }
@@ -24,19 +24,19 @@ extension EditorViewController: WUTextSuggestionDisplayControllerDataSource {
         return nil;
     }
     
-    func filteredNamesUsingQuery(query : String) -> [String] {
-        if let filteredNames = self.names().filteredArrayUsingPredicate(NSPredicate(block: { (evaluatedObject : AnyObject, bindings: [String : AnyObject]?) -> Bool in
-            if let evaluatedObject = evaluatedObject as? String {
-                if evaluatedObject.lowercaseString.hasPrefix(query.lowercaseString) {
-                    return true
-                }
-            }
-            
-            return false
-        })) as? [String] {
-            return filteredNames
-        }
-        
+    func filteredNamesUsingQuery(_ query : String) -> [String] {
+//         let filteredNames = self.names().filtered(using: Predicate(block: { (evaluatedObject : AnyObject, bindings: [String : AnyObject]?) -> Bool in
+//            if let evaluatedObject = evaluatedObject as? String {
+//                if evaluatedObject.lowercased().hasPrefix(query.lowercased()) {
+//                    return true
+//                }
+//            }
+//            
+//            return false
+//        })) as? [String] {
+//            return filteredNames
+//        }
+//        
         return []
     }
     
@@ -46,7 +46,7 @@ extension EditorViewController: WUTextSuggestionDisplayControllerDataSource {
     
     func range() {
         
-        guard let rangeString = NSUserDefaults.standardUserDefaults().stringForKey("range") else {
+        guard let rangeString = UserDefaults.standard().string(forKey: "range") else {
             return
         }
         
@@ -75,12 +75,12 @@ extension EditorViewController: WUTextSuggestionDisplayControllerDataSource {
         }
         
         
-        let stringFromRange = (htmlTextView.text as NSString).substringWithRange( NSRange(location: location, length: 10))
+        let stringFromRange = (htmlTextView.text as NSString).substring( with: NSRange(location: location, length: 10))
         
         // Find where the tag starts
-        var findTag = stringFromRange.characters.enumerate().filter { $0.element == "<"}.last?.index
-        var findCloseBracket = stringFromRange.characters.enumerate().filter { $0.element == "/"}.last?.index
-        
+        var findTag = stringFromRange.characters.enumerated().filter { $0.element == "<"}.last?.offset
+        var findCloseBracket = stringFromRange.characters.enumerated().filter { $0.element == "/"}.last?.offset
+    
         
         if findTag == nil {
             findTag = 0
@@ -118,7 +118,7 @@ extension EditorViewController: WUTextSuggestionDisplayControllerDataSource {
         
         var checkString : String {
             if rangeString.characters.last == " " {
-                return rangeString.substringToIndex(rangeString.endIndex.predecessor())
+                return rangeString.substring(to: rangeString.characters.index(before: rangeString.endIndex))
             }
             else {
                 return rangeString
@@ -135,7 +135,7 @@ extension EditorViewController: WUTextSuggestionDisplayControllerDataSource {
             htmlTextView.insertText(checkString + br)
             
             // Move cursor back +1 since count starts with 0
-            self.moveCursorBy(br.characters.count, diretion: .Back)
+            self.moveCursorBy(br.characters.count, diretion: .back)
             
             
         default:
@@ -149,18 +149,18 @@ extension EditorViewController: WUTextSuggestionDisplayControllerDataSource {
     }
     
     enum MoveCursorDirection {
-        case Back
-        case Forward
+        case back
+        case forward
     }
     
-    func moveCursorBy(number: Int, diretion: MoveCursorDirection) {
+    func moveCursorBy(_ number: Int, diretion: MoveCursorDirection) {
         let range = htmlTextView.selectedRange
         
         switch diretion {
-        case .Back:
+        case .back:
             htmlTextView.selectedRange = NSMakeRange(range.location - number, 0)
             
-        case .Forward:
+        case .forward:
             htmlTextView.selectedRange = NSMakeRange(range.location + number, 0)
         }
     }

@@ -10,35 +10,35 @@ import Foundation
 
 extension WelcomeViewController: UIViewControllerPreviewingDelegate, PeekShortProtocol {
     
-    public func previewingContext(previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+    public func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
         
-        guard let indexPath = self.collectionView.indexPathForItemAtPoint(location),
-            let cell = collectionView.cellForItemAtIndexPath(indexPath) else {
+        guard let indexPath = self.collectionView.indexPathForItem(at: location),
+            let cell = collectionView.cellForItem(at: indexPath) else {
                 return nil
         }
         
         
-        if indexPath.section != 0 {
+        if (indexPath as NSIndexPath).section != 0 {
             return nil
         }
     
-        let fileName: NSString = projectsArray[indexPath.row].lastPathComponent!
+        let fileName: NSString = projectsArray[(indexPath as NSIndexPath).row].lastPathComponent!
         
         let root: NSString = AppDelegate.storagePath()
-        let projectsRootDirPath: NSString = root.stringByAppendingPathComponent("Projects")
-        let projectPath = projectsRootDirPath.stringByAppendingPathComponent(fileName as String)
+        let projectsRootDirPath: NSString = root.appendingPathComponent("Projects")
+        let projectPath = projectsRootDirPath.appendingPathComponent(fileName as String)
 
         
         if fileName.pathExtension != ".zip" {
             let path = projectPath + "/Assets/index.html"
             
-            guard let previewVC = storyboard?.instantiateViewControllerWithIdentifier("webViewPeek") as? PeekWebViewController else {
+            guard let previewVC = storyboard?.instantiateViewController(withIdentifier: "webViewPeek") as? PeekWebViewController else {
                 return nil
             }
             
             //        previewVC.delegate = self
             previewVC.isProjects = true
-            previewVC.previewURL = NSURL(fileURLWithPath: path)
+            previewVC.previewURL = URL(fileURLWithPath: path)
             previewingContext.sourceRect = cell.frame
             
             
@@ -55,12 +55,12 @@ extension WelcomeViewController: UIViewControllerPreviewingDelegate, PeekShortPr
     }
     
     
-    public func previewingContext(previewingContext: UIViewControllerPreviewing, commitViewController viewControllerToCommit: UIViewController) {
+    public func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
      
         if forceTouchPath.characters.count > 5 {
             
-            document = CodinatorDocument(fileURL: NSURL(fileURLWithPath: forceTouchPath))
-            document.openWithCompletionHandler { sucess in
+            document = CodinatorDocument(fileURL: URL(fileURLWithPath: forceTouchPath))
+            document.open { sucess in
                 
                 if sucess {
                     self.projectIsOpened = true
@@ -68,7 +68,7 @@ extension WelcomeViewController: UIViewControllerPreviewingDelegate, PeekShortPr
                     self.projectsPath = self.forceTouchPath
                     self.forceTouchPath = ""
                     
-                    self.performSegueWithIdentifier("projectPop", sender: nil)
+                    self.performSegue(withIdentifier: "projectPop", sender: nil)
                 }
                 else {
                     Notifications.sharedInstance.alertWithMessage("Failed opening the project.", title: "Error", viewController: self)
@@ -83,25 +83,25 @@ extension WelcomeViewController: UIViewControllerPreviewingDelegate, PeekShortPr
     // MARK: - Actions
     
     func rename() {
-        let message = "Rename \(((forceTouchPath as NSString).lastPathComponent as NSString).stringByDeletingPathExtension)"
+        let message = "Rename \(((forceTouchPath as NSString).lastPathComponent as NSString).deletingPathExtension)"
         
-        let alertController = UIAlertController(title: "Rename", message: message, preferredStyle: .Alert)
+        let alertController = UIAlertController(title: "Rename", message: message, preferredStyle: .alert)
         
-        alertController.addTextFieldWithConfigurationHandler { textField in
+        alertController.addTextField { textField in
             textField.placeholder = "Projects new name"
-            textField.keyboardAppearance = .Dark
+            textField.keyboardAppearance = .dark
             textField.tintColor = self.view.tintColor
         }
         
-        let processRenaming = UIAlertAction(title: "Rename", style: .Default) { _ in
+        let processRenaming = UIAlertAction(title: "Rename", style: .default) { _ in
             let newName = alertController.textFields![0].text! + ".cnProj"
-            let newPath = (self.forceTouchPath as NSString).stringByDeletingLastPathComponent + newName
+            let newPath = (self.forceTouchPath as NSString).deletingLastPathComponent + newName
             
             let polaris = Polaris(projectPath: self.forceTouchPath!, currentView: nil, withWebServer: false, uploadServer: false, andWebDavServer: false)
-            polaris.updateSettingsValueForKey("ProjectName", withValue: (newName as NSString).stringByDeletingPathExtension)
+            polaris.updateSettingsValue(forKey: "ProjectName", withValue: (newName as NSString).deletingPathExtension)
             
             do {
-                try NSFileManager.defaultManager().moveItemAtPath(self.forceTouchPath, toPath: newPath)
+                try FileManager.default().moveItem(atPath: self.forceTouchPath, toPath: newPath)
                 self.reloadData()
                 
             } catch let error as NSError {
@@ -112,19 +112,19 @@ extension WelcomeViewController: UIViewControllerPreviewingDelegate, PeekShortPr
         
         }
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
         alertController.addAction(processRenaming)
         alertController.addAction(cancelAction)
         
-        self.presentViewController(alertController, animated: true, completion: nil)
+        self.present(alertController, animated: true, completion: nil)
         
     }
     
     func delete() {
         
         do {
-            try NSFileManager.defaultManager().removeItemAtPath(self.forceTouchPath)
+            try FileManager.default().removeItem(atPath: self.forceTouchPath)
             forceTouchPath = ""
             self.reloadData()
         } catch let error as NSError{

@@ -8,27 +8,8 @@
 
 import UIKit
 
-class NeuronTextView: CYRTextView {
+class NeuronTextView: SourceCodeTextView {
 
-    var defaultFont: UIFont = NSUserDefaults.standardUserDefaults().fontForKey("Font: 0") {
-        didSet {
-            tokens = highlightingTokens()
-        }
-    }
-    
-    var boldFont: UIFont = NSUserDefaults.standardUserDefaults().fontForKey("Font: 1") {
-        didSet {
-            tokens = highlightingTokens()
-        }
-    }
-    
-    var italicFont: UIFont = NSUserDefaults.standardUserDefaults().fontForKey("Font: 2") {
-        didSet {
-            tokens = highlightingTokens()
-        }
-    }
-    
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.commonSetUp()
@@ -42,13 +23,13 @@ class NeuronTextView: CYRTextView {
     
     func commonSetUp() {
         self.font = defaultFont
-        self.textColor = UIColor.whiteColor()
-        self.indicatorStyle = .White
+        self.textColor = UIColor.white()
+        self.indicatorStyle = .white
         
         self.tokens = highlightingTokens()
     }
     
-    func highlightingTokens() -> [CYRToken!] {
+    override func highlightingTokens() -> [CYRToken] {
         
         let tokens = [
             
@@ -58,7 +39,7 @@ class NeuronTextView: CYRTextView {
                 expression: "\\b(algin|width|height|color|text|border|bgcolor|description|name|content|href|src|initialScale|charset|class|role|id|<!DOCTYPE html>|border)\\b",
                 attributes:
                 [
-                    NSForegroundColorAttributeName : NSUserDefaults.standardUserDefaults().colorForKey("Color: 5"),
+                    NSForegroundColorAttributeName : UserDefaults.standard().color(forKey: "Color: 5"),
                     NSFontAttributeName : self.defaultFont
                 ]
             ),
@@ -67,7 +48,7 @@ class NeuronTextView: CYRTextView {
                 expression: "\\b(P|B|I|)\\b",
                 attributes:
                 [
-                    NSForegroundColorAttributeName : NSUserDefaults.standardUserDefaults().colorForKey("Color: 3"),
+                    NSForegroundColorAttributeName : UserDefaults.standard().color(forKey: "Color: 3"),
                     NSFontAttributeName : self.defaultFont
                 ]
             ),
@@ -77,7 +58,7 @@ class NeuronTextView: CYRTextView {
                 expression: "\\b[A-Z][A-Z0-9]+\\b",
                 attributes:
                 [
-                    NSForegroundColorAttributeName : NSUserDefaults.standardUserDefaults().colorForKey("Color: 3"),
+                    NSForegroundColorAttributeName : UserDefaults.standard().color(forKey: "Color: 3"),
                     NSFontAttributeName : self.defaultFont
                 ]
             ),

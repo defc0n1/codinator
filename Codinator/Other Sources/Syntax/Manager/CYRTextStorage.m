@@ -34,6 +34,7 @@
 
 #import "CYRTextStorage.h"
 #import "CYRToken.h"
+#import "Codinator-Swift.h"
 
 #import "NSUserDefaults+Additions.h"
 
@@ -52,12 +53,7 @@
 {
     if (self = [super init])
     {
-        
-
-        
-        
-        
-        _defaultFont = [[NSUserDefaults standardUserDefaults] fontForKey:@"Font: 0"];
+        _defaultFont = [FontDefaults fontWithKey:@"Font: 0"];
         _defaultTextColor = [UIColor whiteColor];
         
         

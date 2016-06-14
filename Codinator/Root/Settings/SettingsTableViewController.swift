@@ -9,7 +9,7 @@
 import UIKit
 import StoreKit
 import MessageUI
-import Twitter
+//import Twitter
 
 class SettingsTableViewController: UITableViewController, SKStoreProductViewControllerDelegate, MFMailComposeViewControllerDelegate {
 
@@ -27,7 +27,7 @@ class SettingsTableViewController: UITableViewController, SKStoreProductViewCont
     @IBOutlet weak var useWebServerSwitch: UISwitch!
     @IBOutlet weak var useUploadServerSwitch: UISwitch!
     
-    let userDefauls = NSUserDefaults.standardUserDefaults()
+    let userDefauls = UserDefaults.standard()
 
     
     
@@ -45,11 +45,11 @@ class SettingsTableViewController: UITableViewController, SKStoreProductViewCont
         
         cells.forEach { $0.backgroundColor = tableView.backgroundColor }
         
-        self.showLineNumberSwitch.on = userDefauls.boolForKey(kLineNumber)
+        self.showLineNumberSwitch.isOn = userDefauls.bool(forKey: kLineNumber)
         
-        self.useWebServerSwitch.on = userDefauls.boolForKey(kWebServer);
-        self.useWebDavServerSwitch.on = userDefauls.boolForKey(kWebDavServer);
-        self.useUploadServerSwitch.on = userDefauls.boolForKey(kUploadServer);
+        self.useWebServerSwitch.isOn = userDefauls.bool(forKey: kWebServer);
+        self.useWebDavServerSwitch.isOn = userDefauls.bool(forKey: kWebDavServer);
+        self.useUploadServerSwitch.isOn = userDefauls.bool(forKey: kUploadServer);
        
         
         extraCells.forEach {
@@ -61,32 +61,32 @@ class SettingsTableViewController: UITableViewController, SKStoreProductViewCont
     //MARK: Switches Changed
     
     
-    @IBAction func showLineNumberSwichChanged(sender: AnyObject) {
-        userDefauls.setBool(self.showLineNumberSwitch.on, forKey: kLineNumber)
+    @IBAction func showLineNumberSwichChanged(_ sender: AnyObject) {
+        userDefauls.set(self.showLineNumberSwitch.isOn, forKey: kLineNumber)
         userDefauls.synchronize()
     }
     
     
     
-    @IBAction func webDavSwichChanged(sender: AnyObject) {
-        userDefauls.setBool(self.useWebDavServerSwitch.on, forKey: kWebDavServer)
+    @IBAction func webDavSwichChanged(_ sender: AnyObject) {
+        userDefauls.set(self.useWebDavServerSwitch.isOn, forKey: kWebDavServer)
         userDefauls.synchronize()
     }
     
     
-    @IBAction func webServerSwichChanged(sender: AnyObject) {
-        userDefauls.setBool(self.useWebServerSwitch.on, forKey: kWebDavServer)
+    @IBAction func webServerSwichChanged(_ sender: AnyObject) {
+        userDefauls.set(self.useWebServerSwitch.isOn, forKey: kWebDavServer)
         userDefauls.synchronize()
     }
     
     
-    @IBAction func uploadServerSwichChanged(sender: AnyObject) {
-        userDefauls.setBool(self.useUploadServerSwitch.on, forKey: kWebDavServer)
+    @IBAction func uploadServerSwichChanged(_ sender: AnyObject) {
+        userDefauls.set(self.useUploadServerSwitch.isOn, forKey: kWebDavServer)
         userDefauls.synchronize()
     }
     
-    @IBAction func doneDidPush(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func doneDidPush(_ sender: AnyObject) {
+        self.dismiss(animated: true, completion: nil)
     }
     
     
@@ -94,12 +94,12 @@ class SettingsTableViewController: UITableViewController, SKStoreProductViewCont
     
     // MARK: - Did push cells
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        if indexPath.section == 2 {
-            tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        if (indexPath as NSIndexPath).section == 2 {
+            tableView.deselectRow(at: indexPath, animated: true)
 
-            switch indexPath.row {
+            switch (indexPath as NSIndexPath).row {
             case 0:
                 if (MFMailComposeViewController.canSendMail()){
                     
@@ -112,7 +112,7 @@ class SettingsTableViewController: UITableViewController, SKStoreProductViewCont
                     mailController.mailComposeDelegate = self
                     mailController.view.tintColor = self.view.tintColor
                     
-                    self.presentViewController(mailController, animated: true, completion: nil)
+                    self.present(mailController, animated: true, completion: nil)
                     
                 }
                 
@@ -121,23 +121,24 @@ class SettingsTableViewController: UITableViewController, SKStoreProductViewCont
                 let storeProductViewController = SKStoreProductViewController()
                 storeProductViewController.delegate = self
                 let dict = [ SKStoreProductParameterITunesItemIdentifier : "1024671232"]
-                storeProductViewController.loadProductWithParameters(dict, completionBlock: nil)
-                self.presentViewController(storeProductViewController, animated: true, completion: nil)
+                storeProductViewController.loadProduct(withParameters: dict, completionBlock: nil)
+                self.present(storeProductViewController, animated: true, completion: nil)
                 
                 
             case 2:
-                if (SLComposeViewController.isAvailableForServiceType(SLServiceTypeTwitter)){
-                    
-                    let tweetSheet = SLComposeViewController(forServiceType: SLServiceTypeTwitter)
-                    tweetSheet.setInitialText("#Codinator is amazing. Editing projects on the go has never been easier. You really should try it out!")
-                    tweetSheet.addURL(NSURL(string: "https://itunes.apple.com/us/app/codinator/id1024671232?ls=1&mt=8"))
-                    
-                    tweetSheet.view.tintColor = self.view.tintColor
-                    
-                    self.presentViewController(tweetSheet, animated: true, completion: nil)
-                    
-                    
-                }
+                break
+//                if (SLComposeViewController.isAvailableForServiceType(SLServiceTypeTwitter)){
+//                    
+//                    let tweetSheet = SLComposeViewController(forServiceType: SLServiceTypeTwitter)
+//                    tweetSheet.setInitialText("#Codinator is amazing. Editing projects on the go has never been easier. You really should try it out!")
+//                    tweetSheet.addURL(NSURL(string: "https://itunes.apple.com/us/app/codinator/id1024671232?ls=1&mt=8"))
+//                    
+//                    tweetSheet.view.tintColor = self.view.tintColor
+//                    
+//                    self.presentViewController(tweetSheet, animated: true, completion: nil)
+//                    
+//                    
+//                }
                 
             default:
                 break
@@ -159,12 +160,12 @@ class SettingsTableViewController: UITableViewController, SKStoreProductViewCont
     
     // MARK: - Delegates
     
-    func productViewControllerDidFinish(viewController: SKStoreProductViewController) {
-        viewController.dismissViewControllerAnimated(true, completion: nil)
+    func productViewControllerDidFinish(_ viewController: SKStoreProductViewController) {
+        viewController.dismiss(animated: true, completion: nil)
     }
     
-    func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
-        controller.dismissViewControllerAnimated(true, completion: nil)
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: NSError?) {
+        controller.dismiss(animated: true, completion: nil)
     }
     
 }

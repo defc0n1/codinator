@@ -11,26 +11,26 @@ import UIKit
 class PlaygroundFileCreator: NSObject {
 
     /// Returns the file url of a Playground with a name
-    class func fileUrlForPlaygroundWithName(fileName: String) -> NSURL {
+    class func fileUrlForPlaygroundWithName(_ fileName: String) -> URL {
         
         let fileName = fileName + ".cnPlay"
         
-        let rootUrl = NSURL(fileURLWithPath: AppDelegate.storagePath())
-        let playgroundPaths = rootUrl.URLByAppendingPathComponent("Playground", isDirectory: true)
-        let fileUrl = playgroundPaths.URLByAppendingPathComponent(fileName, isDirectory: false)
+        let rootUrl = URL(fileURLWithPath: AppDelegate.storagePath())
+        let playgroundPaths = try! rootUrl.appendingPathComponent("Playground", isDirectory: true)
+        let fileUrl = try! playgroundPaths.appendingPathComponent(fileName, isDirectory: false)
         
         return fileUrl
     }
     
     
-    class func generatePlaygroundFileWithName(fileName: String) -> PlaygroundDocument {
+    class func generatePlaygroundFileWithName(_ fileName: String) -> PlaygroundDocument {
         
         // Get URL
         let fileUrl = PlaygroundFileCreator.fileUrlForPlaygroundWithName(fileName)
         
         // Create document
         let document = PlaygroundDocument(fileURL: fileUrl)
-        document.saveToURL(fileUrl, forSaveOperation: .ForCreating, completionHandler: nil)
+        document.save(to: fileUrl, for: .forCreating, completionHandler: nil)
    
         // Neuron file
         let neuronFile =
@@ -59,9 +59,9 @@ class PlaygroundFileCreator: NSObject {
         // JS file
         let jsFile = FileTemplates.jsTemplateFile()
         
-        document.contents.addObject(neuronFile)
-        document.contents.addObject(cssFile)
-        document.contents.addObject(jsFile)
+        document.contents.add(neuronFile)
+        document.contents.add(cssFile!)
+        document.contents.add(jsFile!)
 //        document.setFile(.Neuron, toFile: neuronFile)
 //        document.setFile(.JS, toFile: jsFile)
 //        document.setFile(.CSS, toFile: cssFile)

@@ -69,8 +69,6 @@
 
 
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString*, id> *)options NS_AVAILABLE_IOS(9_0){
-    
-    
     // Import file
     return [self moveImportedFile:url.path.lastPathComponent atPath:url.path];
     
@@ -81,44 +79,37 @@
 - (BOOL)moveImportedFile:(NSString *)filename atPath:(NSString *)path{
     
     
-    NSURL *rootURL = [[[NSFileManager defaultManager] URLForUbiquityContainerIdentifier:nil]URLByAppendingPathComponent:@"Documents"];
-    NSString const *groupPath = [rootURL path];
-    NSString *storagePath = [groupPath stringByAppendingPathComponent:@"Playground"];
+    // Get storage path
+    NSString *storagePath = [[AppDelegate storagePath] stringByAppendingPathComponent:@"Projects"];
     NSFileManager *fileManager = [NSFileManager defaultManager];
     
-    if (![fileManager fileExistsAtPath:storagePath]) {
-        [fileManager createDirectoryAtPath:storagePath withIntermediateDirectories:NO attributes:nil error:nil];
+    // Check if dir exists
+    if ([fileManager fileExistsAtPath:storagePath]) {
+        
+        
+        // Move imported file to the location
+        NSError *error;
+        [[NSFileManager defaultManager] moveItemAtPath:path toPath:[storagePath stringByAppendingPathComponent:filename] error:&error];
+        
+        // Check if no error happened
+        if (error){
+            NSLog(@"%@", [error localizedDescription]);
+            return NO;
+        }
+        else{
+            
+            UINavigationController *navController = (UINavigationController *) self.window.rootViewController;
+            WelcomeViewController *welcomeController = navController.viewControllers[0];
+            
+            [welcomeController reloadData];
+            
+            return YES;
+        }
+        
     }
-    
-    
-    
-    
-    
-    NSError *error;
-    
-    if ([filename.pathExtension isEqualToString:@"zip"]){
-        NSString const *projectsDirPath = [storagePath stringByAppendingPathComponent:@"Projects"];
-        [[NSFileManager defaultManager] moveItemAtPath:path toPath:[projectsDirPath stringByAppendingPathComponent:filename] error:&error];
-    }
-    else{
-        NSString const *playgroundsDirPath = [storagePath stringByAppendingPathComponent:@"Playground"];
-        [[NSFileManager defaultManager] moveItemAtPath:path toPath:[playgroundsDirPath stringByAppendingPathComponent:filename] error:&error];
-    }
-    
-    if (error){
-        NSLog(@"%@", [error localizedDescription]);
-        return false;
-    }
-    else{
-        return YES;
-    }
-    
-    
+
+    return NO;
 }
-
-
-
-
 
 
 
@@ -128,7 +119,7 @@
 // Storage Path
 + (NSString *)storagePath {
     
-    NSURL *rootDirectory = [[[NSFileManager defaultManager] URLForUbiquityContainerIdentifier:nil]URLByAppendingPathComponent:@"Documents"];
+    NSURL *rootDirectory = [[[NSFileManager defaultManager] URLForUbiquityContainerIdentifier:nil] URLByAppendingPathComponent:@"Documents"];
     
     
     if (rootDirectory && ![[NSUserDefaults standardUserDefaults] boolForKey:@"CnCloud"]){

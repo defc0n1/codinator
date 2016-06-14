@@ -10,19 +10,19 @@ import UIKit
 
 class JsTextView: CYRTextView {
 
-    var defaultFont: UIFont = NSUserDefaults.standardUserDefaults().fontForKey("Font: 0") {
+    var defaultFont: UIFont = FontDefaults.font(key: "Font: 0")! {
         didSet {
             tokens = highlightingTokens()
         }
     }
     
-    var boldFont: UIFont = NSUserDefaults.standardUserDefaults().fontForKey("Font: 1") {
+    var boldFont: UIFont = FontDefaults.font(key: "Font: 1")! {
         didSet {
             tokens = highlightingTokens()
         }
     }
     
-    var italicFont: UIFont = NSUserDefaults.standardUserDefaults().fontForKey("Font: 2") {
+    var italicFont: UIFont = FontDefaults.font(key: "Font: 2")! {
         didSet {
             tokens = highlightingTokens()
         }
@@ -42,19 +42,19 @@ class JsTextView: CYRTextView {
     
     func commonSetUp() {
         self.font = defaultFont
-        self.textColor = UIColor.whiteColor()
-        self.indicatorStyle = .White
+        self.textColor = UIColor.white()
+        self.indicatorStyle = .white
         
         self.tokens = highlightingTokens()
     }
     
-    func highlightingTokens() -> [CYRToken!] {
+    func highlightingTokens() -> [CYRToken] {
         
         let regexAttributes = [
             NSForegroundColorAttributeName : SyntaxHighlighterDefaultColors.darkGoldColor
         ]
         
-        let commentAttributes = [
+        let commentAttributes: [NSObject : AnyObject] = [
                 NSForegroundColorAttributeName : SyntaxHighlighterDefaultColors.commentGreen,
         ]
     

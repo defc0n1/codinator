@@ -44,9 +44,9 @@ class EditorViewController: UIViewController, UITextViewDelegate, ProjectSplitVi
                 case "css":
                     cssTextView.text = newValue
                     cssTextView.undoManager!.removeAllActions()
-                    jsTextView.hidden = true
-                    htmlTextView.hidden = true
-                    cssTextView.hidden = false
+                    jsTextView.isHidden = true
+                    htmlTextView.isHidden = true
+                    cssTextView.isHidden = false
                     
                     if htmlTextView.isFirstResponder() {
                         htmlTextView.resignFirstResponder()
@@ -62,9 +62,9 @@ class EditorViewController: UIViewController, UITextViewDelegate, ProjectSplitVi
                 case "js":
                     jsTextView.text = newValue
                     jsTextView.undoManager!.removeAllActions()
-                    cssTextView.hidden = true
-                    htmlTextView.hidden = true
-                    jsTextView.hidden = false
+                    cssTextView.isHidden = true
+                    htmlTextView.isHidden = true
+                    jsTextView.isHidden = false
                     
                     if htmlTextView.isFirstResponder() {
                         htmlTextView.resignFirstResponder()
@@ -79,9 +79,9 @@ class EditorViewController: UIViewController, UITextViewDelegate, ProjectSplitVi
                 default:
                     htmlTextView.text = newValue
                     htmlTextView.undoManager!.removeAllActions()
-                    jsTextView.hidden = true
-                    cssTextView.hidden = true
-                    htmlTextView.hidden = false
+                    jsTextView.isHidden = true
+                    cssTextView.isHidden = true
+                    htmlTextView.isHidden = false
                     
                     if jsTextView.isFirstResponder() {
                         jsTextView.resignFirstResponder()
@@ -168,8 +168,8 @@ class EditorViewController: UIViewController, UITextViewDelegate, ProjectSplitVi
         let suggestionDisplayController = WUTextSuggestionDisplayController()
         suggestionDisplayController.dataSource = self
         let suggestionController = WUTextSuggestionController(textView: htmlTextView, suggestionDisplayController: suggestionDisplayController)
-        suggestionController.suggestionType = .Tag
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(range), name: "range", object: nil)
+        suggestionController?.suggestionType = .tag
+        NotificationCenter.default().addObserver(self, selector: #selector(range), name: "range", object: nil)
 
         
         
@@ -184,7 +184,7 @@ class EditorViewController: UIViewController, UITextViewDelegate, ProjectSplitVi
     
     
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         setUpKeyboardForTextView(htmlTextView)
@@ -196,61 +196,61 @@ class EditorViewController: UIViewController, UITextViewDelegate, ProjectSplitVi
         
         
         // Keyboard show/hide notifications 
-        let notificationCenter = NSNotificationCenter.defaultCenter()
-        notificationCenter.addObserver(self, selector: #selector(keyboardWillShow), name: UIKeyboardWillShowNotification, object: nil)
-        notificationCenter.addObserver(self, selector: #selector(keyboardWillHide), name: UIKeyboardWillHideNotification, object: nil)
+        let notificationCenter = NotificationCenter.default()
+        notificationCenter.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         notificationCenter.addObserver(self, selector: #selector(keyboardWillHide), name: "changedWebViewSize", object: nil)
         
-        self.view.bringSubviewToFront(searchBar)
-        searchBar.keyboardAppearance = .Dark
+        self.view.bringSubview(toFront: searchBar)
+        searchBar.keyboardAppearance = .dark
         
     }
 
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
     
         // Remove Keyboard show/hide notifications
-        let notificationCenter = NSNotificationCenter.defaultCenter()
-        notificationCenter.removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
-        notificationCenter.removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+        let notificationCenter = NotificationCenter.default()
+        notificationCenter.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        notificationCenter.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
     
-    func textViewDidChange(textView: UITextView) {
-        let operation = NSOperation()
-        operation.queuePriority = .Low
-        operation.qualityOfService = .Background
+    func textViewDidChange(_ textView: UITextView) {
+        let operation = Operation()
+        operation.queuePriority = .low
+        operation.qualityOfService = .background
         operation.completionBlock = {
             
             let fileURL = self.projectManager!.selectedFileURL
-            let root = self.projectManager!.selectedFileURL!.URLByDeletingLastPathComponent
+            let root = try! self.projectManager!.selectedFileURL!.deletingLastPathComponent()
             
-            dispatch_async(dispatch_get_main_queue(), { 
+            DispatchQueue.main.async(execute: { 
                 if let splitViewController = self.splitViewController as? ProjectSplitViewController {
-                    splitViewController.webView!.loadFileURL(fileURL!, allowingReadAccessToURL: root!)
+                    splitViewController.webView!.loadFileURL(fileURL!, allowingReadAccessTo: root)
                 }
             })
             
             do {
-                try textView.text.writeToURL(self.projectManager!.selectedFileURL!, atomically: false, encoding: NSUTF8StringEncoding)
+                try textView.text.write(to: self.projectManager!.selectedFileURL!, atomically: false, encoding: String.Encoding.utf8)
             } catch {
                 
             }
             
         }
         
-        NSOperationQueue.mainQueue().addOperation(operation)
+        OperationQueue.main().addOperation(operation)
         
     }
     
-    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         
         if text == "\n" {
         
             // Get the line
-            let line = (textView.text as NSString).substringToIndex(range.location)
-                .componentsSeparatedByString("\n")
+            let line = (textView.text as NSString).substring(to: range.location)
+                .components(separatedBy: "\n")
                 .last!
 
             
@@ -292,8 +292,8 @@ class EditorViewController: UIViewController, UITextViewDelegate, ProjectSplitVi
         else if range.length == 1 {
             
             // Get the line
-            let line = (textView.text as NSString).substringToIndex(range.location + 1)
-                .componentsSeparatedByString("\n")
+            let line = (textView.text as NSString).substring(to: range.location + 1)
+                .components(separatedBy: "\n")
                 .last!
 
             
@@ -331,7 +331,7 @@ class EditorViewController: UIViewController, UITextViewDelegate, ProjectSplitVi
     
     func searchBarAppeared() {
         
-        searchBar.hidden = false
+        searchBar.isHidden = false
         
         view.layoutIfNeeded()
         searchBarTopConstraint.constant = 0
@@ -339,7 +339,7 @@ class EditorViewController: UIViewController, UITextViewDelegate, ProjectSplitVi
         var insets = htmlTextView.contentInset
         insets.top = searchBar.frame.height
         
-        UIView.animateWithDuration(0.4, animations: {
+        UIView.animate(withDuration: 0.4, animations: {
             self.view.layoutIfNeeded()
 
             self.htmlTextView.contentInset = insets
@@ -352,7 +352,7 @@ class EditorViewController: UIViewController, UITextViewDelegate, ProjectSplitVi
     // Hide searchbar and reset insets
     func searchBarDisAppeard() {
         
-        searchBar.hidden = true
+        searchBar.isHidden = true
         
         view.layoutIfNeeded()
         searchBarTopConstraint.constant = -searchBar.frame.height
@@ -360,7 +360,7 @@ class EditorViewController: UIViewController, UITextViewDelegate, ProjectSplitVi
         var insets = htmlTextView.contentInset
         insets.top = 0
         
-        UIView.animateWithDuration(0.4, animations: {
+        UIView.animate(withDuration: 0.4, animations: {
             self.view.layoutIfNeeded()
             
             self.htmlTextView.contentInset = insets
@@ -369,15 +369,15 @@ class EditorViewController: UIViewController, UITextViewDelegate, ProjectSplitVi
             
             }, completion: { bool in
                 self.searchBar.resignFirstResponder()
-                self.searchBar.hidden = true
+                self.searchBar.isHidden = true
             })
     }
     
-    func searchBarTextDidEndEditing(searchBar: UISearchBar) {
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         getSplitView?.searchBarDissappeared()
     }
     
-    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
         
         // Search algorithm
@@ -387,8 +387,8 @@ class EditorViewController: UIViewController, UITextViewDelegate, ProjectSplitVi
     }
     
     var startedSearchInstance = false
-    func searchForText(text: String) {
-            let range = (htmlTextView.text as NSString).rangeOfString(text, options: .CaseInsensitiveSearch)
+    func searchForText(_ text: String) {
+            let range = (htmlTextView.text as NSString).range(of: text, options: .caseInsensitiveSearch)
             
             if range.location == NSNotFound {
                 Notifications.sharedInstance.displayErrorMessage("No occupancy found!")
@@ -407,18 +407,18 @@ class EditorViewController: UIViewController, UITextViewDelegate, ProjectSplitVi
     
     var keyboardHeight: CGFloat = 0
     
-    func keyboardWillShow(notification: NSNotification) {
-        let userInfo = notification.userInfo!
-        keyboardHeight = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue().height
+    func keyboardWillShow(_ notification: Notification) {
+        let userInfo = (notification as NSNotification).userInfo!
+        keyboardHeight = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue().height
         
         dealWithAddingInsetsOnKeyboard()
         
-        getSplitView?.undoButton.enabled = true
-        getSplitView?.redoButton.enabled = true
+        getSplitView?.undoButton.isEnabled = true
+        getSplitView?.redoButton.isEnabled = true
 
     }
     
-    func keyboardWillHide(notification: NSNotification) {
+    func keyboardWillHide(_ notification: Notification) {
         keyboardHeight = 0
         
         var insets = htmlTextView.contentInset
@@ -428,8 +428,8 @@ class EditorViewController: UIViewController, UITextViewDelegate, ProjectSplitVi
         textView.scrollIndicatorInsets = insets
         
         
-        getSplitView?.undoButton.enabled = false
-        getSplitView?.redoButton.enabled = false
+        getSplitView?.undoButton.isEnabled = false
+        getSplitView?.redoButton.isEnabled = false
     
     }
     
@@ -471,7 +471,7 @@ class EditorViewController: UIViewController, UITextViewDelegate, ProjectSplitVi
     
     // MARK: - AssistantViewController
     
-    func snippetWasCoppied(status: String) {
+    func snippetWasCoppied(_ status: String) {
         
         print("status: " + status)
         
@@ -483,11 +483,11 @@ class EditorViewController: UIViewController, UITextViewDelegate, ProjectSplitVi
         }
     }
     
-    func colorDidChange(color: UIColor) {
+    func colorDidChange(_ color: UIColor) {
         
         let colorHex = color.toHexString()
         
-        let pasteBoard = UIPasteboard.generalPasteboard()
+        let pasteBoard = UIPasteboard.general()
         pasteBoard.string = colorHex
         
         Notifications.sharedInstance.displayNeutralMessage("HEX Color was copied")
@@ -499,7 +499,7 @@ class EditorViewController: UIViewController, UITextViewDelegate, ProjectSplitVi
     
 
     // MARK: - Split View
-    override func traitCollectionDidChange(previousTraitCollection: UITraitCollection?) {
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         
         htmlTextView.resignFirstResponder()

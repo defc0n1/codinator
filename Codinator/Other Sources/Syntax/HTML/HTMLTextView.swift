@@ -9,28 +9,9 @@
 import UIKit
 
 
-class HTMLTextView: CYRTextView {
+class HTMLTextView: SourceCodeTextView {
 
     
-    var defaultFont: UIFont = NSUserDefaults.standardUserDefaults().fontForKey("Font: 0") {
-        didSet {
-            tokens = highlightingTokens()
-        }
-    }
-    
-    var boldFont: UIFont = NSUserDefaults.standardUserDefaults().fontForKey("Font: 1") {
-        didSet {
-            tokens = highlightingTokens()
-        }
-    }
-    
-    var italicFont: UIFont = NSUserDefaults.standardUserDefaults().fontForKey("Font: 2") {
-        didSet {
-            tokens = highlightingTokens()
-        }
-    }
-    
-  
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.commonSetUp()
@@ -46,14 +27,14 @@ class HTMLTextView: CYRTextView {
     
     func commonSetUp() {
         self.font = defaultFont
-        self.textColor = UIColor.whiteColor()
-        self.keyboardAppearance = .Dark
+        self.textColor = UIColor.white()
+        self.keyboardAppearance = .dark
         
-        self.indicatorStyle = .White
+        self.indicatorStyle = .white
         self.tokens = highlightingTokens()
     }
     
-    func highlightingTokens() -> [CYRToken] {
+    override func highlightingTokens() -> [CYRToken] {
         
         let tokens = [
             
@@ -90,7 +71,7 @@ class HTMLTextView: CYRTextView {
             
         ]
         
-        return tokens as! [CYRToken]
+        return tokens
     }
     
 

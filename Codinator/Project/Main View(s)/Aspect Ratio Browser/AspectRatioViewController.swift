@@ -13,7 +13,7 @@ import WebKit
 class AspectRatioViewController: UIViewController {
     
     var webView: WKWebView!
-    var previewURL: NSURL!
+    var previewURL: URL!
     
 
     
@@ -26,7 +26,7 @@ class AspectRatioViewController: UIViewController {
      
         configuration.applicationNameForUserAgent = "Codinator"
         configuration.allowsAirPlayForMediaPlayback = true
-        configuration.requiresUserActionForMediaPlayback = false
+        configuration.mediaTypesRequiringUserActionForPlayback = .all
         configuration.allowsPictureInPictureMediaPlayback = true
         
         
@@ -38,7 +38,7 @@ class AspectRatioViewController: UIViewController {
         self.view.addSubview(webView)
     
         // Autoresizing for webview
-        webView.autoresizingMask = [.FlexibleBottomMargin, .FlexibleTopMargin, .FlexibleLeftMargin, .FlexibleRightMargin, .FlexibleHeight, .FlexibleWidth]
+        webView.autoresizingMask = [.flexibleBottomMargin, .flexibleTopMargin, .flexibleLeftMargin, .flexibleRightMargin, .flexibleHeight, .flexibleWidth]
     
         
         webView.bindFrameToSuperviewBounds()
@@ -46,7 +46,7 @@ class AspectRatioViewController: UIViewController {
         
     
         // Load url
-        webView.loadFileURL(previewURL, allowingReadAccessToURL: previewURL.URLByDeletingLastPathComponent!)
+        webView.loadFileURL(previewURL, allowingReadAccessTo: try! previewURL.deletingLastPathComponent())
     }
 
     
@@ -60,29 +60,28 @@ class AspectRatioViewController: UIViewController {
     
     override var keyCommands: [UIKeyCommand]? {
         
-        return [UIKeyCommand(input: "W", modifierFlags: .Command, action: #selector(AspectRatioViewController.close), discoverabilityTitle: "Close Window")]
+        return [UIKeyCommand(input: "W", modifierFlags: .command, action: #selector(AspectRatioViewController.close), discoverabilityTitle: "Close Window")]
     }
 
     
     
     //MARK: print
     
-    @IBAction func printDidPush(sender: AnyObject) {
+    @IBAction func printDidPush(_ sender: AnyObject) {
         
         let printInfo = UIPrintInfo.printInfo()
-        printInfo.outputType = UIPrintInfoOutputType.General
+        printInfo.outputType = UIPrintInfoOutputType.general
         printInfo.jobName = "CnProj Webpage"
-        printInfo.orientation = UIPrintInfoOrientation.Portrait
-        printInfo.duplex = UIPrintInfoDuplex.LongEdge
+        printInfo.orientation = UIPrintInfoOrientation.portrait
+        printInfo.duplex = UIPrintInfoDuplex.longEdge
         
         
-        let printInteractionController = UIPrintInteractionController.sharedPrintController()
+        let printInteractionController = UIPrintInteractionController.shared()
         printInteractionController.printInfo = printInfo
-        printInteractionController.showsPageRange = true
         printInteractionController.printFormatter = self.webView.viewPrintFormatter()
         
         
-        [printInteractionController .presentAnimated(true, completionHandler: nil)]
+        printInteractionController.present(animated: true, completionHandler: nil)
         
     }
     
@@ -102,13 +101,13 @@ class AspectRatioViewController: UIViewController {
     
     
     func close(){
-        NSNotificationCenter.defaultCenter().postNotificationName("resetCloseBool", object: self, userInfo: nil)
-        self.dismissViewControllerAnimated(true, completion: nil);
+        NotificationCenter.default().post(name: Notification.Name(rawValue: "resetCloseBool"), object: self, userInfo: nil)
+        self.dismiss(animated: true, completion: nil);
     }
     
-    @IBAction func closeDidPush(sender: AnyObject) {
-        NSNotificationCenter.defaultCenter().postNotificationName("resetCloseBool", object: self, userInfo: nil)
-        self.dismissViewControllerAnimated(true, completion: nil);
+    @IBAction func closeDidPush(_ sender: AnyObject) {
+        NotificationCenter.default().post(name: Notification.Name(rawValue: "resetCloseBool"), object: self, userInfo: nil)
+        self.dismiss(animated: true, completion: nil);
     }
 
 

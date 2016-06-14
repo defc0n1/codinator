@@ -10,16 +10,16 @@ import Foundation
 
 class HighlighterExtention {
     
-    class func attributesForKey(key: HighlightingDictionaryKey) -> [NSObject:AnyObject] {
-        guard let attriutes = NSUserDefaults.standardUserDefaults().dicForKey(key.rawValue) else {
+    class func attributesForKey(_ key: HighlightingDictionaryKey) -> [NSObject:AnyObject] {
+        guard let attriutes = UserDefaults.standard().dic(forKey: key.rawValue) else {
             return [:]
         }
         
         return attriutes
     }
     
-    class func macroForKey(key: HighlightingMacroKey) -> String {
-        guard let macro = NSUserDefaults.standardUserDefaults().stringForKey(key.rawValue) else {
+    class func macroForKey(_ key: HighlightingMacroKey) -> String {
+        guard let macro = UserDefaults.standard().string(forKey: key.rawValue) else {
             return ""
         }
         

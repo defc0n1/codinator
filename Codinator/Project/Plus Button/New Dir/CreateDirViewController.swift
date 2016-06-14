@@ -27,16 +27,16 @@ class CreateDirViewController: UIViewController, UITextFieldDelegate {
             
             // Create dir
             
-            let dirUrl = projectManager.inspectorURL.URLByAppendingPathComponent(textField.text!, isDirectory: true)
+            let dirUrl = try! projectManager.inspectorURL.appendingPathComponent(textField.text!, isDirectory: true)
             
-            let fileManager = NSFileManager.defaultManager()
+            let fileManager = FileManager.default()
             do {
-                try fileManager.createDirectoryAtURL(dirUrl, withIntermediateDirectories: false, attributes: nil)
+                try fileManager.createDirectory(at: dirUrl, withIntermediateDirectories: false, attributes: nil)
             } catch let error as NSError {
                 Notifications.sharedInstance.alertWithMessage(error.localizedDescription, title: "Something went wrong", viewController: self)
             }
             
-            self.dismissViewControllerAnimated(true, completion: { 
+            self.dismiss(animated: true, completion: { 
                 self.delegate?.reloadDataWithSelection(true)
             })
             
@@ -44,13 +44,13 @@ class CreateDirViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func cancelDidPush() {
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
     
     
     // MARK: - TextField Delegate
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         saveDidPush()
 

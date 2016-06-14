@@ -10,7 +10,7 @@ import UIKit
 
 class cloudHelper {
     class func cloudAvailable() -> Bool {
-        if let _ = NSFileManager.defaultManager().URLForUbiquityContainerIdentifier(nil)?.URLByAppendingPathComponent("Documents") {
+        if let _ = try! FileManager.default().urlForUbiquityContainerIdentifier(nil)?.appendingPathComponent("Documents") {
            return true
         }
         else {
@@ -30,7 +30,7 @@ class CloudSettingsTableViewController: UITableViewController {
     
     
     let kUseCloud = "CnCloud"
-    let userDefauls = NSUserDefaults.standardUserDefaults()
+    let userDefauls = UserDefaults.standard()
 
     
     override func viewDidLoad() {
@@ -39,26 +39,26 @@ class CloudSettingsTableViewController: UITableViewController {
         cells.forEach { $0.backgroundColor = tableView.backgroundColor }
         
         
-        if let _ = NSFileManager.defaultManager().URLForUbiquityContainerIdentifier(nil)?.URLByAppendingPathComponent("Documents") {
-            useCloud.on = !userDefauls.boolForKey(kUseCloud)
+        if let _ = try! FileManager.default().urlForUbiquityContainerIdentifier(nil)?.appendingPathComponent("Documents") {
+            useCloud.isOn = !userDefauls.bool(forKey: kUseCloud)
             cloudAvailableLabel.text = ""
         }
         else {
             cloudAvailableLabel.text = "Please make sure iCloud is enabled in Settings."
-            useCloud.enabled = false
+            useCloud.isEnabled = false
         }
         
         
     }
 
-    @IBAction func cloudSwitchChanged(sender: UISwitch) {
-        userDefauls.setBool(!useCloud.on, forKey: kUseCloud)
-        NSNotificationCenter.defaultCenter().postNotificationName("reload", object: nil)
+    @IBAction func cloudSwitchChanged(_ sender: UISwitch) {
+        userDefauls.set(!useCloud.isOn, forKey: kUseCloud)
+        NotificationCenter.default().post(name: Notification.Name(rawValue: "reload"), object: nil)
     }
     
     
-    @IBAction func doneDidPush(sender: UIBarButtonItem) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func doneDidPush(_ sender: UIBarButtonItem) {
+        self.dismiss(animated: true, completion: nil)
     }
     
     

@@ -23,20 +23,20 @@ class ArchiveViewController: UIViewController {
     }
 
     
-    @IBAction func cancelDidPush(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func cancelDidPush(_ sender: AnyObject) {
+        self.dismiss(animated: true, completion: nil)
     }
     
     
-    @IBAction func archiveDidPush(sender: UIBarButtonItem) {
+    @IBAction func archiveDidPush(_ sender: UIBarButtonItem) {
         textView.resignFirstResponder()
         
         if textView.text.isEmpty {
             Notifications.sharedInstance.alertWithMessage("Commit message can't be emtpy!", title: "", viewController: self)
         }
         else {
-            projectManager.archiveWorkingCopyWithCommitMessge(textView.text)
-                self.dismissViewControllerAnimated(true, completion: nil)
+            projectManager.archiveWorkingCopy(withCommitMessge: textView.text)
+                self.dismiss(animated: true, completion: nil)
         }
     }
     

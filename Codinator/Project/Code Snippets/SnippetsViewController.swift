@@ -10,8 +10,8 @@ import UIKit
 
 
 protocol SnippetsDelegate: class {
-    func snippetWasCoppied(status: String)
-    func colorDidChange(color: UIColor)
+    func snippetWasCoppied(_ status: String)
+    func colorDidChange(_ color: UIColor)
 }
 
 
@@ -26,16 +26,16 @@ class ImgSnippetsViewController: UIViewController,UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        textField.attributedPlaceholder = NSAttributedString(string:"link or path to projects", attributes:[NSForegroundColorAttributeName: UIColor.darkGrayColor()])
+        textField.attributedPlaceholder = AttributedString(string:"link or path to projects", attributes:[NSForegroundColorAttributeName: UIColor.darkGray()])
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
 
     
-    @IBAction func copyDidPush(sender: AnyObject) {
+    @IBAction func copyDidPush(_ sender: AnyObject) {
      
         var status = ""
         
@@ -44,11 +44,11 @@ class ImgSnippetsViewController: UIViewController,UITextFieldDelegate {
         
         if characterCount != 0 {
             let image = (textField.text! as NSString).lastPathComponent
-            let imageName = (image as NSString).stringByDeletingPathExtension
+            let imageName = (image as NSString).deletingPathExtension
             let code = "<img src=\"\(text!)\" alt=\"\(imageName)\"  width=\"\(width.text!)\" height=\"\(height.text!)\">"
             status = "copied"
             
-            let pasteboard = UIPasteboard.generalPasteboard()
+            let pasteboard = UIPasteboard.general()
             pasteboard.string = code
         }
         else{
@@ -58,18 +58,18 @@ class ImgSnippetsViewController: UIViewController,UITextFieldDelegate {
         
         
         
-        self.dismissViewControllerAnimated(true, completion: {
+        self.dismiss(animated: true, completion: {
             self.delegate?.snippetWasCoppied(status)
         })
         
     }
     
-    @IBAction func cancelDidPush(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func cancelDidPush(_ sender: AnyObject) {
+        self.dismiss(animated: true, completion: nil)
     }
     
     
-    @IBAction func viewDidTapped(sender: AnyObject) {
+    @IBAction func viewDidTapped(_ sender: AnyObject) {
         textField.resignFirstResponder()
         width.resignFirstResponder()
         height.resignFirstResponder()
@@ -89,17 +89,17 @@ class LinkSnippetsViewController :UIViewController,UITextFieldDelegate{
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        textField.attributedPlaceholder = NSAttributedString(string:"name", attributes:[NSForegroundColorAttributeName: UIColor.darkGrayColor()])
-        nameTextField.attributedPlaceholder = NSAttributedString(string:"http link", attributes:[NSForegroundColorAttributeName: UIColor.darkGrayColor()])
+        textField.attributedPlaceholder = AttributedString(string:"name", attributes:[NSForegroundColorAttributeName: UIColor.darkGray()])
+        nameTextField.attributedPlaceholder = AttributedString(string:"http link", attributes:[NSForegroundColorAttributeName: UIColor.darkGray()])
         
         
     }
     
-    @IBAction func cancelDidPush(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func cancelDidPush(_ sender: AnyObject) {
+        self.dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func generateDidPush(sender: AnyObject) {
+    @IBAction func generateDidPush(_ sender: AnyObject) {
     
         if nameTextField.text!.isEmpty {
             nameTextField.becomeFirstResponder()
@@ -109,10 +109,10 @@ class LinkSnippetsViewController :UIViewController,UITextFieldDelegate{
         }
         else{
             let code = "<a href=\"\(textField.text!)\">\(nameTextField.text!)</a>"
-            let pasteBoard = UIPasteboard.generalPasteboard()
+            let pasteBoard = UIPasteboard.general()
             pasteBoard.string = code
             
-            self.dismissViewControllerAnimated(true, completion: {
+            self.dismiss(animated: true, completion: {
                 
                 self.delegate?.snippetWasCoppied("copied")
             
@@ -122,12 +122,12 @@ class LinkSnippetsViewController :UIViewController,UITextFieldDelegate{
     
     
 
-    func textFieldShouldReturn(textField2: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField2: UITextField) -> Bool {
        textField2.resignFirstResponder()
         return true
     }
     
-    func textFieldDidBeginEditing(textField2: UITextField) {
+    func textFieldDidBeginEditing(_ textField2: UITextField) {
         let placeHolder = textField2.placeholder
         print(placeHolder)
         
@@ -136,7 +136,7 @@ class LinkSnippetsViewController :UIViewController,UITextFieldDelegate{
         }
     }
     
-    @IBAction func viewDidTapped(sender: AnyObject) {
+    @IBAction func viewDidTapped(_ sender: AnyObject) {
         textField.resignFirstResponder()
         nameTextField.resignFirstResponder()
     }
@@ -155,7 +155,7 @@ class ListSnippetsViewController :UIViewController{
     
     weak var delegate: SnippetsDelegate?
     
-    @IBAction func stepperDidPush(sender: AnyObject) {
+    @IBAction func stepperDidPush(_ sender: AnyObject) {
         let integer = Int(stepper.value)
         enumNumberLabel.text = "\(integer)"
     }
@@ -167,11 +167,11 @@ class ListSnippetsViewController :UIViewController{
         enumNumberLabel.text = "\(integer)"
     }
     
-    @IBAction func cancelDidPush(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func cancelDidPush(_ sender: AnyObject) {
+        self.dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func generateDidPush(sender: AnyObject) {
+    @IBAction func generateDidPush(_ sender: AnyObject) {
         var  tags = "<ul> \n"
         
       
@@ -182,10 +182,10 @@ class ListSnippetsViewController :UIViewController{
         }
         tags += "</ul> "
         
-        let pasteBoard = UIPasteboard.generalPasteboard()
+        let pasteBoard = UIPasteboard.general()
         pasteBoard.string = tags
         
-        self.dismissViewControllerAnimated(true, completion: {
+        self.dismiss(animated: true, completion: {
             self.delegate?.snippetWasCoppied("copied")
         })
     }

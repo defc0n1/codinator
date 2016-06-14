@@ -23,46 +23,46 @@ class CreateSubpageViewController: UIViewController, UITextFieldDelegate {
     
     
 
-    @IBAction func saveDidPush(sender: UIBarButtonItem) {
+    @IBAction func saveDidPush(_ sender: UIBarButtonItem) {
         if textField.text!.isEmpty {
             textField.becomeFirstResponder()
         }
         else {
             
-            let dirUrl = projectManager.inspectorURL.URLByAppendingPathComponent(textField.text!, isDirectory: true)
+            let dirUrl = try! projectManager.inspectorURL.appendingPathComponent(textField.text!, isDirectory: true)
             
-            let fileManager = NSFileManager.defaultManager()
+            let fileManager = FileManager.default()
             
             // Create folder
             do {
-                try fileManager.createDirectoryAtURL(dirUrl, withIntermediateDirectories: false, attributes: nil)
+                try fileManager.createDirectory(at: dirUrl, withIntermediateDirectories: false, attributes: nil)
             } catch let error as NSError {
                 Notifications.sharedInstance.alertWithMessage(error.localizedDescription, title: "Something went wrong.", viewController: self)
                 
-                self.dismissViewControllerAnimated(true, completion: nil)
+                self.dismiss(animated: true, completion: nil)
                 return
             }
             
             
             
-            let indexFileBody = FileTemplates.htmlTemplateFileForName(textField.text!)
-            let indexFileUrl = dirUrl.URLByAppendingPathComponent("index.html", isDirectory: false)
+            let indexFileBody = FileTemplates.htmlTemplateFile(forName: textField.text!)
+            let indexFileUrl = try! dirUrl.appendingPathComponent("index.html", isDirectory: false)
 
             
             // Create file
             do {
-                try indexFileBody.writeToURL(indexFileUrl, atomically: true, encoding: NSUTF8StringEncoding)
+                try indexFileBody?.write(to: indexFileUrl, atomically: true, encoding: String.Encoding.utf8)
             } catch let error as NSError {
                 Notifications.sharedInstance.alertWithMessage(error.localizedDescription, title: "Something went wrong", viewController: self)
                 
-                self.dismissViewControllerAnimated(true, completion: nil)
+                self.dismiss(animated: true, completion: nil)
                 return
 
             }
             
             
             delegate?.reloadDataWithSelection(true)
-            self.dismissViewControllerAnimated(true, completion: nil)
+            self.dismiss(animated: true, completion: nil)
             
             
         }
@@ -70,14 +70,14 @@ class CreateSubpageViewController: UIViewController, UITextFieldDelegate {
     }
     
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return false
     }
     
     
     @IBAction func cancelDidPush() {
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
     
     

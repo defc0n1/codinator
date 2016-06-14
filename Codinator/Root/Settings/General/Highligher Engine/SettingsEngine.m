@@ -44,11 +44,10 @@
         UIFont *normalFont = [UIFont systemFontOfSize:14];
         UIFont *italicFont = [UIFont italicSystemFontOfSize:14];
         UIFont *boldFont = [UIFont boldSystemFontOfSize:14];
-        
-        [userDefaults setFont:normalFont forKey:@"Font: 0"];
-        [userDefaults setFont:italicFont forKey:@"Font: 1"];
-        [userDefaults setFont:boldFont forKey:@"Font: 2"];
-        
+
+        [FontDefaults setWithFont:normalFont key:@"Font: 0"];
+        [FontDefaults setWithFont:italicFont key:@"Font: 1"];
+        [FontDefaults setWithFont:boldFont key:@"Font: 2"];
         
         //Save colors
 
@@ -135,7 +134,7 @@
             
             NSDictionary *attributes = @{
                                          NSForegroundColorAttributeName : [userDefaults colorForKey: colorKey],
-                                         NSFontAttributeName : [[NSUserDefaults standardUserDefaults] fontForKey:fontKey]
+                                         NSFontAttributeName : [FontDefaults fontWithKey:fontKey]
                                          };
             
             [[NSUserDefaults standardUserDefaults] setDic:attributes ForKey:saveKey];

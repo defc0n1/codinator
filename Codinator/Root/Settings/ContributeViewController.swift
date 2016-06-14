@@ -22,20 +22,23 @@ class ContributeViewController: UIViewController {
     
 
 
-    @IBAction func contributeOnGitHubDidPush(sender: AnyObject) {
-        UIApplication.sharedApplication().openURL(
-            NSURL(string: "https://github.com/VWAS/Codinator")!
+    @IBAction func contributeOnGitHubDidPush(_ sender: AnyObject) {
+      
+        UIApplication.shared().open(
+            URL(string: "https://github.com/VWAS/Codinator")!
+            , options: [:], completionHandler: nil
         )
+        
     }
     
     
-    @IBAction func joinUsOnSlackDidPush(sender: AnyObject) {
-        let sfController = SFSafariViewController(URL:
-            NSURL(string: "https://vwas-slack.herokuapp.com")!
+    @IBAction func joinUsOnSlackDidPush(_ sender: AnyObject) {
+        let sfController = SFSafariViewController(url:
+            URL(string: "https://vwas-slack.herokuapp.com")!
         )
         
-        sfController.modalPresentationStyle = .PageSheet
-        presentViewController(sfController, animated: true, completion: nil)
+        sfController.modalPresentationStyle = .pageSheet
+        present(sfController, animated: true, completion: nil)
     }
     
 }

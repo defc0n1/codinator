@@ -26,7 +26,7 @@ class CreateFileViewController: UIViewController, UITextFieldDelegate {
 
     
     
-    @IBAction func createFile(sender: UIBarButtonItem) {
+    @IBAction func createFile(_ sender: UIBarButtonItem) {
         
         if extensionTextField.text!.isEmpty {
             extensionTextField.becomeFirstResponder()
@@ -45,7 +45,7 @@ class CreateFileViewController: UIViewController, UITextFieldDelegate {
             
             switch extensionTextField.text! {
             case "html":
-                return FileTemplates.htmlTemplateFileForName(nameTextField.text!)
+                return FileTemplates.htmlTemplateFile(forName: nameTextField.text!)
 
             case "css":
                 return FileTemplates.cssTemplateFile()
@@ -66,18 +66,18 @@ class CreateFileViewController: UIViewController, UITextFieldDelegate {
         }
        
         
-        let fileUrl = NSURL(fileURLWithPath: path!, isDirectory: false).URLByAppendingPathComponent(fileName)
+        let fileUrl = try! URL(fileURLWithPath: path!, isDirectory: false).appendingPathComponent(fileName)
         
         do {
-            try fileContent.writeToURL(fileUrl, atomically: true, encoding: NSUTF8StringEncoding)
+            try fileContent.write(to: fileUrl, atomically: true, encoding: String.Encoding.utf8)
         } catch let error as NSError {
             Notifications.sharedInstance.alertWithMessage(error.localizedDescription, title: "Something went wrong", viewController: self)
             
-            self.dismissViewControllerAnimated(true, completion: nil)
+            self.dismiss(animated: true, completion: nil)
         }
         
         
-        self.dismissViewControllerAnimated(true) { 
+        self.dismiss(animated: true) { 
             self.delegate?.reloadDataWithSelection(true)
         }
         
@@ -86,13 +86,13 @@ class CreateFileViewController: UIViewController, UITextFieldDelegate {
     
     
     @IBAction func cancelDidPush() {
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
     
     
     // MARK: - TextField Delegate
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         
         if extensionTextField.text!.isEmpty && nameTextField.text!.isEmpty {
@@ -115,23 +115,23 @@ class CreateFileViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: - File types Shortcut
     
-    @IBAction func html(sender: UIButton) {
+    @IBAction func html(_ sender: UIButton) {
         extensionTextField.text = "html"
     }
 
-    @IBAction func css(sender: UIButton) {
+    @IBAction func css(_ sender: UIButton) {
         extensionTextField.text = "css"
     }
     
-    @IBAction func js(sender: UIButton) {
+    @IBAction func js(_ sender: UIButton) {
         extensionTextField.text = "js"
     }
     
-    @IBAction func php(sender: UIButton) {
+    @IBAction func php(_ sender: UIButton) {
         extensionTextField.text = "php"
     }
     
-    @IBAction func txt(sender: UIButton) {
+    @IBAction func txt(_ sender: UIButton) {
         extensionTextField.text = "txt"
     }
     

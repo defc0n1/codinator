@@ -11,33 +11,33 @@ import Foundation
 extension FilesTableViewController {
     
         
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    @objc(numberOfSectionsInTableView:) func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return items.count
     }
     
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
+    @objc(tableView:cellForRowAtIndexPath:) func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         
         // Configure the cell...
         
         let bgColorView = UIView()
-        bgColorView.backgroundColor = UIColor.blackColor()
+        bgColorView.backgroundColor = UIColor.black()
         cell.selectedBackgroundView = bgColorView
         
         
-        if let text = items[indexPath.row].lastPathComponent {
+        if let text = items[(indexPath as NSIndexPath).row].lastPathComponent {
             cell.textLabel?.text = text
             
-            if let path = projectManager?.inspectorURL.URLByAppendingPathComponent(text).path {
+            if let path = try! projectManager?.inspectorURL.appendingPathComponent(text).path {
                 let manager = Thumbnail()
-                cell.imageView?.image = manager.thumbnailForFileAtPath(path)
+                cell.imageView?.image = manager.thumbnailForFile(atPath: path)
             }
         }
         
@@ -50,20 +50,20 @@ extension FilesTableViewController {
     }
     
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if let selectedURL = inspectorURL?.URLByAppendingPathComponent(items[indexPath.row].lastPathComponent!) {
+    @objc(tableView:didSelectRowAtIndexPath:) func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let selectedURL = try! inspectorURL?.appendingPathComponent(items[(indexPath as NSIndexPath).row].lastPathComponent!) {
             var isDirectory : ObjCBool = ObjCBool(false)
             
-            if (NSFileManager.defaultManager().fileExistsAtPath(selectedURL.path!, isDirectory: &isDirectory) && Bool(isDirectory) == true) {
+            if (FileManager.default().fileExists(atPath: selectedURL.path!, isDirectory: &isDirectory) && Bool(isDirectory) == true) {
                                 
                 projectManager.inspectorURL = selectedURL
                 
-                if let controller = storyboard?.instantiateViewControllerWithIdentifier("filesTableView") as? FilesTableViewController {
+                if let controller = storyboard?.instantiateViewController(withIdentifier: "filesTableView") as? FilesTableViewController {
                     controller.inspectorURL = selectedURL
                     
                     
                     count += 1
-                    self.navigationController?.showViewController(controller, sender: self)
+                    self.navigationController?.show(controller, sender: self)
                 
                 }
                 
@@ -74,11 +74,11 @@ extension FilesTableViewController {
                 
                 switch selectedURL.pathExtension! {
                     
-                case "png","img","jpg","jpeg", "gif":
+                case "png","img","jpg","jpeg", "gif", "PNG","IMG","JPG","JPEG", "GIF":
                     
                     projectManager.tmpFileURL = selectedURL
                     
-                    let cell = tableView.cellForRowAtIndexPath(indexPath)!
+                    let cell = tableView.cellForRow(at: indexPath)!
                     
                     
                     
@@ -88,34 +88,34 @@ extension FilesTableViewController {
                     imageInfo.referenceRect = cell.imageView!.frame
                     imageInfo.referenceView = cell.imageView?.superview
                     
-                    let imageViewer = JTSImageViewController(imageInfo: imageInfo, mode: .Image, backgroundStyle: .Blurred)
+                    let imageViewer = JTSImageViewController(imageInfo: imageInfo, mode: .image, backgroundStyle: .blurred)
                     
-                    imageViewer.showFromViewController(self, transition: .FromOriginalPosition)
+                    imageViewer?.show(from: self, transition: .fromOriginalPosition)
                     
                     
                 case "zip":
                     let unzipStoryBoard = UIStoryboard(name: "UnZip", bundle: nil)
                     
                     let viewController = unzipStoryBoard.instantiateInitialViewController() as! UnArchivingViewController
-                    viewController.modalPresentationStyle = .OverFullScreen
+                    viewController.modalPresentationStyle = .overFullScreen
                     
                     viewController.filePathToZipFile = selectedURL.path
                     
-                    self.presentViewController(viewController, animated: true, completion: nil)
+                    self.present(viewController, animated: true, completion: nil)
                     
                 case "pdf":
                     projectManager.tmpFileURL = projectManager.selectedFileURL!
-                    self.performSegueWithIdentifier("run", sender: self)
+                    self.performSegue(withIdentifier: "run", sender: self)
                     
                     
                 default:
                     
-                    if let data = NSFileManager.defaultManager().contentsAtPath(selectedURL.path!) {
-                        let contents = NSString(data: data, encoding: NSUTF8StringEncoding)
+                    if let data = FileManager.default().contents(atPath: selectedURL.path!) {
+                        let contents = NSString(data: data, encoding: String.Encoding.utf8.rawValue)
                         
                         getSplitView.showDetailViewController(getSplitView.editorView!, sender: self)
                         getSplitView.editorView!.text = contents as? String
-                        getSplitView.webView!.loadFileURL(selectedURL, allowingReadAccessToURL: projectManager!.projectURL())
+                        getSplitView.webView!.loadFileURL(selectedURL, allowingReadAccessTo: projectManager!.projectURL())
                         getSplitView.assistantViewController?.setFilePathTo(projectManager)
                     }
                     
@@ -128,57 +128,57 @@ extension FilesTableViewController {
     
 
     
-    func tableViewCellWasLongPressed(sender: UILongPressGestureRecognizer) {
-        let point = sender.locationInView(tableView)
-        let position = CGRectMake(point.x, point.y, 20, 0)
+    func tableViewCellWasLongPressed(_ sender: UILongPressGestureRecognizer) {
+        let point = sender.location(in: tableView)
+        let position = CGRect(x: point.x, y: point.y, width: 20, height: 0)
         
-        let indexPath = tableView.indexPathForRowAtPoint(point)
-        if sender.state == .Began && indexPath != nil {
-            projectManager.deleteURL = projectManager.inspectorURL.URLByAppendingPathComponent(items[indexPath!.row].lastPathComponent!)
+        let indexPath = tableView.indexPathForRow(at: point)
+        if sender.state == .began && indexPath != nil {
+            projectManager.deleteURL = try! projectManager.inspectorURL.appendingPathComponent(items[(indexPath! as NSIndexPath).row].lastPathComponent!)
             
             
-            let deleteAction = UIAlertAction(title: "Delete", style: .Destructive, handler: { _ in
+            let deleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: { _ in
                 self.delete()
             })
             
             
-            let previewAction = UIAlertAction(title: "Preview", style: .Default, handler: { _ in
-                self.performSegueWithIdentifier("run", sender: self)
+            let previewAction = UIAlertAction(title: "Preview", style: .default, handler: { _ in
+                self.performSegue(withIdentifier: "run", sender: self)
             })
             
             
-            let printAction = UIAlertAction(title: "Print", style: .Default, handler: { _ in
+            let printAction = UIAlertAction(title: "Print", style: .default, handler: { _ in
                 self.print()
             })
             
             
-            let moveAction = UIAlertAction(title: "Move file", style: .Default, handler: { _ in
+            let moveAction = UIAlertAction(title: "Move file", style: .default, handler: { _ in
                 self.move()
             })
             
             
-            let renameAction = UIAlertAction(title: "Rename", style: .Default, handler: { _ in
+            let renameAction = UIAlertAction(title: "Rename", style: .default, handler: { _ in
                 self.rename()
             })
             
             
-            let shareAction = UIAlertAction(title: "Share", style: .Default, handler: { _ in
+            let shareAction = UIAlertAction(title: "Share", style: .default, handler: { _ in
                 self.indexPath = indexPath
                 self.share()
             })
             
             
-            let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: { _ in
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in
                 
-                if self.getSplitView.displayMode == .PrimaryHidden {
-                    self.getSplitView.preferredDisplayMode = .PrimaryOverlay
+                if self.getSplitView.displayMode == .primaryHidden {
+                    self.getSplitView.preferredDisplayMode = .primaryOverlay
                 }
 
                 
             })
             
             
-            let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+            let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
             
             let pathExtension = self.projectManager.deleteURL!.pathExtension!
             
@@ -202,16 +202,16 @@ extension FilesTableViewController {
             alertController.popoverPresentationController?.sourceRect = position
             
             
-            if getSplitView.displayMode != .PrimaryOverlay {
-                self.presentViewController(alertController, animated: true, completion: nil)
+            if getSplitView.displayMode != .primaryOverlay {
+                self.present(alertController, animated: true, completion: nil)
             }
             else {
 
                 alertController.title = projectManager.deleteURL!.lastPathComponent
                 alertController.message = "What do you want to do with the file?"
                 
-                getSplitView.preferredDisplayMode = .PrimaryHidden
-                getSplitView!.rootVC.presentViewController(alertController, animated: true, completion: nil)
+                getSplitView.preferredDisplayMode = .primaryHidden
+                getSplitView!.rootVC.present(alertController, animated: true, completion: nil)
             }
             
         }

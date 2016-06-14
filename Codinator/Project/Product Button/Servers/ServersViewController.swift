@@ -23,12 +23,12 @@ class ServersViewController: UIViewController {
 
         let wifiErrorMessage = "No Wi-Fi"
         let offErrorMessage = "Turned Off"
-        let userDefaults = NSUserDefaults.standardUserDefaults()
+        let userDefaults = UserDefaults.standard()
         
         if let webDavIp = projectManager.webDavServerURL() {
             if webDavIp.isEmpty {
                 
-                if userDefaults.boolForKey("CnWebDavServer") {
+                if userDefaults.bool(forKey: "CnWebDavServer") {
                     webDavLabel.text = wifiErrorMessage
                 }
                 else {
@@ -38,15 +38,15 @@ class ServersViewController: UIViewController {
             }
             else {
                 webDavLabel.text = webDavIp
-                    .stringByReplacingOccurrencesOfString("http://", withString: "")
-                    .stringByReplacingOccurrencesOfString("/", withString: "")
+                    .replacingOccurrences(of: "http://", with: "")
+                    .replacingOccurrences(of: "/", with: "")
                 
             }
         }
         
         if let webServerIp = projectManager.webServerURL() {
             if webServerIp.isEmpty {
-                if userDefaults.boolForKey("CnWebServer") {
+                if userDefaults.bool(forKey: "CnWebServer") {
                     webServerLabel.text = wifiErrorMessage
                 }
                 else {
@@ -55,8 +55,8 @@ class ServersViewController: UIViewController {
             }
             else {
                 webServerLabel.text = webServerIp
-                    .stringByReplacingOccurrencesOfString("http://", withString: "")
-                    .stringByReplacingOccurrencesOfString("/", withString: "")
+                    .replacingOccurrences(of: "http://", with: "")
+                    .replacingOccurrences(of: "/", with: "")
             }
         }
         
@@ -64,7 +64,7 @@ class ServersViewController: UIViewController {
         
         if let webUploaderIp = projectManager.webUploaderServerURL() {
             if webUploaderIp.isEmpty {
-                if userDefaults.boolForKey("CnUploadServer") {
+                if userDefaults.bool(forKey: "CnUploadServer") {
                     webServerLabel.text = wifiErrorMessage
                 }
                 else {
@@ -72,8 +72,8 @@ class ServersViewController: UIViewController {
                 }            }
             else {
                 webUploaderLabel.text = webUploaderIp
-                    .stringByReplacingOccurrencesOfString("http://", withString: "")
-                    .stringByReplacingOccurrencesOfString("/", withString: "")
+                    .replacingOccurrences(of: "http://", with: "")
+                    .replacingOccurrences(of: "/", with: "")
             }
         }
         
@@ -83,7 +83,7 @@ class ServersViewController: UIViewController {
     
     
     @IBAction func doneDidPush() {
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
     
     

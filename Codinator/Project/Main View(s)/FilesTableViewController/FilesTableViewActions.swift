@@ -12,14 +12,13 @@ extension FilesTableViewController: PeekProtocol {
     
     func print() {
         let printInfo = UIPrintInfo.printInfo()
-        printInfo.outputType = .General
+        printInfo.outputType = .general
         printInfo.jobName = "Print File"
-        printInfo.orientation = .Portrait
-        printInfo.duplex = .LongEdge
+        printInfo.orientation = .portrait
+        printInfo.duplex = .longEdge
         
-        let printController = UIPrintInteractionController.sharedPrintController()
+        let printController = UIPrintInteractionController.shared()
         printController.printInfo = printInfo
-        printController.showsPageRange = true
         
         let pathExtension = self.projectManager.deleteURL!.pathExtension!
         switch pathExtension {
@@ -32,9 +31,8 @@ extension FilesTableViewController: PeekProtocol {
         default:
             
             if pathExtension != "" {
-                let textView = UITextView(frame: CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height))
-                try! textView.text = String(contentsOfURL: projectManager.deleteURL!)
-                
+                let textView = UITextView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: self.view.bounds.size.height))
+                textView.text = try! String(contentsOf: projectManager.deleteURL!)
                 printController.printFormatter = textView.viewPrintFormatter()
             }
             else {
@@ -45,48 +43,48 @@ extension FilesTableViewController: PeekProtocol {
             
         }
         
-        printController.presentAnimated(true, completionHandler: nil)
+        printController.present(animated: true, completionHandler: nil)
         
-        if self.getSplitView.displayMode == .PrimaryHidden {
-            self.getSplitView.preferredDisplayMode = .PrimaryOverlay
+        if self.getSplitView.displayMode == .primaryHidden {
+            self.getSplitView.preferredDisplayMode = .primaryOverlay
         }
     }
     
     func move() {
-        self.performSegueWithIdentifier("moveFile", sender: self)
+        self.performSegue(withIdentifier: "moveFile", sender: self)
         
-        if self.getSplitView.displayMode == .PrimaryHidden {
-            self.getSplitView.preferredDisplayMode = .PrimaryOverlay
+        if self.getSplitView.displayMode == .primaryHidden {
+            self.getSplitView.preferredDisplayMode = .primaryOverlay
         }
     }
     
     func rename() {
         let message = "Rename \(self.projectManager.deleteURL!.lastPathComponent)"
         
-        let alert = UIAlertController(title: "Rename", message: message, preferredStyle: .Alert)
+        let alert = UIAlertController(title: "Rename", message: message, preferredStyle: .alert)
         
-        alert.addTextFieldWithConfigurationHandler({ textField in
+        alert.addTextField(configurationHandler: { textField in
             textField.placeholder = self.projectManager.deleteURL!.lastPathComponent!
             
-            textField.keyboardAppearance = .Dark
-            textField.autocorrectionType = .No
-            textField.autocapitalizationType = .None
+            textField.keyboardAppearance = .dark
+            textField.autocorrectionType = .no
+            textField.autocapitalizationType = .none
         })
         
         
-        let processAction = UIAlertAction(title: "Rename", style: .Default, handler: { _ in
+        let processAction = UIAlertAction(title: "Rename", style: .default, handler: { _ in
             
             let newName = alert.textFields?.first?.text
-            let newURL = self.projectManager.deleteURL!.URLByDeletingLastPathComponent!.URLByAppendingPathComponent(newName!)
+            let newURL = try! self.projectManager.deleteURL!.deletingLastPathComponent().appendingPathComponent(newName!)
             
             do {
                 
-                try NSFileManager.defaultManager().moveItemAtURL(self.projectManager.deleteURL!, toURL: newURL)
+                try FileManager.default().moveItem(at: self.projectManager.deleteURL!, to: newURL)
                 
                 self.reloadDataWithSelection(true)
                 
-                if self.getSplitView.displayMode == .PrimaryHidden {
-                    self.getSplitView.preferredDisplayMode = .PrimaryOverlay
+                if self.getSplitView.displayMode == .primaryHidden {
+                    self.getSplitView.preferredDisplayMode = .primaryOverlay
                 }
                 
                 
@@ -98,13 +96,13 @@ extension FilesTableViewController: PeekProtocol {
         })
         
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
         alert.addAction(processAction)
         alert.addAction(cancelAction)
         
         
-        self.presentViewController(alert, animated: true, completion: nil)
+        self.present(alert, animated: true, completion: nil)
     }
     
     func share() {
@@ -113,37 +111,37 @@ extension FilesTableViewController: PeekProtocol {
         
         
         // Create the interaction controller
-        self.documentInteractionController = UIDocumentInteractionController(URL: fileUrl!)
+        self.documentInteractionController = UIDocumentInteractionController(url: fileUrl!)
         
         // Present the app picker display
-        let cell = self.tableView.cellForRowAtIndexPath(self.indexPath!)!
+        let cell = self.tableView.cellForRow(at: self.indexPath! as IndexPath)!
         
         if let cellImageView = cell.imageView, let _ = cell.imageView?.image {
-            self.documentInteractionController?.presentOptionsMenuFromRect(cellImageView.frame, inView: cellImageView.superview!, animated: true)
+            self.documentInteractionController?.presentOptionsMenu(from: cellImageView.frame, in: cellImageView.superview!, animated: true)
         }
         else {
-            self.documentInteractionController?.presentOptionsMenuFromRect(cell.frame, inView: tableView, animated: true)
+            self.documentInteractionController?.presentOptionsMenu(from: cell.frame, in: tableView, animated: true)
         }
         
     }
     
     func delete() {
-        let fileExists = NSFileManager.defaultManager().fileExistsAtPath(self.projectManager.deleteURL!.path!)
+        let fileExists = FileManager.default().fileExists(atPath: self.projectManager.deleteURL!.path!)
         
         if fileExists {
             
-            let alert = UIAlertController(title: "Are you sure you want to delete \(self.projectManager.deleteURL!.lastPathComponent!)?", message: nil, preferredStyle: .Alert)
+            let alert = UIAlertController(title: "Are you sure you want to delete \(self.projectManager.deleteURL!.lastPathComponent!)?", message: nil, preferredStyle: .alert)
             
-            let cancel = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
-            let delete = UIAlertAction(title: "Delete", style: .Destructive, handler: { _ in
+            let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            let delete = UIAlertAction(title: "Delete", style: .destructive, handler: { _ in
                 
                 do {
-                    try NSFileManager.defaultManager().removeItemAtURL(self.projectManager.deleteURL!)
+                    try FileManager.default().removeItem(at: self.projectManager.deleteURL!)
                     
                     self.reloadDataWithSelection(true)
                     
-                    if self.getSplitView.displayMode == .PrimaryHidden {
-                        self.getSplitView.preferredDisplayMode = .PrimaryOverlay
+                    if self.getSplitView.displayMode == .primaryHidden {
+                        self.getSplitView.preferredDisplayMode = .primaryOverlay
                     }
                     
                     
@@ -157,7 +155,7 @@ extension FilesTableViewController: PeekProtocol {
             alert.addAction(delete)
             alert.addAction(cancel)
             
-            self.presentViewController(alert, animated: true, completion: nil)
+            self.present(alert, animated: true, completion: nil)
             
         }
         else {

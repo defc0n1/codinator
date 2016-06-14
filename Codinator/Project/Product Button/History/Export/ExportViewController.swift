@@ -24,7 +24,7 @@ class ExportViewController: UIViewController, SSZipArchiveDelegate, UIDocumentIn
     }
 
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         createZipArchive()
     }
@@ -36,65 +36,65 @@ class ExportViewController: UIViewController, SSZipArchiveDelegate, UIDocumentIn
     func createZipArchive() {
     
         let zipTmpPath = NSHomeDirectory() + "/Documents/Temp.zip"
-        SSZipArchive.createZipFileAtPath(zipTmpPath, withContentsOfDirectory: path, delegate: self)
+        SSZipArchive.createZipFile(atPath: zipTmpPath, withContentsOfDirectory: path, delegate: self)
         
         
     }
     
     
     var documentInteractionController: UIDocumentInteractionController?
-    func zipArchiveDidZippedArchiveToPath(path: String!) {
+    func zipArchiveDidZippedArchive(toPath path: String!) {
 
-        UIView.animateWithDuration(0.4, animations: {
-            self.preparingFilesLabel.hidden = true
-            self.activityIndicator.hidden = true
+        UIView.animate(withDuration: 0.4, animations: {
+            self.preparingFilesLabel.isHidden = true
+            self.activityIndicator.isHidden = true
             }) { bool in
-            self.chooseHowToSendButton.hidden = false
+            self.chooseHowToSendButton.isHidden = false
         }
         
-        let url = NSURL(fileURLWithPath: path, isDirectory: false)
+        let url = URL(fileURLWithPath: path, isDirectory: false)
      
         // Create the interaction controller
-        documentInteractionController = UIDocumentInteractionController(URL: url)
+        documentInteractionController = UIDocumentInteractionController(url: url)
 
         documentInteractionController?.delegate = self
         
-        documentInteractionController?.presentOpenInMenuFromRect(chooseHowToSendButton.frame, inView: self.view, animated: true)
+        documentInteractionController?.presentOpenInMenu(from: chooseHowToSendButton.frame, in: self.view, animated: true)
         
     }
     
-    @IBAction func shareDidPush(sender: UIButton) {
+    @IBAction func shareDidPush(_ sender: UIButton) {
         
         let zipTmpPath = NSHomeDirectory() + "/Documents/Temp.zip"
-        let url = NSURL(fileURLWithPath: zipTmpPath, isDirectory: false)
+        let url = URL(fileURLWithPath: zipTmpPath, isDirectory: false)
         
         // Create the interaction controller
-        documentInteractionController = UIDocumentInteractionController(URL: url)
+        documentInteractionController = UIDocumentInteractionController(url: url)
         
         documentInteractionController?.delegate = self
         
-        documentInteractionController?.presentOpenInMenuFromRect(sender.frame, inView: self.view, animated: true)
+        documentInteractionController?.presentOpenInMenu(from: sender.frame, in: self.view, animated: true)
     
     }
     
     
-    func documentInteractionControllerViewControllerForPreview(controller: UIDocumentInteractionController) -> UIViewController
+    func documentInteractionControllerViewControllerForPreview(_ controller: UIDocumentInteractionController) -> UIViewController
     {
         return self
     }
     
 
-    func documentInteractionController(controller: UIDocumentInteractionController, didEndSendingToApplication application: String?) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+    func documentInteractionController(_ controller: UIDocumentInteractionController, didEndSendingToApplication application: String?) {
+        self.dismiss(animated: true, completion: nil)
     }
     
     
     
     
-    @IBAction func cancelDidPush(sender: AnyObject) {
+    @IBAction func cancelDidPush(_ sender: AnyObject) {
     
-        dispatch_async(dispatch_get_main_queue(),{
-            self.dismissViewControllerAnimated(true, completion: nil)
+        DispatchQueue.main.async(execute: {
+            self.dismiss(animated: true, completion: nil)
         })
 
     }

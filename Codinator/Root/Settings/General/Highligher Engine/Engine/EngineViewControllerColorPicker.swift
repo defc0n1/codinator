@@ -10,12 +10,12 @@ import Foundation
 
 extension EngineViewController: ColorProtocol {
  
-    func colorDidChange(color: UIColor) {
+    func colorDidChange(_ color: UIColor) {
         changeColorButton.tintColor = color
-        NSUserDefaults.standardUserDefaults().setColor(color, forKey: "Color: \(selectedType)");
+        UserDefaults.standard().setColor(color, forKey: "Color: \(selectedType)");
     }
     
-    public override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    public override func prepare(for segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "colorPicker" {
             let destViewController = segue.destinationViewController as! ColorPickerViewController
             destViewController.colorDelegate = self

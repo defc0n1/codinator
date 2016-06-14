@@ -12,19 +12,20 @@ import Foundation
 
 extension NSObject {
     
-    func callSelectorAsync(selector: Selector, object: AnyObject?, delay: NSTimeInterval) -> NSTimer {
+    func callSelectorAsync(_ selector: Selector, object: AnyObject?, delay: TimeInterval) -> Timer {
         
-        let timer = NSTimer.scheduledTimerWithTimeInterval(delay, target: self, selector: selector, userInfo: object, repeats: false)
+        let timer = Timer.scheduledTimer(timeInterval: delay, target: self, selector: selector, userInfo: object, repeats: false)
         return timer
     }
     
-    func callSelector(selector: Selector, object: AnyObject?, delay: NSTimeInterval) {
+    func callSelector(_ selector: Selector, object: AnyObject?, delay: TimeInterval) {
         
         let delay = delay * Double(NSEC_PER_SEC)
-        let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
-        dispatch_after(time, dispatch_get_main_queue(), {
-            NSThread.detachNewThreadSelector(selector, toTarget:self, withObject: object)
-        })
+        let time = DispatchTime.now() + Double(Int64(delay)) / Double(NSEC_PER_SEC)
+        
+        DispatchQueue.main.after(when: time) { 
+            Thread.detachNewThreadSelector(selector, toTarget: self, with: object)
+        }
     }
 }
 

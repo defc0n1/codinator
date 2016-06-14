@@ -10,7 +10,7 @@
 
 #import "Polaris.h"
 #import "HRColorPickerView.h"
-
+#import "Codinator-Swift.h"
 
 @interface EngineViewController ()
 
@@ -131,7 +131,7 @@
     
     NSDictionary *attributes = @{
                                 NSForegroundColorAttributeName : self.changeColorButton.tintColor,
-                                NSFontAttributeName : [[NSUserDefaults standardUserDefaults] fontForKey:fontKey]
+                                NSFontAttributeName : [FontDefaults fontWithKey:fontKey]
                                 };
     
     [[NSUserDefaults standardUserDefaults] setDic:attributes ForKey:saveKey];
