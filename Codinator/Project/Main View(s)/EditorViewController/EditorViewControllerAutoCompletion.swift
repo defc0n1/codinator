@@ -25,19 +25,21 @@ extension EditorViewController: WUTextSuggestionDisplayControllerDataSource {
     }
     
     func filteredNamesUsingQuery(_ query : String) -> [String] {
-//         let filteredNames = self.names().filtered(using: Predicate(block: { (evaluatedObject : AnyObject, bindings: [String : AnyObject]?) -> Bool in
-//            if let evaluatedObject = evaluatedObject as? String {
-//                if evaluatedObject.lowercased().hasPrefix(query.lowercased()) {
-//                    return true
-//                }
-//            }
-//            
-//            return false
-//        })) as? [String] {
-//            return filteredNames
-//        }
-//        
-        return []
+        
+        guard let filteredNames = self.names().filtered(using: Predicate(block: { (evaluatedObject, bindings) -> Bool in
+            
+            if let evaluatedObject = evaluatedObject as? String {
+                if evaluatedObject.lowercased().hasPrefix(query.lowercased()) {
+                    return true
+                }
+            }
+
+            return false
+        })) as? [String] else {
+            return []
+        }
+
+        return filteredNames
     }
     
     func names() -> NSArray {
