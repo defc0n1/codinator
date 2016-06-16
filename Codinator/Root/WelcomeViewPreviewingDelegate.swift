@@ -59,7 +59,7 @@ extension WelcomeViewController: UIViewControllerPreviewingDelegate, PeekShortPr
      
         if forceTouchPath.characters.count > 5 {
             
-            document = CodinatorDocument(fileURL: URL(fileURLWithPath: forceTouchPath))
+            self.document = CodinatorDocument(fileURL: URL(fileURLWithPath: forceTouchPath))
             document.open { sucess in
                 
                 if sucess {

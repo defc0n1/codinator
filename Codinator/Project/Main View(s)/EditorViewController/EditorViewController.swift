@@ -10,12 +10,25 @@ import UIKit
 
 class EditorViewController: UIViewController, UITextViewDelegate, ProjectSplitViewControllerDelegate, UISearchBarDelegate, SnippetsDelegate {
     
-    
+    // Properties
     @IBOutlet weak var searchBar: UISearchBar!
     let htmlTextView = HTMLTextView()
     let jsTextView = JsTextView()
     let cssTextView = CSSTextView()
     
+    // Auto completion
+    lazy var htmlSuggestions = ["h1>","/h1>","h2>","/h2>","h3>","/h3>","h4>","h5>","h6>","head>","body>","/body>","!Doctype html>","center>","img src=","a href=","font ","meta","table border=","tr>","td>","div>","div class=","style>","title>","li>","em>","p>","section class=","header>","footer>","ul>","del>","em>","sub>","sup>","cite>","big>","small>","strong>","code>","frameset","blackquote>","br>"]
+    
+    lazy var jsSuggestions = ["var ", "this", "return ", "break", "true", "false", "throw", "new", "typeof", "if () {\n   \n}", "function () {\n   \n}", "for (;;) {\n   \n}"]
+    
+    
+    
+    // Computed properties
+    var fileExtension: String? {
+        get {
+            return projectManager?.selectedFileURL!.pathExtension!
+        }
+    }
     
     var text: String? {
         get {
@@ -37,7 +50,7 @@ class EditorViewController: UIViewController, UITextViewDelegate, ProjectSplitVi
         }
         
         set {
-            if let fileExtension = projectManager?.selectedFileURL!.pathExtension! {
+            if let fileExtension = fileExtension {
                 
                 
                 switch fileExtension {
@@ -66,6 +79,9 @@ class EditorViewController: UIViewController, UITextViewDelegate, ProjectSplitVi
                     htmlTextView.isHidden = true
                     jsTextView.isHidden = false
                     
+                    suggestionController = WUTextSuggestionController(textView: jsTextView, suggestionDisplayController: suggestionDisplayController)
+                    suggestionController!.suggestionType = .JS
+                    
                     if htmlTextView.isFirstResponder() {
                         htmlTextView.resignFirstResponder()
                         jsTextView.becomeFirstResponder()
@@ -82,6 +98,9 @@ class EditorViewController: UIViewController, UITextViewDelegate, ProjectSplitVi
                     jsTextView.isHidden = true
                     cssTextView.isHidden = true
                     htmlTextView.isHidden = false
+                    
+                    suggestionController = WUTextSuggestionController(textView: htmlTextView, suggestionDisplayController: suggestionDisplayController)
+                    suggestionController!.suggestionType = .tag
                     
                     if jsTextView.isFirstResponder() {
                         jsTextView.resignFirstResponder()
@@ -156,6 +175,9 @@ class EditorViewController: UIViewController, UITextViewDelegate, ProjectSplitVi
         }
     }
     
+    
+    let suggestionDisplayController = WUTextSuggestionDisplayController()
+    var suggestionController: WUTextSuggestionController!
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -165,10 +187,7 @@ class EditorViewController: UIViewController, UITextViewDelegate, ProjectSplitVi
 
         
         // Auto Completion
-        let suggestionDisplayController = WUTextSuggestionDisplayController()
         suggestionDisplayController.dataSource = self
-        let suggestionController = WUTextSuggestionController(textView: htmlTextView, suggestionDisplayController: suggestionDisplayController)
-        suggestionController?.suggestionType = .tag
         NotificationCenter.default().addObserver(self, selector: #selector(range), name: "range", object: nil)
 
         
@@ -247,46 +266,7 @@ class EditorViewController: UIViewController, UITextViewDelegate, ProjectSplitVi
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         
         if text == "\n" {
-        
-            // Get the line
-            let line = (textView.text as NSString).substring(to: range.location)
-                .components(separatedBy: "\n")
-                .last!
-
-            
-            // Get indent
-            var indentingString: String {
-                let characters = line.characters
-                var indentations = ""
-                
-                for character in characters {
-                    if character == " " {
-                        indentations += String(character)
-                    }
-                    else {
-                        break
-                    }
-                }
-                return indentations
-            }
-            
-            // line break + indent
-            textView.insertText("\n" + indentingString)
-            
-            textView.undoManager?.__registerUndoWithTarget(self, handler: { _ in
-                textView.undoManager?.disableUndoRegistration()
-
-                
-                if indentingString.characters.count > 1 {
-                    for _ in 1...indentingString.characters.count {
-                        textView.deleteBackward()
-                    }
-                }
-                
-               
-                textView.undoManager?.enableUndoRegistration()
-            })
-            
+            indentReturn(with: range)
             return false
         }
         else if range.length == 1 {
@@ -321,6 +301,47 @@ class EditorViewController: UIViewController, UITextViewDelegate, ProjectSplitVi
         else {
             return true
         }
+    }
+    
+    func indentReturn(with range: NSRange) {
+        // Get the line
+        let line = (textView.text as NSString).substring(to: range.location)
+            .components(separatedBy: "\n")
+            .last!
+        
+        
+        // Get indent
+        var indentingString: String {
+            let characters = line.characters
+            var indentations = ""
+            
+            for character in characters {
+                if character == " " {
+                    indentations += String(character)
+                }
+                else {
+                    break
+                }
+            }
+            return indentations
+        }
+        
+        // line break + indent
+        textView.insertText("\n" + indentingString)
+        
+        textView.undoManager?.__registerUndoWithTarget(self, handler: { _ in
+            self.textView.undoManager?.disableUndoRegistration()
+            
+            
+            if indentingString.characters.count > 1 {
+                for _ in 1...indentingString.characters.count {
+                    self.textView.deleteBackward()
+                }
+            }
+            
+            
+            self.textView.undoManager?.enableUndoRegistration()
+        })
     }
     
     

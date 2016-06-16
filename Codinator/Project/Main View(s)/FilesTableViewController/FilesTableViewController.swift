@@ -194,6 +194,10 @@ class FilesTableViewController: UIViewController, UITableViewDelegate, UITableVi
     // MARK: - Action Buttons
     
     @IBAction func add(_ sender: UIBarButtonItem) {
+        let Import = UIAlertAction(title: "Import", style: .default) { (action : UIAlertAction) in
+            self.performSegue(withIdentifier: "import", sender: self)
+        }
+        
         let newFile = UIAlertAction(title: "New File", style: .default) { (action : UIAlertAction) in
             self.performSegue(withIdentifier: "newFile", sender: self)
         }
@@ -206,9 +210,6 @@ class FilesTableViewController: UIViewController, UITableViewDelegate, UITableVi
             self.performSegue(withIdentifier: "newDir", sender: self)
         }
         
-        let Import = UIAlertAction(title: "Import", style: .default) { (action : UIAlertAction) in
-            self.performSegue(withIdentifier: "import", sender: self)
-        }
         
         let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in
             
@@ -221,10 +222,10 @@ class FilesTableViewController: UIViewController, UITableViewDelegate, UITableVi
         
         
         let popup = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        popup.addAction(Import)
         popup.addAction(newFile)
         popup.addAction(newSubpage)
         popup.addAction(newDir)
-        popup.addAction(Import)
         popup.addAction(cancel)
         
         popup.view.tintColor = UIColor.purple()
@@ -244,25 +245,26 @@ class FilesTableViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     @IBAction func product(_ sender: UIBarButtonItem) {
-        let run = UIAlertAction(title: "Full Screen Preview", style: .default) { (action : UIAlertAction) in
-            self.performSegue(withIdentifier: "run", sender: self)
-        }
-        
         let archive = UIAlertAction(title: "Commit", style: .default) { (action : UIAlertAction) in
             self.performSegue(withIdentifier: "archive", sender: self)
-        }
-        
-        let history = UIAlertAction(title: "Commit History", style: .default) { (action : UIAlertAction) in
-            self.performSegue(withIdentifier: "history", sender: self)
         }
         
         let export = UIAlertAction(title: "Export", style: .default) { (action : UIAlertAction) in
             Notifications.sharedInstance.alertWithMessage("Archive the Project first.\nAfterwards open up the History window and use the export manager.", title: "Export", viewController: self)
         }
+
+        let history = UIAlertAction(title: "Commit History", style: .default) { (action : UIAlertAction) in
+            self.performSegue(withIdentifier: "history", sender: self)
+        }
         
         let localServer = UIAlertAction(title: "Local Server", style: .default) { (action : UIAlertAction) in
             self.performSegue(withIdentifier: "Pulse", sender: self)
         }
+        
+        let run = UIAlertAction(title: "Full Screen Preview", style: .default) { (action : UIAlertAction) in
+            self.performSegue(withIdentifier: "run", sender: self)
+        }
+        
         
         let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in
 
@@ -274,11 +276,11 @@ class FilesTableViewController: UIViewController, UITableViewDelegate, UITableVi
         
         
         let popup = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        popup.addAction(run)
         popup.addAction(archive)
-        popup.addAction(history)
         popup.addAction(export)
         popup.addAction(localServer)
+        popup.addAction(history)
+        popup.addAction(run)
         popup.addAction(cancel)
         
         popup.view.tintColor = UIColor.purple()

@@ -18,6 +18,8 @@ class NewImportViewController: UIViewController,UINavigationControllerDelegate,U
     @IBOutlet weak var cameraButton: UIButton!
     
     
+    @IBOutlet var loadingView: UIVisualEffectView!
+    
     
     var items: [String]!
     var webUploaderURL: String!
@@ -125,11 +127,9 @@ class NewImportViewController: UIViewController,UINavigationControllerDelegate,U
          
             let picker = UIImagePickerController()
             picker.delegate = self
-            picker.allowsEditing = true
             picker.sourceType = UIImagePickerControllerSourceType.photoLibrary
             picker.modalPresentationStyle = UIModalPresentationStyle.popover
         
-            
 
             let popover : UIPopoverPresentationController = picker.popoverPresentationController!
             
@@ -145,41 +145,59 @@ class NewImportViewController: UIViewController,UINavigationControllerDelegate,U
     }
     
     
-  
-    // MARK: - WAS DEPRECATED
-    //    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
-    //
-    //        let pathToWriteFile = inspectorPath! + "/" + textField.text!
-    //        var fileUrl = URL(fileURLWithPath: pathToWriteFile)
-    //
-    //        if (fileUrl.lastPathComponent == ""){
-    //            fileUrl = try! fileUrl.appendingPathExtension("png")
-    //        }
-    //        else{
-    //            fileUrl = try! fileUrl.deletingPathExtension()
-    //            fileUrl = try! fileUrl.appendingPathExtension("png")
-    //        }
-    //
-    //
-    //
-    //        let newFileName = NewFiles.availableName(fileUrl.lastPathComponent!, nameWithoutExtension: try! fileUrl.deletingPathExtension().lastPathComponent!, Extension: fileUrl.pathExtension!, items: items)
-    //        fileUrl = try! fileUrl.deletingLastPathComponent().appendingPathComponent(newFileName)
-    //
-    //
-    //
-    //        let content = UIImagePNGRepresentation(image)
-    //
-    //        FileManager.default().createFile(atPath: (fileUrl.path)!, contents: content, attributes: nil)
-    //
-    //
-    //        picker.dismiss(animated: true, completion: {
-    //            self.delegate?.reloadDataWithSelection(true)
-    //            self.dismiss(animated: true, completion: nil)
-    //        })
-    //    }
-    //    
+    // MARK: - Image Picker
     
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        
+        
+        // Load animation
+        self.loadingView.effect = nil
+        UIView.animate(withDuration: 0.4) {
+            self.loadingView.alpha = 1.0
+            self.loadingView.effect = UIBlurEffect(style: .dark)
+        }
+        
+        
+        
+        DispatchQueue.global(attributes: .qosUserInitiated).async(execute: { 
+          
+            let pathToWriteFile = self.inspectorPath! + "/" + self.textField.text!
+            var fileUrl = URL(fileURLWithPath: pathToWriteFile)
+            
+            if (fileUrl.lastPathComponent == ""){
+                fileUrl = try! fileUrl.appendingPathExtension("png")
+            }
+            else{
+                fileUrl = try! fileUrl.deletingPathExtension()
+                fileUrl = try! fileUrl.appendingPathExtension("png")
+            }
+            
+            
+            
+            let newFileName = NewFiles.availableName(fileUrl.lastPathComponent!, nameWithoutExtension: try! fileUrl.deletingPathExtension().lastPathComponent!, Extension: fileUrl.pathExtension!, items: self.items)
+            fileUrl = try! fileUrl.deletingLastPathComponent().appendingPathComponent(newFileName)
+            
+            
+            let image = info[UIImagePickerControllerOriginalImage] as! UIImage
+            
+            if let content = UIImagePNGRepresentation(image) {
+                FileManager.default().createFile(atPath: (fileUrl.path)!, contents: content, attributes: nil)
+            }
+            
+            
+            
+            DispatchQueue.main.async(execute: { 
+                picker.dismiss(animated: true, completion: {
+                    self.delegate?.reloadDataWithSelection(true)
+                    self.dismiss(animated: true, completion: nil)
+                })
+            })
+            
+        })
+
+    }
     
+
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
     }
@@ -231,20 +249,49 @@ class NewImportViewController: UIViewController,UINavigationControllerDelegate,U
     // MARK: cloud
     
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentAt url: URL) {
+        
         if (controller.documentPickerMode == UIDocumentPickerMode.import){
             
+            
+            // Load animation
+            self.loadingView.effect = nil
+            UIView.animate(withDuration: 0.4) {
+                self.loadingView.alpha = 1.0
+                self.loadingView.effect = UIBlurEffect(style: .dark)
+            }
+            
+            
+            
+            DispatchQueue.global(attributes: .qosUserInitiated).async(execute: {
+            
+            
+            
             let name = url.lastPathComponent!
-            let pathToWriteFile = inspectorPath! + "/" + name
+            let pathToWriteFile = self.inspectorPath! + "/" + name
 
             let content = try? Data(contentsOf: url)
             FileManager.default().createFile(atPath: pathToWriteFile, contents: content, attributes: nil)
             
-            try? content?.write(to: URL(fileURLWithPath: inspectorPath!), options: [.dataWritingAtomic])
+                
+                do {
+                    try content?.write(to: URL(fileURLWithPath: self.inspectorPath!), options: [.dataWritingAtomic])
+                } catch {}
+                
+                DispatchQueue.main.async(execute: { 
+                    self.dismiss(animated: true, completion: {
+                        self.delegate?.reloadDataWithSelection(true)
+                    })
+                })
+                
+            })
+            
+        }
+        else {
+            self.dismiss(animated: true, completion: {
+                self.delegate?.reloadDataWithSelection(true)
+            })
         }
     
-        self.dismiss(animated: true, completion: {
-            self.delegate?.reloadDataWithSelection(true)
-        })
     }
     
 

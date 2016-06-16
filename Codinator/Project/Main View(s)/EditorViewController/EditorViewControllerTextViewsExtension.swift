@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import AudioToolbox
 
 extension EditorViewController {
     
@@ -133,73 +134,93 @@ extension EditorViewController {
     // MARK: - Snippets
     
     @objc private func _tab() {
+        AudioServicesPlaySystemSound(1104)
         self.textView.insertText("    ")
     }
     
     @objc private func _insertOpenBracket() {
+        AudioServicesPlaySystemSound(1104)
         self.textView.insertText("(")
     }
 
     @objc private func _insertCloseBracket() {
+        AudioServicesPlaySystemSound(1104)
         self.textView.insertText(")")
     }
     
     @objc private func _closeTag() {
+        AudioServicesPlaySystemSound(1104)
         self.textView.insertText(">")
     }
     
     @objc private func _openTag() {
+        AudioServicesPlaySystemSound(1104)
         self.textView.insertText("<")
     }
     
     @objc private func _hash() {
+        AudioServicesPlaySystemSound(1104)
         self.textView.insertText("#")
     }
     
     @objc private func _string() {
-        self.textView.insertText("\"")
+        AudioServicesPlaySystemSound(1104)
+        self.textView.insertText("\"\"")
+        moveCursor(by: 1, diretion: .back)
     }
     
     @objc private func _equal() {
-        self.textView.insertText("=")
+        AudioServicesPlaySystemSound(1104)
+        self.textView.insertText("= ")
     }
     
     @objc private func _percent() {
+        AudioServicesPlaySystemSound(1104)
         self.textView.insertText("%")
     }
     
     @objc private func _clojureOpen() {
-        self.textView.insertText("{")
+        AudioServicesPlaySystemSound(1104)
+        self.textView.insertText("{\n   \n} ")
     }
 
     @objc private func _doublePoint() {
-        self.textView.insertText(":")
+        AudioServicesPlaySystemSound(1104)
+        self.textView.insertText(": ")
     }
     
     @objc private func _clojureClose() {
+        AudioServicesPlaySystemSound(1104)
         self.textView.insertText("}")
     }
 
     @objc private func _plus() {
+        AudioServicesPlaySystemSound(1104)
         self.textView.insertText("+")
     }
     
     @objc private func _minus() {
+        AudioServicesPlaySystemSound(1104)
         self.textView.insertText("-")
     }
 
     @objc private func _comma() {
+        AudioServicesPlaySystemSound(1104)
         self.textView.insertText(";")
+        indentReturn(with: self.textView.selectedRange)
     }
     @objc private func _dollar() {
+        AudioServicesPlaySystemSound(1104)
         self.textView.insertText("$")
     }
 
     @objc private func _apostrophe() {
-        self.textView.insertText("'")
+        AudioServicesPlaySystemSound(1104)
+        self.textView.insertText("''")
     }
 
     @objc private func _closeTagHTML() {
+        AudioServicesPlaySystemSound(1104)
         self.textView.insertText("/")
     }
 

@@ -16,9 +16,9 @@
 @property (strong, nonatomic) NSMutableArray *playgroundsArray;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
+@property (nonatomic, strong) CodinatorDocument *document;
 
 @property (strong, nonatomic) NSString *forceTouchPath;
-@property (nonatomic) CodinatorDocument *document;
 
 @property (nonatomic) BOOL projectIsOpened;
 @property (nonatomic) NSString *projectsPath;

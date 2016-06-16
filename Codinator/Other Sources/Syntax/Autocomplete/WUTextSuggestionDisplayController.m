@@ -135,20 +135,13 @@ static WUTextSuggestionDisplayController __weak *_activeTextSuggestionDisplayCon
 - (void)textSuggestionDisplayItemTapped:(WUTextSuggestionDisplayItem *)item {
 
         NSRange suggestionRange = self.suggestionRange;
-        NSString *Suggestion = NSStringFromRange(suggestionRange);
         NSLog(@"%@",NSStringFromRange(suggestionRange));
         NSString *suggestionString = item.title;
-        NSString *insertString = [suggestionString stringByAppendingString:@" "];
-        if (self.textView.text.length > suggestionRange.location + suggestionRange.length) {
-            if ([[self.textView.text substringWithRange:NSMakeRange(suggestionRange.location, suggestionRange.length + 1)] hasSuffix:@" "]) {
-                insertString = suggestionString;
-            }
-        
-        }
+    
+    
      //   NSRange PreRange = self.textView.selectedRange;
    // NSString *PreR = NSStringFromRange(PreRange);
-    [[NSUserDefaults standardUserDefaults] setObject:insertString forKey:@"range"];
-    [[NSUserDefaults standardUserDefaults] setObject:Suggestion forKey:@"sugg"];
+    [[NSUserDefaults standardUserDefaults] setObject:suggestionString forKey:@"range"];
     [[NSUserDefaults standardUserDefaults] synchronize];
      //   self.textView.text = [self.textView.text stringByReplacingCharactersInRange:suggestionRange withString:insertString];
     

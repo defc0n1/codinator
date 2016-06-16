@@ -613,13 +613,7 @@
                 [self reloadData];
             });
         }
-        
-        //        #ifdef DEBUG
-        //        if (error) {
-        //            NSLog(@"%@", error.localizedFailureReason);
-        //        }
-        //        #endif
-        
+
     };
     
     
@@ -693,30 +687,15 @@
                 {
                     [context evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics localizedReason:@"Unlock project" reply:^(BOOL success, NSError *authenticationError){
                         if (success) {
-                            [document openWithCompletionHandler:^(BOOL success) {
-                                
-                                if (success) {
-                                    
-                                    projectIsOpened = YES;
-                                    
-                                    self.projectsPath = path;
-                                    dispatch_async(dispatch_get_main_queue(), ^{
-                                        [self performSegueWithIdentifier:@"project" sender:nil];
-                                    });
-                                }
-                                else{
-                                    NSString *message = [NSString stringWithFormat:@"%@ can't be opened right now...", path.lastPathComponent];
-                                    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error" message:message preferredStyle:UIAlertControllerStyleAlert];
-                                    UIAlertAction *closeAlert = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
-                                    [alert addAction:closeAlert];
-                                    
-                                    dispatch_async(dispatch_get_main_queue(), ^{
-                                        [self presentViewController:alert animated:YES completion:nil];
-                                    });
-                                    
-                                }
-                                
-                            }];
+                            
+                            projectIsOpened = YES;
+                            
+                            self.projectsPath = path;
+                            dispatch_async(dispatch_get_main_queue(), ^{
+                                [self performSegueWithIdentifier:@"project" sender:nil];
+                            });
+                            
+                            
                         }
                     }];
                 }
@@ -728,27 +707,13 @@
             }
             else {
                 
-                [document openWithCompletionHandler:^(BOOL success) {
-                    
-                    if (success) {
-                        
-                        projectIsOpened = YES;
-                        
-                        self.projectsPath = path;
-                        [self performSegueWithIdentifier:@"project" sender:nil];
-                        
-                    }
-                    else{
-                        NSString *message = [NSString stringWithFormat:@"%@ can't be opened right now...", path.lastPathComponent];
-                        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error" message:message preferredStyle:UIAlertControllerStyleAlert];
-                        UIAlertAction *closeAlert = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
-                        [alert addAction:closeAlert];
-                        [self presentViewController:alert animated:YES completion:nil];
-                        
-                    }
-                    
-                }];
+                projectIsOpened = YES;
                 
+                self.projectsPath = path;
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self performSegueWithIdentifier:@"project" sender:nil];
+                });
+
                 
             }
             

@@ -10,6 +10,7 @@
 typedef NS_ENUM(NSUInteger, WUTextSuggestionType) {
     WUTextSuggestionTypeNone    = 0,
     WUTextSuggestionTypeTag      = 1 << 0,
+    WUTextSuggestionTypeJS      = 1 << 1,
 };
 
 @interface WUTextSuggestionController : NSObject

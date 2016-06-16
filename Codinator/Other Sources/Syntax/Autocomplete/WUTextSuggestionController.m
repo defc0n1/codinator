@@ -24,6 +24,7 @@ NSString * const WUTextSuggestionControllerTextInputTextPropertyKey = @"text";
 @property (nonatomic) BOOL observingSelectedTextRange;
 @property (nonatomic) BOOL observingTextInputText;
 
+
 @end
 
 @implementation WUTextSuggestionController
@@ -103,9 +104,16 @@ NSString * const WUTextSuggestionControllerTextInputTextPropertyKey = @"text";
 }
 
 - (NSRegularExpression *)textCheckingRegularExpression {
-    if (!_textCheckingRegularExpression) {
-        _textCheckingRegularExpression = [NSRegularExpression regularExpressionWithPattern:@"([<|/]([^\\s/:：@#>]?)+$?)" options:NSRegularExpressionCaseInsensitive error:NULL];
+
+    
+    if (!_textCheckingRegularExpression && self.suggestionType == WUTextSuggestionTypeTag) {
+        // old one: ([<|/]([^\\s/:：@#>]?)+$?)
+        _textCheckingRegularExpression = [NSRegularExpression regularExpressionWithPattern:@"[<|/]([^\\s/:：@#]?)" options:NSRegularExpressionCaseInsensitive error:NULL];
     }
+    else if (!_textCheckingRegularExpression && self.suggestionType == WUTextSuggestionTypeJS) {
+        _textCheckingRegularExpression = [NSRegularExpression regularExpressionWithPattern:@"([ \n\t]([^\\s/:：@#>;]?)+$?)" options:NSRegularExpressionCaseInsensitive error:NULL];
+    }
+    
     return _textCheckingRegularExpression;
 }
 
@@ -126,14 +134,14 @@ NSString * const WUTextSuggestionControllerTextInputTextPropertyKey = @"text";
          }
      }];
     
-    if (word.length >= 1 && range.location != NSNotFound) {
+    if ((word.length >= 1 || range.location == 0) && range.location != NSNotFound) {
         NSString *first = [word substringToIndex:1];
         NSString *rest = [word substringFromIndex:1];
-        if (([first isEqualToString:@"<"] || [first isEqualToString:@"/"]) && (self.suggestionType & WUTextSuggestionTypeTag)) {
+        if (([first isEqualToString:@"<"] || [first isEqualToString:@"/"] || [first isEqualToString:@" "] || [first isEqualToString:@"\n"]|| [first isEqualToString:@"\t"]) && self.suggestionType) {
             self.suggesting = YES;
             self.suggestionRange = NSMakeRange(range.location + 1, range.length - 1);
             if (self.shouldReloadSuggestionsBlock) {
-                self.shouldReloadSuggestionsBlock(WUTextSuggestionTypeTag,rest,self.suggestionRange);
+                self.shouldReloadSuggestionsBlock(self.suggestionType,rest,self.suggestionRange);
             }
         } else {
             self.suggestionRange = NSMakeRange(NSNotFound, 0);
