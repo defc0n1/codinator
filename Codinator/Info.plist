@@ -107,6 +107,12 @@
 	</dict>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>UIAppFonts</key>
+	<array>
+		<string>SFMono-Regular.otf</string>
+		<string>SFMono-Bold.otf</string>
+		<string>SFMono-RegularItalic.otf</string>
+	</array>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>audio</string>

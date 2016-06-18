@@ -19,8 +19,8 @@ class EditorViewController: UIViewController, UITextViewDelegate, ProjectSplitVi
     // Auto completion
     lazy var htmlSuggestions = ["h1>","/h1>","h2>","/h2>","h3>","/h3>","h4>","h5>","h6>","head>","body>","/body>","!Doctype html>","center>","img src=","a href=","font ","meta","table border=","tr>","td>","div>","div class=","style>","title>","li>","em>","p>","section class=","header>","footer>","ul>","del>","em>","sub>","sup>","cite>","big>","small>","strong>","code>","frameset","blackquote>","br>"]
     
-    lazy var jsSuggestions = ["var ", "this", "return ", "break", "true", "false", "throw", "new", "typeof", "if () {\n   \n}", "function () {\n   \n}", "for (;;) {\n   \n}"]
-    
+    lazy var jsSuggestions = ["var", "this", "return", "break", "true", "false", "throw", "new", "typeof", "if () {\n   \n}", "function () {\n   \n}", "for (;;) {\n   \n}"]
+
     
     
     // Computed properties
@@ -261,12 +261,24 @@ class EditorViewController: UIViewController, UITextViewDelegate, ProjectSplitVi
         
         OperationQueue.main().addOperation(operation)
         
+        if textView == jsTextView {
+            jsVariableNames(text: textView.text, completion: { (varNames) in
+                var originalJsSuggestionsCopy = ["var", "this", "return", "break", "true", "false", "throw", "new", "typeof", "if () {\n   \n}", "function () {\n   \n}", "for (;;) {\n   \n}"]
+                
+                originalJsSuggestionsCopy.append(contentsOf: varNames)
+                
+                self.jsSuggestions = originalJsSuggestionsCopy
+
+            })
+        }
+        
+        
     }
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         
         if text == "\n" {
-            indentReturn(with: range)
+            _ = indentReturn(with: range)
             return false
         }
         else if range.length == 1 {
@@ -303,7 +315,7 @@ class EditorViewController: UIViewController, UITextViewDelegate, ProjectSplitVi
         }
     }
     
-    func indentReturn(with range: NSRange) {
+    func indentReturn(with range: NSRange) -> String {
         // Get the line
         let line = (textView.text as NSString).substring(to: range.location)
             .components(separatedBy: "\n")
@@ -342,6 +354,8 @@ class EditorViewController: UIViewController, UITextViewDelegate, ProjectSplitVi
             
             self.textView.undoManager?.enableUndoRegistration()
         })
+        
+        return indentingString
     }
     
     

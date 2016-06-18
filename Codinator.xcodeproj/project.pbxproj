@@ -78,6 +78,9 @@
 		646EC7291CADD80900F359C2 /* JsTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646EC7281CADD80900F359C2 /* JsTextView.swift */; };
 		646EC72B1CADD8AC00F359C2 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646EC72A1CADD8AC00F359C2 /* UIColorExtension.swift */; };
 		647F33921CCDDC8600CA537D /* FilesTableViewControllerPreviewing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647F33911CCDDC8600CA537D /* FilesTableViewControllerPreviewing.swift */; };
+		649194311D15D5240025E79C /* SFMono-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 649194301D15D50C0025E79C /* SFMono-Regular.otf */; };
+		649194341D15DF9D0025E79C /* SFMono-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 649194321D15DEB20025E79C /* SFMono-Bold.otf */; };
+		649194351D15DFA00025E79C /* SFMono-RegularItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 649194331D15DEDC0025E79C /* SFMono-RegularItalic.otf */; };
 		649B64721C7B618900E0830D /* ContributeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649B64711C7B618900E0830D /* ContributeViewController.swift */; };
 		64A080B91BDBD9D60001CA0C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 64A080B81BDBD9D60001CA0C /* main.m */; };
 		64A080BC1BDBD9D60001CA0C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 64A080BB1BDBD9D60001CA0C /* AppDelegate.m */; };
@@ -148,6 +151,7 @@
 		64A083661BDD24680001CA0C /* project.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 64A083651BDD24680001CA0C /* project.storyboard */; };
 		64B3840C1CC912B000B8B340 /* CreateSubpageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64B3840B1CC912B000B8B340 /* CreateSubpageViewController.swift */; };
 		64B67C8F1C7F53440040E574 /* SettingsEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 64B67C8E1C7F53440040E574 /* SettingsEngine.m */; };
+		64E4A9E11D157CE700A9B4F9 /* EditorViewAutoCompletionAnalyzis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E4A9E01D157CE700A9B4F9 /* EditorViewAutoCompletionAnalyzis.swift */; };
 		64E77DDF1CCE752E003FE752 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E77DDE1CCE752E003FE752 /* SettingsTableViewController.swift */; };
 		64EED4D91CCAF40200A8BC34 /* ColorPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64EED4D81CCAF40200A8BC34 /* ColorPickerViewController.swift */; };
 		64EED4DB1CCC3CC400A8BC34 /* ExportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64EED4DA1CCC3CC400A8BC34 /* ExportViewController.swift */; };
@@ -268,6 +272,9 @@
 		646EC7281CADD80900F359C2 /* JsTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsTextView.swift; sourceTree = "<group>"; };
 		646EC72A1CADD8AC00F359C2 /* UIColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
 		647F33911CCDDC8600CA537D /* FilesTableViewControllerPreviewing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilesTableViewControllerPreviewing.swift; sourceTree = "<group>"; };
+		649194301D15D50C0025E79C /* SFMono-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFMono-Regular.otf"; sourceTree = "<group>"; };
+		649194321D15DEB20025E79C /* SFMono-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFMono-Bold.otf"; sourceTree = "<group>"; };
+		649194331D15DEDC0025E79C /* SFMono-RegularItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFMono-RegularItalic.otf"; sourceTree = "<group>"; };
 		649B64711C7B618900E0830D /* ContributeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContributeViewController.swift; sourceTree = "<group>"; };
 		64A080B41BDBD9D60001CA0C /* Codinator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Codinator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		64A080B81BDBD9D60001CA0C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -398,6 +405,7 @@
 		64B3840B1CC912B000B8B340 /* CreateSubpageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateSubpageViewController.swift; sourceTree = "<group>"; };
 		64B67C8D1C7F53440040E574 /* SettingsEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsEngine.h; sourceTree = "<group>"; };
 		64B67C8E1C7F53440040E574 /* SettingsEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsEngine.m; sourceTree = "<group>"; };
+		64E4A9E01D157CE700A9B4F9 /* EditorViewAutoCompletionAnalyzis.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditorViewAutoCompletionAnalyzis.swift; sourceTree = "<group>"; };
 		64E77DDE1CCE752E003FE752 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		64EED4D81CCAF40200A8BC34 /* ColorPickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorPickerViewController.swift; sourceTree = "<group>"; };
 		64EED4DA1CCC3CC400A8BC34 /* ExportViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExportViewController.swift; sourceTree = "<group>"; };
@@ -733,6 +741,9 @@
 		64A081161BDBDF080001CA0C /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				649194301D15D50C0025E79C /* SFMono-Regular.otf */,
+				649194321D15DEB20025E79C /* SFMono-Bold.otf */,
+				649194331D15DEDC0025E79C /* SFMono-RegularItalic.otf */,
 				64A0811C1BDBDFCC0001CA0C /* Launch Screen */,
 				64A080C81BDBD9D60001CA0C /* Info.plist */,
 				64A080C31BDBD9D60001CA0C /* Assets.xcassets */,
@@ -1244,6 +1255,7 @@
 				3201D0171CA6EFA900204373 /* EditorViewController.swift */,
 				640AFA321CDCF7D50063727D /* EditorViewControllerTextViewsExtension.swift */,
 				64EED4DD1CCCE67700A8BC34 /* EditorViewControllerAutoCompletion.swift */,
+				64E4A9E01D157CE700A9B4F9 /* EditorViewAutoCompletionAnalyzis.swift */,
 			);
 			path = EditorViewController;
 			sourceTree = "<group>";
@@ -1302,6 +1314,7 @@
 						CreatedOnToolsVersion = 7.1;
 						DevelopmentTeam = L6QAR75AH5;
 						LastSwiftMigration = 0800;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
 								enabled = 1;
@@ -1341,10 +1354,13 @@
 			files = (
 				64A083661BDD24680001CA0C /* project.storyboard in Resources */,
 				64A080C71BDBD9D60001CA0C /* LaunchScreen.storyboard in Resources */,
+				649194341D15DF9D0025E79C /* SFMono-Bold.otf in Resources */,
+				649194351D15DFA00025E79C /* SFMono-RegularItalic.otf in Resources */,
 				64A082AF1BDBE81F0001CA0C /* qsgProjects.storyboard in Resources */,
 				64A082B11BDBE81F0001CA0C /* extra.storyboard in Resources */,
 				646EC6E61CA8D0BE00F359C2 /* GCDWebUploader.bundle in Resources */,
 				64A080C41BDBD9D60001CA0C /* Assets.xcassets in Resources */,
+				649194311D15D5240025E79C /* SFMono-Regular.otf in Resources */,
 				64A0833C1BDD16040001CA0C /* UnZip.storyboard in Resources */,
 				326F02A01CA1EE1700CA61C7 /* MainStoryboard.storyboard in Resources */,
 				64A082B01BDBE81F0001CA0C /* History.storyboard in Resources */,
@@ -1392,6 +1408,7 @@
 				6460CF071D10449A006909E9 /* FontDefaults.swift in Sources */,
 				64A083281BDD155C0001CA0C /* WUTextSuggestionDisplayController.m in Sources */,
 				64EED4D91CCAF40200A8BC34 /* ColorPickerViewController.swift in Sources */,
+				64E4A9E11D157CE700A9B4F9 /* EditorViewAutoCompletionAnalyzis.swift in Sources */,
 				64A082D11BDBE89A0001CA0C /* AFURLResponseSerialization.m in Sources */,
 				646EC6E41CA8D0BE00F359C2 /* UIBarButtonItem+BlocksKit.m in Sources */,
 				3201D00B1CA6E02600204373 /* FilesTableViewController.swift in Sources */,
@@ -1619,6 +1636,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Codinator/Codinator.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Codinator/Frameworks",
@@ -1630,6 +1648,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.vladidanila.codinator;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Codinator/Root/Playground/Codinator-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
@@ -1646,6 +1666,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Codinator/Codinator.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Codinator/Frameworks",
@@ -1657,6 +1678,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.vladidanila.codinator;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Codinator/Root/Playground/Codinator-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 3.0;

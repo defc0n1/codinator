@@ -70,13 +70,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    UIEdgeInsets insets;
+    UIEdgeInsets insets = UIEdgeInsetsZero;
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
         insets = UIEdgeInsetsMake(10, 0, 0, 0);
-        
         UIEdgeInsets scrollInsets = insets;
         scrollInsets.top = 0;
-        
         self.collectionView.scrollIndicatorInsets = scrollInsets;
     }
     
@@ -108,13 +106,13 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
     self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName: [UIColor darkGrayColor]};
 }
 
 - (void)viewDidAppear:(BOOL)animated{
-    [super viewDidAppear:true];
-    
-    //Root Path
+    [super viewDidAppear:animated];
     
     
     // delete old indexed files
@@ -262,15 +260,16 @@
 
 
 - (void)setUp {
-    NSString *macroKey = @"MacroInitBOOL";
+    
+    // Configure fonts
+    NSString *macroKey = @"SF_Font_iOS_10";
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     
     BOOL macro = [userDefaults boolForKey:macroKey];
     
     
     if (!macro) {
-        [userDefaults setBool:YES forKey:macroKey];
-        
+       [userDefaults setBool:YES forKey:macroKey];
         
         [SettingsEngine restoreSyntaxSettings];
         [SettingsEngine restoreServerSettings];
@@ -1044,8 +1043,6 @@
 
 
 - (void)reloadData{
-    [super viewDidAppear:true];
-    
     
     NSOperation *backgroundOperation = [[NSOperation alloc] init];
     backgroundOperation.queuePriority = NSOperationQueuePriorityNormal;
@@ -1063,6 +1060,9 @@
         projectsArray = [[[NSFileManager defaultManager] contentsOfDirectoryAtURL:[NSURL fileURLWithPath:projectsDirPath isDirectory:YES] includingPropertiesForKeys:[NSArray arrayWithObject:NSURLNameKey] options:NSDirectoryEnumerationSkipsHiddenFiles error:nil] mutableCopy];
         playgroundsArray = [[[NSFileManager defaultManager] contentsOfDirectoryAtURL:[NSURL fileURLWithPath:playgroundsDirPath isDirectory:YES] includingPropertiesForKeys:[NSArray arrayWithObject:NSURLNameKey] options:NSDirectoryEnumerationSkipsHiddenFiles error:nil] mutableCopy];
         
+        if (!self.oldProjectsArray) {
+            self.oldProjectsArray = [[NSMutableArray alloc] init];
+        }
         
         if (![projectsArray isEqualToArray:self.oldProjectsArray] | ![playgroundsArray isEqualToArray:self.oldPlaygroundsArray]) {
             

@@ -143,6 +143,8 @@
 
 #pragma mark - Essentials
 - (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    
     [self saveMacro];
     [self saveAttributes];
 }

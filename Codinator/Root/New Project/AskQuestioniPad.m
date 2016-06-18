@@ -260,27 +260,6 @@ BOOL done;
                 }
             }
             else{
-                NSString *script;
-                NSString *stylsheet;
-                NSString *finalString;
-                if (useCss) {
-                    stylsheet = @"<link href=\"style.css\" rel=\"stylesheet\" type=\"text/css\">";
-                    finalString = [NSString stringWithFormat:@"%@",stylsheet];
-                    
-                }
-                if (useJs) {
-                    script = @"<script src=\"script.js\"></script>";
-                    finalString = [NSString stringWithFormat:@"%@",script];
-                    
-                }
-                if (useCss && useJs) {
-                    finalString = [NSString stringWithFormat:@"%@\n                %@",stylsheet,script];
-                }
-                
-                
-                
-                
-                
                 NSError *error;
                 NSString *fileName = @"index.html";
                 NSString *fileContents = [FileTemplates htmlTemplateFileForName:webPageNameTextField.text];

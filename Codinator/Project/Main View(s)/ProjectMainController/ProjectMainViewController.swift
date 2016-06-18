@@ -39,7 +39,7 @@ class ProjectMainViewController: UIViewController, UISplitViewControllerDelegate
     var getSplitView: ProjectSplitViewController! {
      
         get {
-            return (self.childViewControllers[0] as? ProjectSplitViewController)
+            return (self.childViewControllers.first as? ProjectSplitViewController)
         }
         
     }
@@ -119,7 +119,12 @@ class ProjectMainViewController: UIViewController, UISplitViewControllerDelegate
         }
         else {
             
-            Notifications.sharedInstance.alertWithMessage(nil, title: "Open a file", viewController: self)
+            if getSplitView.isCollapsed == false {
+                getSplitView?.dealWithSearchBar()
+            }
+            else {
+                Notifications.sharedInstance.alertWithMessage(nil, title: "Open a file", viewController: self)
+            }
         }
     }
     

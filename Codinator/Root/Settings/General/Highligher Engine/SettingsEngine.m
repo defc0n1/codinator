@@ -10,8 +10,6 @@
 #import "NSUserDefaults+Additions.h"
 #import "Codinator-Swift.h"
 
-#define RGB(r,g,b) [UIColor colorWithRed:r/255.0f green:g/255.0f blue:b/255.0f alpha:1.0f]
-
 
 @implementation SettingsEngine
 
@@ -27,8 +25,7 @@
         NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
         
         
-        //save macros
-        
+        // Save macros
         NSString *tagMacro = @"<.*?(>)";
         NSString *bracketsMacro = @"[\\[\\]]";
         NSString *keywordsMacro = @"(algin|width|height|color|text|border|bgcolor|description|name|content|href|src|charset|class|role|id|<!DOCTYPE html>|border)";
@@ -39,20 +36,17 @@
         [userDefaults setObject:keywordsMacro forKey:@"Macro:5"];
         [userDefaults setObject:stringMacro forKey:@"Macro:6"];
         
-        //save fonts
-        
-        UIFont *normalFont = [UIFont systemFontOfSize:14];
-        UIFont *italicFont = [UIFont italicSystemFontOfSize:14];
-        UIFont *boldFont = [UIFont boldSystemFontOfSize:14];
+        // Save fonts
+        CGFloat size = 13;
+        UIFont *normalFont = [UIFont fontWithName:@"SFMono-Regular" size:size];
+        UIFont *italicFont = [UIFont fontWithName:@"SFMono-RegularItalic" size:size];
+        UIFont *boldFont = [UIFont fontWithName:@"SFMono-Bold" size:size];
 
         [FontDefaults setWithFont:normalFont key:@"Font: 0"];
         [FontDefaults setWithFont:italicFont key:@"Font: 1"];
         [FontDefaults setWithFont:boldFont key:@"Font: 2"];
         
-        //Save colors
-
-        
-        
+        // Save colors
         UIColor *tagColor = [SyntaxHighlighterDefaultColors purpleColor];
         UIColor *bracketsColor = [SyntaxHighlighterDefaultColors darkGoldColor];
         UIColor *keyworkdsColor = [SyntaxHighlighterDefaultColors silverGray];
@@ -102,9 +96,7 @@
         [userDefaults setDic:keywordsDictionary ForKey:@"Macro:5 Attribute"];
         [userDefaults setDic:stringDictionary ForKey:@"Macro:6 Attribute"];
         
-        
-        
-        
+
     };
     
     

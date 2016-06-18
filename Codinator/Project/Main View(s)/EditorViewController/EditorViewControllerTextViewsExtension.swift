@@ -181,7 +181,13 @@ extension EditorViewController {
     
     @objc private func _clojureOpen() {
         AudioServicesPlaySystemSound(1104)
-        self.textView.insertText("{\n   \n} ")
+        self.textView.insertText("{")
+        let indentation = indentReturn(with: self.textView.selectedRange) + indentReturn(with: self.textView.selectedRange)
+        self.textView.insertText("}")
+        
+        
+        // TODO: - By has to be calculated upon indentation level <- #Fixed needs to be tested
+        moveCursor(by: indentation.characters.count, diretion: .back)
     }
 
     @objc private func _doublePoint() {
@@ -207,7 +213,7 @@ extension EditorViewController {
     @objc private func _comma() {
         AudioServicesPlaySystemSound(1104)
         self.textView.insertText(";")
-        indentReturn(with: self.textView.selectedRange)
+        _ = indentReturn(with: self.textView.selectedRange)
     }
     @objc private func _dollar() {
         AudioServicesPlaySystemSound(1104)

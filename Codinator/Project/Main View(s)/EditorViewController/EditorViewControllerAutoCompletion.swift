@@ -27,6 +27,36 @@ extension EditorViewController: WUTextSuggestionDisplayControllerDataSource {
     func filteredNames(query : String, type: WUTextSuggestionType) -> [String] {
         let suggetionsArray = type == .tag ? htmlSuggestions : jsSuggestions
         let filteredNames = suggetionsArray.filter { $0.lowercased().hasPrefix(query.lowercased()) }
+        
+        
+        if suggetionsArray == jsSuggestions {
+            var range = self.jsTextView.selectedRange
+            
+            if range.location - 5 > 0 {
+                range.location -= 5
+            }
+            
+            
+            // TODO: - Check if this works
+            if (5 + range.location) <= jsTextView.text.characters.count {
+                range.length = 5
+            }
+            
+            
+            let text = (jsTextView.text as NSString).substring(with: range)
+            
+            let fineFilteredNames = filteredNames.filter { text.contains($0) }
+            
+            // If you are currently editing the variable suggested return nothing
+            if fineFilteredNames.count > 0 {
+                return []
+            }
+            
+            
+            
+        }
+        
+        
         return filteredNames
     }
     
@@ -111,6 +141,9 @@ extension EditorViewController: WUTextSuggestionDisplayControllerDataSource {
             
             // Calculate position backward
             self.moveCursor(by: completion.characters.count - bracketPosition, diretion: .back)
+        }
+        else {
+            jsTextView.insertText(" ")
         }
         
     }

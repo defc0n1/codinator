@@ -15,7 +15,7 @@
         <scene sceneID="7hU-fk-GV1">
             <objects>
                 <navigationController id="6sV-hf-PdK" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="YZS-DX-XHK">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" barStyle="black" id="YZS-DX-XHK">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -154,7 +154,7 @@
         <scene sceneID="eDS-h2-uwV">
             <objects>
                 <navigationController id="dRg-Z5-B0Z" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="MkM-gu-KMu">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" barStyle="black" id="MkM-gu-KMu">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -243,9 +243,6 @@
                                 <color key="textColor" red="1" green="1" blue="1" alpha="0.43370616007194246" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" keyboardAppearance="alert" returnKeyType="done"/>
-                                <variation key="widthClass=compact" ambiguous="YES">
-                                    <rect key="frame" x="160" y="109" width="364" height="30"/>
-                                </variation>
                                 <connections>
                                     <outlet property="delegate" destination="AGI-c8-Zz2" id="RQE-LH-3Sj"/>
                                 </connections>
@@ -315,9 +312,6 @@
                                 <color key="textColor" red="1" green="1" blue="1" alpha="0.43370616010000002" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardAppearance="alert" returnKeyType="done"/>
-                                <variation key="widthClass=compact" ambiguous="YES">
-                                    <rect key="frame" x="160" y="60" width="364" height="30"/>
-                                </variation>
                                 <connections>
                                     <outlet property="delegate" destination="AGI-c8-Zz2" id="Toa-lr-1bf"/>
                                 </connections>
@@ -415,7 +409,7 @@
         <scene sceneID="AQo-4Y-Ogc">
             <objects>
                 <navigationController id="e0L-1v-ab7" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="L1a-Yz-TJG">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" barStyle="black" id="L1a-Yz-TJG">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -462,9 +456,6 @@
                                 <color key="textColor" red="1" green="1" blue="1" alpha="0.43370616010000002" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardAppearance="alert" returnKeyType="done"/>
-                                <variation key="widthClass=compact" ambiguous="YES">
-                                    <rect key="frame" x="164" y="84" width="364" height="30"/>
-                                </variation>
                                 <variation key="heightClass=compact-widthClass=compact" ambiguous="YES">
                                     <rect key="frame" x="164" y="104" width="364" height="30"/>
                                 </variation>
@@ -599,6 +590,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.1764705882" green="0.1764705882" blue="0.15686274510000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <label key="tableFooterView" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="jsS-co-lb4">
+                            <frame key="frameInset" minY="604" width="768" height="35"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                         <sections>
                             <tableViewSection headerTitle="Editing" id="RTD-j0-ieJ">
                                 <cells>
@@ -849,7 +847,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hcz-aK-EpZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2123" y="445"/>
+            <point key="canvasLocation" x="2122.65625" y="444.72656249999994"/>
         </scene>
         <!--Highlighter Engine Customizer Root View Controller-->
         <scene sceneID="f79-SI-eGw">
@@ -968,9 +966,6 @@
                                                     <state key="normal" title="Edit">
                                                         <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </state>
-                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="327" y="7" width="30" height="30"/>
-                                                    </variation>
                                                     <connections>
                                                         <action selector="tagsEditDidPush:" destination="0fh-ll-c7a" eventType="touchUpInside" id="kug-qi-ADX"/>
                                                     </connections>
@@ -1003,9 +998,6 @@
                                                     <state key="normal" title="Edit">
                                                         <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </state>
-                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="327" y="7" width="30" height="30"/>
-                                                    </variation>
                                                     <connections>
                                                         <action selector="bracketsEditDidPush:" destination="0fh-ll-c7a" eventType="touchUpInside" id="KcI-YA-MDD"/>
                                                     </connections>
@@ -1038,9 +1030,6 @@
                                                     <state key="normal" title="Edit">
                                                         <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </state>
-                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="327" y="7" width="30" height="30"/>
-                                                    </variation>
                                                     <connections>
                                                         <action selector="attributesEditDidPush:" destination="0fh-ll-c7a" eventType="touchUpInside" id="wJb-bJ-fXe"/>
                                                     </connections>
@@ -1073,9 +1062,6 @@
                                                     <state key="normal" title="Edit">
                                                         <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </state>
-                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="327" y="7" width="30" height="30"/>
-                                                    </variation>
                                                     <connections>
                                                         <action selector="stringsEditDidPush:" destination="0fh-ll-c7a" eventType="touchUpInside" id="Mix-bk-1dg"/>
                                                     </connections>
@@ -1606,7 +1592,7 @@ BODY()
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="86D-iC-ILW" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="9oQ-fS-yBq">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" barStyle="black" id="9oQ-fS-yBq">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1700,9 +1686,6 @@ BODY()
                                 <color key="textColor" red="1" green="1" blue="1" alpha="0.43370616010000002" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardAppearance="alert" returnKeyType="done"/>
-                                <variation key="widthClass=compact" ambiguous="YES">
-                                    <rect key="frame" x="164" y="60" width="364" height="30"/>
-                                </variation>
                                 <variation key="heightClass=compact-widthClass=compact" ambiguous="YES">
                                     <rect key="frame" x="164" y="60" width="364" height="30"/>
                                 </variation>
@@ -2003,7 +1986,7 @@ BODY()
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="YX7-lR-W5X" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="R0M-Eh-MSz">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" barStyle="black" id="R0M-Eh-MSz">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -2040,7 +2023,7 @@ BODY()
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="SkP-qK-Z3u" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="UYb-6J-Ovw">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" barStyle="black" id="UYb-6J-Ovw">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -2159,7 +2142,7 @@ BODY()
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="gee-bm-7QA" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="wwx-LC-ier">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" barStyle="black" id="wwx-LC-ier">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
