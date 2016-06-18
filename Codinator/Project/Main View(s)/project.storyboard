@@ -238,6 +238,48 @@
                                     <outletCollection property="gestureRecognizers" destination="wL9-oo-s7B" appends="YES" id="Ysz-3T-vUZ"/>
                                 </connections>
                             </view>
+                            <visualEffectView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Esf-xq-SlZ">
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="G94-5K-MnA">
+                                    <frame key="frameInset"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Qx-Dh-YWz">
+                                            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="StU-Ew-mQR">
+                                                <frame key="frameInset"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" Label " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1m2-ZA-30M">
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstItem="1m2-ZA-30M" firstAttribute="leading" secondItem="StU-Ew-mQR" secondAttribute="leading" id="FxF-yg-k9P"/>
+                                                    <constraint firstAttribute="trailing" secondItem="1m2-ZA-30M" secondAttribute="trailing" id="L8J-Zc-luf"/>
+                                                    <constraint firstAttribute="bottom" secondItem="1m2-ZA-30M" secondAttribute="bottom" id="q4h-ex-iEQ"/>
+                                                    <constraint firstItem="1m2-ZA-30M" firstAttribute="top" secondItem="StU-Ew-mQR" secondAttribute="top" id="xoy-RW-abg"/>
+                                                </constraints>
+                                            </view>
+                                            <vibrancyEffect>
+                                                <blurEffect style="dark"/>
+                                            </vibrancyEffect>
+                                        </visualEffectView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="3Qx-Dh-YWz" firstAttribute="leading" secondItem="G94-5K-MnA" secondAttribute="leading" id="Hil-JG-b2y"/>
+                                        <constraint firstAttribute="trailing" secondItem="3Qx-Dh-YWz" secondAttribute="trailing" id="ao2-3F-1Ur"/>
+                                        <constraint firstItem="3Qx-Dh-YWz" firstAttribute="top" secondItem="G94-5K-MnA" secondAttribute="top" id="hM1-I1-nQ9"/>
+                                        <constraint firstAttribute="bottom" secondItem="3Qx-Dh-YWz" secondAttribute="bottom" id="zK9-n4-dft"/>
+                                    </constraints>
+                                </view>
+                                <blurEffect style="dark"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </visualEffectView>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -249,6 +291,7 @@
                             <constraint firstItem="GAi-rW-b0a" firstAttribute="top" secondItem="bNn-Go-QbU" secondAttribute="bottom" id="BBK-32-5zQ"/>
                             <constraint firstItem="urO-RY-jw8" firstAttribute="top" secondItem="TJj-an-Bof" secondAttribute="bottom" id="Epw-Xl-pMg"/>
                             <constraint firstItem="lAe-GI-N2a" firstAttribute="top" secondItem="bNn-Go-QbU" secondAttribute="bottom" id="HyN-ab-AHS"/>
+                            <constraint firstItem="Esf-xq-SlZ" firstAttribute="top" secondItem="TJj-an-Bof" secondAttribute="bottom" constant="8" id="K4T-eo-uzt"/>
                             <constraint firstItem="lAe-GI-N2a" firstAttribute="top" secondItem="cDr-XV-23j" secondAttribute="bottom" id="Vu2-cF-7rl"/>
                             <constraint firstItem="GAi-rW-b0a" firstAttribute="top" secondItem="lAe-GI-N2a" secondAttribute="top" priority="750" constant="200" id="YKe-iP-LkI"/>
                             <constraint firstAttribute="bottomMargin" secondItem="vcS-DT-rcw" secondAttribute="bottom" id="ZjD-cO-ZJr"/>
@@ -266,6 +309,7 @@
                             <constraint firstItem="cDr-XV-23j" firstAttribute="top" secondItem="TJj-an-Bof" secondAttribute="bottom" id="r47-hh-7gg"/>
                             <constraint firstItem="cDr-XV-23j" firstAttribute="left" relation="greaterThanOrEqual" secondItem="FXD-xH-WL3" secondAttribute="left" constant="144" id="tDG-q0-yeQ"/>
                             <constraint firstItem="bNn-Go-QbU" firstAttribute="top" secondItem="TJj-an-Bof" secondAttribute="bottom" id="uw3-mP-2Fq"/>
+                            <constraint firstItem="urO-RY-jw8" firstAttribute="leading" secondItem="Esf-xq-SlZ" secondAttribute="trailing" constant="8" id="x5x-ZY-sHw"/>
                             <constraint firstItem="vcS-DT-rcw" firstAttribute="top" relation="greaterThanOrEqual" secondItem="TJj-an-Bof" secondAttribute="bottom" constant="140" id="xUT-rQ-1m1"/>
                         </constraints>
                         <variation key="default">
@@ -280,9 +324,9 @@
                             </mask>
                             <mask key="constraints">
                                 <include reference="oNR-wV-20Y"/>
+                                <exclude reference="AKU-Hj-2US"/>
                                 <include reference="cUx-0s-s2z"/>
                                 <exclude reference="tDG-q0-yeQ"/>
-                                <exclude reference="AKU-Hj-2US"/>
                             </mask>
                         </variation>
                     </view>
@@ -362,7 +406,7 @@
                     </connections>
                 </panGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-1033" y="-1486"/>
+            <point key="canvasLocation" x="-1033.0078125" y="-1486.71875"/>
         </scene>
         <!--newSubpage-->
         <scene sceneID="Kjs-hW-Teg">
