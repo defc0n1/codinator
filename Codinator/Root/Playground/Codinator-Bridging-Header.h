@@ -6,7 +6,6 @@
 #import "AFNetworking.h"
 #import "HRColorPickerView.h"
 
-#import "Thumbnail.h"
 #import "Polaris.h"
 
 #import "NSUserDefaults+Additions.h"
@@ -18,8 +17,6 @@
 #import "CYRTextStorage.h"
 
 #import "VWASAccessoryView.h"
-
-#import "CSNotificationView.h"
 
 
 #import "HistoryViewController.h"

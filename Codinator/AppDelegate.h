@@ -7,13 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Thumbnail.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate, NSFileManagerDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 
-@property (nonatomic, strong) Thumbnail *thumbnailManager;
 @property (nonatomic, strong) NSString *storagePath;
 + (NSString *)storagePath;
 

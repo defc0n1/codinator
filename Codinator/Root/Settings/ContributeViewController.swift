@@ -24,10 +24,14 @@ class ContributeViewController: UIViewController {
 
     @IBAction func contributeOnGitHubDidPush(_ sender: AnyObject) {
       
-        UIApplication.shared().open(
-            URL(string: "https://github.com/VWAS/Codinator")!
-            , options: [:], completionHandler: nil
-        )
+        if #available(iOS 10.0, *) {
+            UIApplication.shared().open(
+                URL(string: "https://github.com/VWAS/Codinator")!
+                , options: [:], completionHandler: nil
+            )
+        } else {
+            UIApplication.shared().openURL(URL(string: "https://github.com/VWAS/Codinator")!)
+        }
         
     }
     

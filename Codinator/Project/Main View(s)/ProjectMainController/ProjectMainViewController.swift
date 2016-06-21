@@ -44,6 +44,11 @@ class ProjectMainViewController: UIViewController, UISplitViewControllerDelegate
         
     }
     
+    
+    // Notifications 
+    @IBOutlet weak var notificationsView: NotificationsView!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -53,8 +58,9 @@ class ProjectMainViewController: UIViewController, UISplitViewControllerDelegate
         let configuration = WKWebViewConfiguration()
         configuration.allowsInlineMediaPlayback = true
         configuration.allowsAirPlayForMediaPlayback = true
-        configuration.mediaTypesRequiringUserActionForPlayback = .all
         configuration.applicationNameForUserAgent = "Codinator"
+        if #available(iOS 10.0, *) { configuration.mediaTypesRequiringUserActionForPlayback = .all }
+    
         
         webView = WKWebView(frame: bottomView.frame, configuration: configuration)
         webView?.allowsLinkPreview = true
@@ -106,7 +112,7 @@ class ProjectMainViewController: UIViewController, UISplitViewControllerDelegate
     
     @IBAction func back(_ sender: UIBarButtonItem) {
         if getSplitView.filesTableView?.navigationController?.viewControllers.count == 1 {
-           _ = self.navigationController?.popViewController(animated: true)
+            _ = self.navigationController?.popViewController(animated: true)
         }
         else {
             _ = getSplitView.filesTableView?.navigationController?.popViewController(animated: true)

@@ -12,7 +12,17 @@
 @class TKDInteractiveTextColoringTextStorage;
 
 
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+    self = [self initWithTextView:nil];
+    
+    return self;
+}
 
+- (instancetype)initWithEffect:(UIVisualEffect *)effect {
+    self = [self initWithTextView:nil];
+    
+    return self;
+}
 
 
 - (instancetype)initWithTextView:(UITextView *)textView {

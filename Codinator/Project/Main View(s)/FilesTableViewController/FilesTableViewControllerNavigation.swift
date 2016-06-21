@@ -35,9 +35,20 @@ extension FilesTableViewController {
         if let text = items[(indexPath as NSIndexPath).row].lastPathComponent {
             cell.textLabel?.text = text
             
-            if let path = try! projectManager?.inspectorURL.appendingPathComponent(text).path {
-                let manager = Thumbnail()
-                cell.imageView?.image = manager.thumbnailForFile(atPath: path)
+            if let url = try! projectManager?.inspectorURL.appendingPathComponent(text) {
+                
+                Thumbnail.sharedInstance.file(with: url, completion: { image in
+                
+                    if image?.size != CGSize(width: 128.0, height: 128.0) {
+                        // TODO: - Crop the image
+                        
+                    }
+                    
+                    cell.imageView!.image = image
+                    
+                })
+                
+                
             }
         }
         

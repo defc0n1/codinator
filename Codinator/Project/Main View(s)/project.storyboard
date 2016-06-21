@@ -238,7 +238,7 @@
                                     <outletCollection property="gestureRecognizers" destination="wL9-oo-s7B" appends="YES" id="Ysz-3T-vUZ"/>
                                 </connections>
                             </view>
-                            <visualEffectView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Esf-xq-SlZ">
+                            <visualEffectView opaque="NO" clipsSubviews="YES" alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Esf-xq-SlZ" customClass="NotificationsView" customModule="Codinator" customModuleProvider="target">
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="G94-5K-MnA">
                                     <frame key="frameInset"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -248,7 +248,7 @@
                                                 <frame key="frameInset"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" Label " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1m2-ZA-30M">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" Text " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1m2-ZA-30M">
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
@@ -262,7 +262,7 @@
                                                 </constraints>
                                             </view>
                                             <vibrancyEffect>
-                                                <blurEffect style="dark"/>
+                                                <blurEffect style="extraLight"/>
                                             </vibrancyEffect>
                                         </visualEffectView>
                                     </subviews>
@@ -273,12 +273,15 @@
                                         <constraint firstAttribute="bottom" secondItem="3Qx-Dh-YWz" secondAttribute="bottom" id="zK9-n4-dft"/>
                                     </constraints>
                                 </view>
-                                <blurEffect style="dark"/>
+                                <blurEffect style="extraLight"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                         <integer key="value" value="5"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <outlet property="textLabel" destination="1m2-ZA-30M" id="sfy-rO-Xlx"/>
+                                </connections>
                             </visualEffectView>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -324,9 +327,9 @@
                             </mask>
                             <mask key="constraints">
                                 <include reference="oNR-wV-20Y"/>
-                                <exclude reference="AKU-Hj-2US"/>
                                 <include reference="cUx-0s-s2z"/>
                                 <exclude reference="tDG-q0-yeQ"/>
+                                <exclude reference="AKU-Hj-2US"/>
                             </mask>
                         </variation>
                     </view>
@@ -379,6 +382,7 @@
                         <outlet property="grabberConstraint" destination="YKe-iP-LkI" id="CT9-t4-1Rn"/>
                         <outlet property="grabberView" destination="lAe-GI-N2a" id="1yN-3l-Ibj"/>
                         <outlet property="leftButton" destination="IDd-rw-Axq" id="8Ds-dP-Cfr"/>
+                        <outlet property="notificationsView" destination="Esf-xq-SlZ" id="3WQ-4N-oRS"/>
                         <outlet property="redoButton" destination="wuG-lf-bLM" id="dvS-2Z-6Yf"/>
                         <outlet property="rightButton" destination="fOv-aa-fuv" id="nxG-To-IxH"/>
                         <outlet property="searchDisplayController" destination="HEO-tS-iOU" id="scT-h2-4wE"/>
@@ -642,7 +646,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="R7f-Cr-R2b" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="VKh-0p-0uT">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" barStyle="black" id="VKh-0p-0uT">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1214,7 +1218,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="nh1-04-UAG" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="lAS-mh-rOD">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" barStyle="black" translucent="NO" id="lAS-mh-rOD">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1283,7 +1287,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="b4G-6a-did" sceneMemberID="viewController">
                     <toolbarItems/>
                     <value key="contentSizeForViewInPopover" type="size" width="349" height="150"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="G7u-dR-Jra">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" barStyle="black" id="G7u-dR-Jra">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1302,7 +1306,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="C1I-M0-4Gg" sceneMemberID="viewController">
                     <toolbarItems/>
                     <value key="contentSizeForViewInPopover" type="size" width="349" height="120"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="h0E-Eq-ags">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" barStyle="black" id="h0E-Eq-ags">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1321,7 +1325,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="aZG-Up-KG5" sceneMemberID="viewController">
                     <toolbarItems/>
                     <value key="contentSizeForViewInPopover" type="size" width="349" height="194"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="BdC-Ij-CQE">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" barStyle="black" id="BdC-Ij-CQE">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

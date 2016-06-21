@@ -14,7 +14,6 @@ class FilesTableViewController: UIViewController, UITableViewDelegate, UITableVi
     @IBOutlet weak var toolBar: UIToolbar!
     
     
-    
     var documentInteractionController: UIDocumentInteractionController?
     
     var items: [URL] = []

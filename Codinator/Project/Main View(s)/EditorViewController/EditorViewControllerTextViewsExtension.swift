@@ -133,14 +133,22 @@ extension EditorViewController {
     
     // MARK: - Snippets
     
+    var inset: String {
+        get {
+            return "    "
+        }
+    }
+    
     @objc private func _tab() {
         AudioServicesPlaySystemSound(1104)
-        self.textView.insertText("    ")
+        self.textView.insertText(inset)
     }
+    
     
     @objc private func _insertOpenBracket() {
         AudioServicesPlaySystemSound(1104)
-        self.textView.insertText("(")
+        self.textView.insertText("()")
+        self.moveCursor(by: 1, diretion: .back)
     }
 
     @objc private func _insertCloseBracket() {
@@ -181,13 +189,17 @@ extension EditorViewController {
     
     @objc private func _clojureOpen() {
         AudioServicesPlaySystemSound(1104)
+        
+        // Insert '{' than indent and insert '}'
         self.textView.insertText("{")
         let indentation = indentReturn(with: self.textView.selectedRange) + indentReturn(with: self.textView.selectedRange)
         self.textView.insertText("}")
         
+        // Move cursor between '{ }'
+        moveCursor(by: indentation.characters.count / 2 + 2, diretion: .back)
         
-        // TODO: - By has to be calculated upon indentation level <- #Fixed needs to be tested
-        moveCursor(by: indentation.characters.count, diretion: .back)
+        // Tab in between
+        self.textView.insertText(inset)
     }
 
     @objc private func _doublePoint() {
@@ -223,6 +235,7 @@ extension EditorViewController {
     @objc private func _apostrophe() {
         AudioServicesPlaySystemSound(1104)
         self.textView.insertText("''")
+        moveCursor(by: 1, diretion: .back)
     }
 
     @objc private func _closeTagHTML() {

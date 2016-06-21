@@ -83,6 +83,11 @@ NS_DESIGNATED_INITIALIZER
 
 #pragma mark - Initializers
 
+- (id)init {
+    self = [self initWithFile:nil];
+    
+    return self;
+}
 
 - (instancetype)initWithFile:(NSURL *)fileURL
 {

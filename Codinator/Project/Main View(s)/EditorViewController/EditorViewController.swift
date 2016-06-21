@@ -426,7 +426,7 @@ class EditorViewController: UIViewController, UITextViewDelegate, ProjectSplitVi
             let range = (htmlTextView.text as NSString).range(of: text, options: .caseInsensitiveSearch)
             
             if range.location == NSNotFound {
-                Notifications.sharedInstance.displayErrorMessage("No occupancy found!")
+                getSplitView?.mainViewController.notificationsView.notify(with: "No occupancy found!")
             }
             else {
                 htmlTextView.becomeFirstResponder()
@@ -511,10 +511,11 @@ class EditorViewController: UIViewController, UITextViewDelegate, ProjectSplitVi
         print("status: " + status)
         
         if status == "copied" {
-            Notifications.sharedInstance.displayNeutralMessage("Snippet was copied")
+            getSplitView?.mainViewController.notificationsView.notify(with: "Snippet was copied")
+
         }
         else {
-            Notifications.sharedInstance.displayNeutralMessage("Fill out all the fields.")
+            getSplitView?.mainViewController.notificationsView.notify(with: "Fill out all the fields")
         }
     }
     
@@ -525,8 +526,7 @@ class EditorViewController: UIViewController, UITextViewDelegate, ProjectSplitVi
         let pasteBoard = UIPasteboard.general()
         pasteBoard.string = colorHex
         
-        Notifications.sharedInstance.displayNeutralMessage("HEX Color was copied")
-
+        getSplitView?.mainViewController.notificationsView.notify(with: "HEX Color was copied")
         
     }
     

@@ -197,6 +197,8 @@ class NewImportViewController: UIViewController,UINavigationControllerDelegate,U
 
     }
     
+    
+    
 
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
@@ -206,11 +208,7 @@ class NewImportViewController: UIViewController,UINavigationControllerDelegate,U
     
     
     
-    
-    
-    
-    
-    
+
 
     
     
@@ -272,10 +270,6 @@ class NewImportViewController: UIViewController,UINavigationControllerDelegate,U
             let content = try? Data(contentsOf: url)
             FileManager.default().createFile(atPath: pathToWriteFile, contents: content, attributes: nil)
             
-                
-                do {
-                    try content?.write(to: URL(fileURLWithPath: self.inspectorPath!), options: [.dataWritingAtomic])
-                } catch {}
                 
                 DispatchQueue.main.async(execute: { 
                     self.dismiss(animated: true, completion: {

@@ -89,7 +89,7 @@ extension FilesTableViewController: PeekProtocol {
                 
                 
             } catch let error as NSError {
-                Notifications.sharedInstance.displayErrorMessage(error.localizedDescription)
+                self.getSplitView.mainViewController.notificationsView.notify(with: error.localizedDescription)
             }
             
             
@@ -145,8 +145,8 @@ extension FilesTableViewController: PeekProtocol {
                     }
                     
                     
-                } catch let error as NSError{
-                    Notifications.sharedInstance.displayErrorMessage(error.localizedDescription)
+                } catch let error as NSError {
+                    self.getSplitView.mainViewController.notificationsView.notify(with: error.localizedDescription)
                 }
                 
             })
@@ -159,7 +159,7 @@ extension FilesTableViewController: PeekProtocol {
             
         }
         else {
-            Notifications.sharedInstance.displayErrorMessage("There was an unexpected error")
+            getSplitView.mainViewController.notificationsView.notify(with: "There was an unexpected error")
         }
         
     }

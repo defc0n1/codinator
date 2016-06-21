@@ -13,17 +13,17 @@ class Notifications: NSObject {
     
     var viewController: UIViewController!
     
-    func displaySuccessMessage(_ message: String) {
-        CSNotificationView.show(in: viewController, style: .success, message: message)
-    }
-    
-    func displayErrorMessage(_ message: String) {
-        CSNotificationView.show(in: viewController, style: .error, message: message)
-    }
-    
-    func displayNeutralMessage(_ message: String) {
-        CSNotificationView.show(in: viewController, tintColor: UIColor.white(), font: UIFont.systemFont(ofSize: 18), textAlignment: .center, image: nil, message: message, duration: 3.0)
-    }
+//    func displaySuccessMessage(_ message: String) {
+//        CSNotificationView.show(in: viewController, style: .success, message: message)
+//    }
+//    
+//    func displayErrorMessage(_ message: String) {
+//        CSNotificationView.show(in: viewController, style: .error, message: message)
+//    }
+//    
+//    func displayNeutralMessage(_ message: String) {
+//        CSNotificationView.show(in: viewController, tintColor: UIColor.white(), font: UIFont.systemFont(ofSize: 18), textAlignment: .center, image: nil, message: message, duration: 3.0)
+//    }
     
     
     func alertWithMessage(_ message: String?, title: String?, viewController: UIViewController) {

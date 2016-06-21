@@ -45,9 +45,8 @@
 
 
 //Holding Objects
-@property (strong, nonatomic) UIImage *rocketBlueprintImage;
-@property (strong, nonatomic) NSMutableArray *oldProjectsArray;
-@property (strong, nonatomic) NSMutableArray *oldPlaygroundsArray;
+@property (strong, nonatomic) NSMutableArray <NSURL *>*oldProjectsArray;
+@property (strong, nonatomic) NSMutableArray <NSURL *>*oldPlaygroundsArray;
 @property (weak, nonatomic) NSString *zipPath;
 
 
@@ -432,7 +431,6 @@
 
 #pragma mark - CollectionView Delegates
 
-// 3
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
     return UIEdgeInsetsMake(20, 20, 20, 20);
 }
@@ -467,11 +465,6 @@
 
 
 - (UICollectionViewCell *)collectionView:(nonnull UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath{
-    
-    if (!self.appDelegate.thumbnailManager) {
-        self.appDelegate.thumbnailManager = [[Thumbnail alloc] init];
-    }
-    
     
     // Get cell
     ProjectCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Document" forIndexPath:indexPath];
@@ -522,24 +515,22 @@
             
         }
         else {
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-                
-                UIImage *image = [[self.appDelegate thumbnailManager] thumbnailForFileAtPath:[projectsArray[indexPath.row] path]];
-                
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    
+            
+                [[Thumbnail sharedInstance] fileWith:[NSURL fileURLWithPath: projectsArray[indexPath.row]] completion:^(UIImage * _Nonnull image) {
+                   
                     NSURL *url = projectsArray[indexPath.row];
                     NSString *path = url.path.pathExtension;
-            
+                    
                     // If it's an image i.e png file fill the entire cell
                     if ([path isEqualToString:@"png"] || [path isEqualToString:@"jpg"] ||  [path isEqualToString:@"gif"] || [path isEqualToString:@"PNG"] || [path isEqualToString:@"JPG"] || [path isEqualToString:@"JPEG"] || [path isEqualToString:@"GIF"]) {
                         [cell.imageView setContentMode:UIViewContentModeScaleAspectFill];
                     }
                     
                     cell.imageView.image = image;
-                });
+
+                    
+                }];
                 
-            });
         }
         
     }
@@ -550,16 +541,12 @@
         NSString const *playgroudPaths = [root stringByAppendingPathComponent:@"Playground"];
         NSString *path = [playgroudPaths stringByAppendingPathComponent:[playgroundsArray[indexPath.row] lastPathComponent]];
         
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-            
-            UIImage *image = [self.appDelegate.thumbnailManager thumbnailForFileAtPath:path];
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                cell.imageView.image = image;
-            });
-            
-            
-        });
+        
+        [[Thumbnail sharedInstance] fileWith:[NSURL fileURLWithPath: path] completion:^(UIImage * _Nonnull image) {
+            cell.imageView.image = image;
+        }];
+        
+        
         
         if ([path.pathExtension isEqualToString:@"icloud"]) {
             cell.loadingIndicator.hidden = NO;
@@ -625,25 +612,16 @@
 
 - (UIImage *)projectRocketBlueprintIconForProjectPath:(NSString *)path{
     
-    
     NSString *favIconPath = [path stringByAppendingPathComponent:@"Assets/favicon.png"];
-    
-    
-    
     BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:favIconPath];
+
     
     if (fileExists) {
         return [UIImage imageWithContentsOfFile:favIconPath];
     }
-    else{
-        
-        if (!self.rocketBlueprintImage) {
-            self.rocketBlueprintImage = [UIImage imageNamed:@"cnProj"];
-        }
-        
-        return self.rocketBlueprintImage;
-        
-    }
+    
+    
+    return [Thumbnail sharedInstance].projectImage;
 }
 
 
@@ -753,18 +731,18 @@
         }
         else{
             
-            ///Some stuff missing
-            if ([[self.appDelegate thumbnailManager] isFileAtPathDir:path]){
-                
-                
-                
-            }
-            else{
-                
-                
-                
-                
-            }
+//            ///Some stuff missing
+//            if ([[self.appDelegate thumbnailManager] isFileAtPathDir:path]){
+//                
+//                
+//                
+//            }
+//            else{
+//                
+//                
+//                
+//                
+//            }
         }
     }
     

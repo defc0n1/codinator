@@ -7,7 +7,6 @@
 //
 
 #import "ImportFromGitHubViewController.h"
-#import "CSNotificationView.h"
 #import "AFNetworking.h"
 #import "AppDelegate.h"
 
@@ -215,11 +214,13 @@
             self.downloadButton.enabled = YES;
             self.progressView.hidden = YES;
             self.progressView.progress = 0.0;
+
             
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Error" message:@"You can only download zipped projects right now." preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleCancel handler:nil];
+            [alertController addAction:cancelAction];
             
-            [CSNotificationView showInViewController:self
-                                               style:CSNotificationViewStyleError
-                                             message:@"You can only download zipped projects right now."];
+            [self presentViewController:alertController animated:YES completion:nil];
             
             self.progressView.hidden = YES;
             
@@ -229,7 +230,6 @@
         
         
     }
-    
     
     
     
