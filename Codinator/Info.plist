@@ -107,6 +107,8 @@
 	</dict>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Allow access to the camera to import images from camera roll</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>SFMono-Regular.otf</string>
@@ -127,8 +129,6 @@
 	</array>
 	<key>UIStatusBarHidden</key>
 	<false/>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Allow access to the camera to import images from camera roll</string>
 	<key>UIStatusBarStyle</key>
 	<string>UIStatusBarStyleLightContent</string>
 	<key>UISupportedInterfaceOrientations</key>

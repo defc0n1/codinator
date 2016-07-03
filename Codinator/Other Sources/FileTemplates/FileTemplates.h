@@ -13,7 +13,7 @@
 
 + (NSString *)htmlTemplateFileForName:(NSString *)name;
 + (NSString *)cssTemplateFile;
-+ (NSString *)jsTemplateFile;
++ (NSString *)jsTemplateFileWithCopyright:(NSString *)copyright;
 + (NSString *)txtTemplateFile;
 + (NSString *)phpTemplateFile;
 

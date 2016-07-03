@@ -17,7 +17,6 @@ extension FilesTableViewController {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return items.count
     }
     
@@ -35,21 +34,27 @@ extension FilesTableViewController {
         if let text = items[(indexPath as NSIndexPath).row].lastPathComponent {
             cell.textLabel?.text = text
             
-            if let url = try! projectManager?.inspectorURL.appendingPathComponent(text) {
-                
-                Thumbnail.sharedInstance.file(with: url, completion: { image in
-                
-                    if image?.size != CGSize(width: 128.0, height: 128.0) {
-                        // TODO: - Crop the image
-                        
-                    }
+            
+                let queue = DispatchQueue.global(attributes: .qosUserInitiated)
+                queue.sync(execute: {
                     
-                    cell.imageView!.image = image
+                    if let url = try! self.projectManager?.inspectorURL.appendingPathComponent(text) {
+                        let image = Thumbnail.sharedInstance.file(with: url)
+                        
+                        if image.size != CGSize(width: 128, height: 128) {
+                            cell.imageView!.image = Thumbnail.sharedInstance.cropped(image: image, size: CGSize(width: 128, height: 128))
+                        }
+                        else {
+                            cell.imageView!.image = image
+                        }
+                    }
                     
                 })
                 
-                
-            }
+            
+            
+            
+            
         }
         
         
@@ -80,8 +85,6 @@ extension FilesTableViewController {
                 
             } else {
                 
-                projectManager?.selectedFileURL = selectedURL
-                
                 
                 switch selectedURL.pathExtension! {
                     
@@ -94,7 +97,7 @@ extension FilesTableViewController {
                     
                     
                     let imageInfo = JTSImageInfo()
-                    imageInfo.image = cell.imageView!.image
+                    imageInfo.image = UIImage(contentsOfFile: selectedURL.path!)
                     
                     imageInfo.referenceRect = cell.imageView!.frame
                     imageInfo.referenceView = cell.imageView?.superview
@@ -124,10 +127,15 @@ extension FilesTableViewController {
                     if let data = FileManager.default().contents(atPath: selectedURL.path!) {
                         let contents = NSString(data: data, encoding: String.Encoding.utf8.rawValue)
                         
+                        projectManager?.selectedFileURL = selectedURL
+                        
                         getSplitView.showDetailViewController(getSplitView.editorView!, sender: self)
                         getSplitView.editorView!.text = contents as? String
                         getSplitView.webView!.loadFileURL(selectedURL, allowingReadAccessTo: projectManager!.projectURL())
                         getSplitView.assistantViewController?.setFilePathTo(projectManager)
+                    }
+                    else {
+                        tableView.deselectRow(at: indexPath, animated: true)
                     }
                     
                 }
@@ -231,8 +239,5 @@ extension FilesTableViewController {
     }
 
     
-    func refreashData() {
-        
-    }
     
 }

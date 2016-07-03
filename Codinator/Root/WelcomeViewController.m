@@ -470,68 +470,38 @@
     ProjectCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Document" forIndexPath:indexPath];
     
     // Set the imageView content mode to aspect fit in case that it was modified by a cell displaying an i.e png file
-    [cell.imageView setContentMode:UIViewContentModeScaleAspectFit];
-    
+    [cell.imageView setContentMode:UIViewContentModeScaleAspectFill];
+    cell.imageView.image = nil;
     
     NSString const *root = [AppDelegate storagePath];
+    
     
     
     //If 'projects' is selected
     if (indexPath.section == 0) {
         
+        NSURL *url = projectsArray[indexPath.row];
         cell.name.text = [[projectsArray[indexPath.row] lastPathComponent] stringByDeletingPathExtension];
         
         
-        if ([[projectsArray[indexPath.row] pathExtension] isEqualToString:@"zip"]) {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
             
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-                
-                UIImage *image = [UIImage imageNamed:@"zip"];
-                
+            UIImage *image = [[Thumbnail sharedInstance] fileWith:url size: CGSizeMake(108, 144)];
+            
                 dispatch_async(dispatch_get_main_queue(), ^{
                     cell.imageView.image = image;
                 });
-            });
             
             
-        }
-        else if ([[projectsArray[indexPath.row] pathExtension] isEqualToString:@"cnProj"]) {
-            
-            NSString const *projectsDirPath = [root stringByAppendingPathComponent:@"Projects"];
-            NSString *path = [projectsDirPath stringByAppendingPathComponent:[projectsArray[indexPath.row] lastPathComponent]];
+        });
+        
             
             
-            [self dealWithiCloudDownloadForCell:cell forIndexPath:indexPath andFilePath:path];
-            
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-                
-                UIImage *image = [self projectRocketBlueprintIconForProjectPath:[projectsDirPath stringByAppendingPathComponent:[projectsArray[indexPath.row] lastPathComponent]]];
-                
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    cell.imageView.image = image;
-                });
-            });
-            
-            
-        }
-        else {
-            
-                [[Thumbnail sharedInstance] fileWith:[NSURL fileURLWithPath: projectsArray[indexPath.row]] completion:^(UIImage * _Nonnull image) {
-                   
-                    NSURL *url = projectsArray[indexPath.row];
-                    NSString *path = url.path.pathExtension;
-                    
-                    // If it's an image i.e png file fill the entire cell
-                    if ([path isEqualToString:@"png"] || [path isEqualToString:@"jpg"] ||  [path isEqualToString:@"gif"] || [path isEqualToString:@"PNG"] || [path isEqualToString:@"JPG"] || [path isEqualToString:@"JPEG"] || [path isEqualToString:@"GIF"]) {
-                        [cell.imageView setContentMode:UIViewContentModeScaleAspectFill];
-                    }
-                    
-                    cell.imageView.image = image;
-
-                    
-                }];
-                
-        }
+        
+        NSString const *projectsDirPath = [root stringByAppendingPathComponent:@"Projects"];
+        NSString *path = [projectsDirPath stringByAppendingPathComponent:[projectsArray[indexPath.row] lastPathComponent]];
+        [self dealWithiCloudDownloadForCell:cell forIndexPath:indexPath andFilePath:path];
+        
         
     }
     else{ //If 'playgrounds' section
@@ -542,26 +512,17 @@
         NSString *path = [playgroudPaths stringByAppendingPathComponent:[playgroundsArray[indexPath.row] lastPathComponent]];
         
         
-        [[Thumbnail sharedInstance] fileWith:[NSURL fileURLWithPath: path] completion:^(UIImage * _Nonnull image) {
-            cell.imageView.image = image;
-        }];
+        cell.imageView.image =  [[Thumbnail sharedInstance] fileWith:[NSURL fileURLWithPath: path] size: CGSizeMake(100, 100)];
         
         
         
         if ([path.pathExtension isEqualToString:@"icloud"]) {
-            cell.loadingIndicator.hidden = NO;
-            cell.progressView.hidden = NO;
-            [cell.progressView setProgress:0.5f animated:YES];
             [self dealWithiCloudDownloadForCell:cell forIndexPath:indexPath andFilePath:path];
             
             NSString *cellText = [[[playgroundsArray[indexPath.row] lastPathComponent] stringByDeletingPathExtension] stringByDeletingPathExtension];
             cell.name.text = cellText;
         }
         else{
-            cell.loadingIndicator.hidden = YES;
-            cell.progressView.hidden = YES;
-            cell.progressView.progress = .0f;
-            
             cell.name.text = [[playgroundsArray[indexPath.row] lastPathComponent] stringByDeletingPathExtension];
             
         }
@@ -574,7 +535,6 @@
     
     UILongPressGestureRecognizer *longPressRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(tableViewCellWasLongPressed:)];
     [cell addGestureRecognizer:longPressRecognizer];
-    
     
     
     return cell;
@@ -594,7 +554,6 @@
         BOOL downloadDone = [[NSFileManager defaultManager]startDownloadingUbiquitousItemAtURL:[NSURL fileURLWithPath:path isDirectory:NO] error:&error];
         
         if (downloadDone) {
-            cell.loadingIndicator.hidden = YES;
             dispatch_sync(dispatch_get_main_queue(), ^{
                 [self reloadData];
             });
@@ -605,23 +564,6 @@
     
     [[NSOperationQueue mainQueue] addOperation:backgroundOperation];
     
-}
-
-
-
-
-- (UIImage *)projectRocketBlueprintIconForProjectPath:(NSString *)path{
-    
-    NSString *favIconPath = [path stringByAppendingPathComponent:@"Assets/favicon.png"];
-    BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:favIconPath];
-
-    
-    if (fileExists) {
-        return [UIImage imageWithContentsOfFile:favIconPath];
-    }
-    
-    
-    return [Thumbnail sharedInstance].projectImage;
 }
 
 
@@ -728,21 +670,6 @@
             
             [self performSegueWithIdentifier:@"playground" sender:self];
             
-        }
-        else{
-            
-//            ///Some stuff missing
-//            if ([[self.appDelegate thumbnailManager] isFileAtPathDir:path]){
-//                
-//                
-//                
-//            }
-//            else{
-//                
-//                
-//                
-//                
-//            }
         }
     }
     
@@ -1040,6 +967,10 @@
         
         if (!self.oldProjectsArray) {
             self.oldProjectsArray = [[NSMutableArray alloc] init];
+        }
+        
+        if (!self.oldPlaygroundsArray) {
+            self.oldPlaygroundsArray = [[NSMutableArray alloc] init];
         }
         
         if (![projectsArray isEqualToArray:self.oldProjectsArray] | ![playgroundsArray isEqualToArray:self.oldPlaygroundsArray]) {

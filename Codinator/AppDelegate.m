@@ -7,10 +7,12 @@
 //
 
 @import CoreSpotlight;
-
+@import Fabric;
+@import Crashlytics;
 
 #import "AppDelegate.h"
 #import "WelcomeViewController.h"
+
 
 @interface AppDelegate ()
 
@@ -21,42 +23,41 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
+    [Fabric with:@[[Crashlytics class]]];
+
+    
     // Create FileSystem
-    
-        NSString *path = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
-
-        NSString *playgroundsDirPath = [path stringByAppendingPathComponent:@"Playground"];
-        NSString *projectsDirPath = [path stringByAppendingPathComponent:@"Projects"];
-        
-        NSError *error;
-        
-        [[NSFileManager defaultManager] createDirectoryAtPath:projectsDirPath withIntermediateDirectories:NO attributes:nil error:&error];
-        [[NSFileManager defaultManager] createDirectoryAtPath:playgroundsDirPath withIntermediateDirectories:NO attributes:nil error:nil];
-        
-        
-        
-        NSURL *rootDirectory = [[[NSFileManager defaultManager] URLForUbiquityContainerIdentifier:nil]URLByAppendingPathComponent:@"Documents"];
-        
-        
-        
-        
-        // And finish up the 'store' action
-        if (![[NSFileManager defaultManager] setUbiquitous:YES itemAtURL:[NSURL fileURLWithPath:playgroundsDirPath isDirectory:YES] destinationURL:[rootDirectory URLByAppendingPathComponent:@"Playground"] error:&error]) {
-            NSLog(@"Error occurred: %@", error);
-        }
-        
-        if (![[NSFileManager defaultManager] setUbiquitous:YES itemAtURL:[NSURL fileURLWithPath:projectsDirPath isDirectory:YES] destinationURL:[rootDirectory URLByAppendingPathComponent:@"Projects"] error:&error]) {
-            NSLog(@"Error occurred: %@", error);
-        }
-        
-        
-        
-        
+    NSFileManager *fileManager = [NSFileManager defaultManager];
     
     
-
     
-
+    NSString *path = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
+    
+    NSString *playgroundsDirPath = [path stringByAppendingPathComponent:@"Playground"];
+    NSString *projectsDirPath = [path stringByAppendingPathComponent:@"Projects"];
+    
+    NSError *error;
+    
+    [fileManager createDirectoryAtPath:projectsDirPath withIntermediateDirectories:NO attributes:nil error:&error];
+    [fileManager createDirectoryAtPath:playgroundsDirPath withIntermediateDirectories:NO attributes:nil error:nil];
+    
+    
+    
+    NSURL *rootDirectory = [[fileManager URLForUbiquityContainerIdentifier:nil]URLByAppendingPathComponent:@"Documents"];
+    
+    
+    
+    
+    // And finish up the 'store' action
+    if (![fileManager setUbiquitous:YES itemAtURL:[NSURL fileURLWithPath:playgroundsDirPath isDirectory:YES] destinationURL:[rootDirectory URLByAppendingPathComponent:@"Playground"] error:&error]) {
+        NSLog(@"Error occurred: %@", error);
+    }
+    
+    if (![fileManager setUbiquitous:YES itemAtURL:[NSURL fileURLWithPath:projectsDirPath isDirectory:YES] destinationURL:[rootDirectory URLByAppendingPathComponent:@"Projects"] error:&error]) {
+        NSLog(@"Error occurred: %@", error);
+    }
+    
+ 
     _window.tintColor = [UIColor purpleColor];
     
     

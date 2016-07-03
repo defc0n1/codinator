@@ -13,6 +13,8 @@ class CreateFileViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet var nameTextField: UITextField!
     @IBOutlet var extensionTextField: UITextField!
     
+    
+    var projectManager: Polaris?
     var items: [String]?
     var path: String?
     
@@ -51,7 +53,8 @@ class CreateFileViewController: UIViewController, UITextFieldDelegate {
                 return FileTemplates.cssTemplateFile()
                 
             case "js":
-                return FileTemplates.jsTemplateFile()
+                let copyright = projectManager?.projectCopyright()
+                return FileTemplates.jsTemplateFile(withCopyright: copyright)
                 
             case "txt":
                 return FileTemplates.txtTemplateFile()

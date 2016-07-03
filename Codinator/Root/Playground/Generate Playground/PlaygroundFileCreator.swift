@@ -57,7 +57,7 @@ class PlaygroundFileCreator: NSObject {
         
         
         // JS file
-        let jsFile = FileTemplates.jsTemplateFile()
+        let jsFile = FileTemplates.jsTemplateFile(withCopyright: "NAME")
         
         document.contents.add(neuronFile)
         document.contents.add(cssFile!)

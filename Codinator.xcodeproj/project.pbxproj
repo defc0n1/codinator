@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 47;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -77,6 +77,9 @@
 		646EC7291CADD80900F359C2 /* JsTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646EC7281CADD80900F359C2 /* JsTextView.swift */; };
 		646EC72B1CADD8AC00F359C2 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646EC72A1CADD8AC00F359C2 /* UIColorExtension.swift */; };
 		647F33921CCDDC8600CA537D /* FilesTableViewControllerPreviewing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647F33911CCDDC8600CA537D /* FilesTableViewControllerPreviewing.swift */; };
+		648D14F71D29923200D58BA5 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 648D14F51D29923200D58BA5 /* Fabric.framework */; };
+		648D14F81D29923200D58BA5 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 648D14F61D29923200D58BA5 /* Crashlytics.framework */; };
+		648D14FA1D29937A00D58BA5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648D14F91D29937A00D58BA5 /* AppDelegate.swift */; };
 		649194311D15D5240025E79C /* SFMono-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 649194301D15D50C0025E79C /* SFMono-Regular.otf */; };
 		649194341D15DF9D0025E79C /* SFMono-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 649194321D15DEB20025E79C /* SFMono-Bold.otf */; };
 		649194351D15DFA00025E79C /* SFMono-RegularItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 649194331D15DEDC0025E79C /* SFMono-RegularItalic.otf */; };
@@ -132,7 +135,7 @@
 		64A082F41BDCD8C80001CA0C /* HistoryWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64A082F31BDCD8C80001CA0C /* HistoryWebViewController.m */; };
 		64A082FC1BDCD8E70001CA0C /* GitHubViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64A082FB1BDCD8E70001CA0C /* GitHubViewController.m */; };
 		64A083081BDD142B0001CA0C /* VWASAccessoryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 64A083061BDD142B0001CA0C /* VWASAccessoryView.m */; };
-		64A0830C1BDD14B80001CA0C /* AskQuestioniPad.m in Sources */ = {isa = PBXBuildFile; fileRef = 64A0830B1BDD14B80001CA0C /* AskQuestioniPad.m */; };
+		64A0830C1BDD14B80001CA0C /* NewProjectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64A0830B1BDD14B80001CA0C /* NewProjectViewController.m */; };
 		64A083271BDD155C0001CA0C /* WUTextSuggestionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64A083241BDD155C0001CA0C /* WUTextSuggestionController.m */; };
 		64A083281BDD155C0001CA0C /* WUTextSuggestionDisplayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64A083261BDD155C0001CA0C /* WUTextSuggestionDisplayController.m */; };
 		64A083311BDD15660001CA0C /* CYRLayoutManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 64A0832A1BDD15660001CA0C /* CYRLayoutManager.m */; };
@@ -268,6 +271,9 @@
 		646EC7281CADD80900F359C2 /* JsTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsTextView.swift; sourceTree = "<group>"; };
 		646EC72A1CADD8AC00F359C2 /* UIColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
 		647F33911CCDDC8600CA537D /* FilesTableViewControllerPreviewing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilesTableViewControllerPreviewing.swift; sourceTree = "<group>"; };
+		648D14F51D29923200D58BA5 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
+		648D14F61D29923200D58BA5 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
+		648D14F91D29937A00D58BA5 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		649194301D15D50C0025E79C /* SFMono-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFMono-Regular.otf"; sourceTree = "<group>"; };
 		649194321D15DEB20025E79C /* SFMono-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFMono-Bold.otf"; sourceTree = "<group>"; };
 		649194331D15DEDC0025E79C /* SFMono-RegularItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFMono-RegularItalic.otf"; sourceTree = "<group>"; };
@@ -368,8 +374,8 @@
 		64A082FB1BDCD8E70001CA0C /* GitHubViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GitHubViewController.m; sourceTree = "<group>"; };
 		64A083061BDD142B0001CA0C /* VWASAccessoryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VWASAccessoryView.m; sourceTree = "<group>"; };
 		64A083071BDD142B0001CA0C /* VWASAccessoryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VWASAccessoryView.h; sourceTree = "<group>"; };
-		64A0830A1BDD14B80001CA0C /* AskQuestioniPad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AskQuestioniPad.h; sourceTree = "<group>"; };
-		64A0830B1BDD14B80001CA0C /* AskQuestioniPad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AskQuestioniPad.m; sourceTree = "<group>"; };
+		64A0830A1BDD14B80001CA0C /* NewProjectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewProjectViewController.h; sourceTree = "<group>"; };
+		64A0830B1BDD14B80001CA0C /* NewProjectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewProjectViewController.m; sourceTree = "<group>"; };
 		64A083231BDD155C0001CA0C /* WUTextSuggestionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WUTextSuggestionController.h; sourceTree = "<group>"; };
 		64A083241BDD155C0001CA0C /* WUTextSuggestionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WUTextSuggestionController.m; sourceTree = "<group>"; };
 		64A083251BDD155C0001CA0C /* WUTextSuggestionDisplayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WUTextSuggestionDisplayController.h; sourceTree = "<group>"; };
@@ -414,6 +420,8 @@
 			files = (
 				64A083641BDD20740001CA0C /* libz.tbd in Frameworks */,
 				64A083631BDD1E6B0001CA0C /* libxml2.tbd in Frameworks */,
+				648D14F81D29923200D58BA5 /* Crashlytics.framework in Frameworks */,
+				648D14F71D29923200D58BA5 /* Fabric.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -613,6 +621,8 @@
 		64A080D01BDBDAEB0001CA0C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				648D14F51D29923200D58BA5 /* Fabric.framework */,
+				648D14F61D29923200D58BA5 /* Crashlytics.framework */,
 				64A0836B1BDD61E70001CA0C /* CoreImage.framework */,
 				64A0835F1BDD19970001CA0C /* SystemConfiguration.framework */,
 				64A0835D1BDD19830001CA0C /* Security.framework */,
@@ -915,6 +925,7 @@
 			children = (
 				64A080BA1BDBD9D60001CA0C /* AppDelegate.h */,
 				64A080BB1BDBD9D60001CA0C /* AppDelegate.m */,
+				648D14F91D29937A00D58BA5 /* AppDelegate.swift */,
 			);
 			name = Main;
 			path = Codinator;
@@ -1150,8 +1161,8 @@
 		64A083091BDD14B10001CA0C /* New Project */ = {
 			isa = PBXGroup;
 			children = (
-				64A0830A1BDD14B80001CA0C /* AskQuestioniPad.h */,
-				64A0830B1BDD14B80001CA0C /* AskQuestioniPad.m */,
+				64A0830A1BDD14B80001CA0C /* NewProjectViewController.h */,
+				64A0830B1BDD14B80001CA0C /* NewProjectViewController.m */,
 			);
 			path = "New Project";
 			sourceTree = "<group>";
@@ -1314,7 +1325,7 @@
 				};
 			};
 			buildConfigurationList = 64A080AF1BDBD9D60001CA0C /* Build configuration list for PBXProject "Codinator" */;
-			compatibilityVersion = "Xcode 3.2";
+			compatibilityVersion = "Xcode 6.3";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -1366,7 +1377,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ \"${CONFIGURATION}\" = \"Debug\" ]; then\nTAGS=\"TODO:|FIXME:\"\necho \"searching ${SRCROOT} for ${TAGS}\"\nfind \"${SRCROOT}\" \\( -name \"*.swift\" \\) -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($TAGS).*\\$\" | perl -p -e \"s/($TAGS)/ warning: \\$1/\"\nfi";
+			shellScript = "./Fabric.framework/run a9db8361f62e5e9f07ee5c42b59c4239b4ddedc2 4d5b49e97e76ba7f6545212351bd4547a5d6ff03f838f40591d546216f95e902";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1448,6 +1459,7 @@
 				646EC6E11CA8D0BE00F359C2 /* RNCryptorEngine.m in Sources */,
 				64A082CD1BDBE89A0001CA0C /* AFNetworkReachabilityManager.m in Sources */,
 				6458FDCA1CA8BADB005B2B93 /* HighlighterExtention.swift in Sources */,
+				648D14FA1D29937A00D58BA5 /* AppDelegate.swift in Sources */,
 				3201D0161CA6EDBF00204373 /* ProjectSplitViewController.swift in Sources */,
 				646EC6F31CA8D0BE00F359C2 /* GCDWebServerResponse.m in Sources */,
 				64A0813D1BDBE0B60001CA0C /* SettingsGeneralViewController.swift in Sources */,
@@ -1500,7 +1512,7 @@
 				64FD18B91CC82E7800A4A3B7 /* ServersViewController.swift in Sources */,
 				646EC6EC1CA8D0BE00F359C2 /* GCDWebServerDataResponse.m in Sources */,
 				64380E0D1CC91E9E00FCF69A /* NewFileDelegate.swift in Sources */,
-				64A0830C1BDD14B80001CA0C /* AskQuestioniPad.m in Sources */,
+				64A0830C1BDD14B80001CA0C /* NewProjectViewController.m in Sources */,
 				64A082CF1BDBE89A0001CA0C /* AFURLConnectionOperation.m in Sources */,
 				64A082FC1BDCD8E70001CA0C /* GitHubViewController.m in Sources */,
 				64A083321BDD15660001CA0C /* CYRTextStorage.m in Sources */,

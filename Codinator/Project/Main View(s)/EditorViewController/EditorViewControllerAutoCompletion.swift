@@ -128,11 +128,11 @@ extension EditorViewController: WUTextSuggestionDisplayControllerDataSource {
         
         if completion.contains("(") && completion.contains(")") {
             
-            // ')' Position in String
-            let bracketPosition = completion.characters.enumerated().filter { $0.element == Character("{") }.first!.offset
+            // '(' Position in String
+            let bracketPosition = completion.characters.enumerated().filter { $0.element == Character("(") }.first!.offset
             
             // Calculate position backward
-            self.moveCursor(by: completion.characters.count - bracketPosition, diretion: .back)
+            self.moveCursor(by: completion.characters.count - bracketPosition + 1, diretion: .back)
         
         }
         else if completion.contains("{") && completion.contains("}") {

@@ -12,7 +12,6 @@ class NotificationsView: UIVisualEffectView {
 
     @IBOutlet var textLabel: UILabel!
     
-    
     func notify(with text: String, duration: TimeInterval = 3) {
         
         textLabel.text = " \(text) "

@@ -369,6 +369,7 @@ class FilesTableViewController: UIViewController, UITableViewDelegate, UITableVi
                 let viewController = (segue.destinationViewController as! UINavigationController).viewControllers.first as! CreateFileViewController
                 viewController.path = projectManager.inspectorURL.path
                 viewController.items = self.items.map { $0.lastPathComponent! }
+                viewController.projectManager = projectManager
                 viewController.delegate = self
  
             case "newSubpage":

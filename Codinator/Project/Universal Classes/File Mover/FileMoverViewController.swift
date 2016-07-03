@@ -126,9 +126,8 @@ class FileMoverViewController: UIViewController, UITableViewDelegate, UITableVie
             cell.textLabel?.textColor = UIColor.white()
             
             if let url = try! inspectorUrl?.appendingPathComponent(text) {
-                Thumbnail.sharedInstance.file(with: url, completion: { (image) in
+                let image = Thumbnail.sharedInstance.file(with: url)
                     cell.imageView?.image = image
-                })
             }
         }
         

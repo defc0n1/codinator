@@ -50,8 +50,9 @@ https://github.com/necolas/normalize.css */ \n\
     return cssBody;
 }
 
-+ (NSString *)jsTemplateFile {
-    return @"// © 2016 NAME \n";
++ (NSString *)jsTemplateFileWithCopyright:(NSString *)copyright {
+    NSString *jsTemplate = [NSString stringWithFormat:@"// %@ \n", copyright];
+    return jsTemplate;
 }
 
 + (NSString *)txtTemplateFile {

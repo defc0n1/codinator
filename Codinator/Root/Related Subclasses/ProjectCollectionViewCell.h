@@ -11,13 +11,8 @@
 @interface ProjectCollectionViewCell : UICollectionViewCell
 
 
-
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (weak, nonatomic) IBOutlet UILabel *name;
-
-
-@property (weak, nonatomic) IBOutlet UIProgressView *progressView;
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loadingIndicator;
 
 
 @end

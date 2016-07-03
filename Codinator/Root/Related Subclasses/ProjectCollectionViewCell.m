@@ -19,8 +19,11 @@
     self.imageView.backgroundColor = [UIColor blackColor];
     self.selectedBackgroundView.backgroundColor = [UIColor darkGrayColor];
     
-    self.imageView.layer.cornerRadius = 2;
+    self.imageView.layer.cornerRadius = 5;
     self.layer.masksToBounds = YES;
+    
+    
+    self.layer.drawsAsynchronously = YES;
 }
 
 
