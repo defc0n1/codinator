@@ -15,7 +15,7 @@ class PlaygroundFileCreator: NSObject {
         
         let fileName = fileName + ".cnPlay"
         
-        let rootUrl = URL(fileURLWithPath: AppDelegate.storagePath())
+        let rootUrl = AppDelegate.storageURL
         let playgroundPaths = try! rootUrl.appendingPathComponent("Playground", isDirectory: true)
         let fileUrl = try! playgroundPaths.appendingPathComponent(fileName, isDirectory: false)
         

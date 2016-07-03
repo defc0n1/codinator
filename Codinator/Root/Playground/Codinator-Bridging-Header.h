@@ -10,7 +10,6 @@
 
 #import "NSUserDefaults+Additions.h"
 #import "CYRTextView.h"
-#import "AppDelegate.h"
 
 #import "CYRToken.h"
 #import "CYRLayoutManager.h"

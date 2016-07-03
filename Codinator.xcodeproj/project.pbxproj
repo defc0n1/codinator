@@ -84,8 +84,6 @@
 		649194341D15DF9D0025E79C /* SFMono-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 649194321D15DEB20025E79C /* SFMono-Bold.otf */; };
 		649194351D15DFA00025E79C /* SFMono-RegularItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 649194331D15DEDC0025E79C /* SFMono-RegularItalic.otf */; };
 		649B64721C7B618900E0830D /* ContributeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649B64711C7B618900E0830D /* ContributeViewController.swift */; };
-		64A080B91BDBD9D60001CA0C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 64A080B81BDBD9D60001CA0C /* main.m */; };
-		64A080BC1BDBD9D60001CA0C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 64A080BB1BDBD9D60001CA0C /* AppDelegate.m */; };
 		64A080C41BDBD9D60001CA0C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 64A080C31BDBD9D60001CA0C /* Assets.xcassets */; };
 		64A080C71BDBD9D60001CA0C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 64A080C51BDBD9D60001CA0C /* LaunchScreen.storyboard */; };
 		64A080E81BDBDBFE0001CA0C /* HRBrightnessCursor.m in Sources */ = {isa = PBXBuildFile; fileRef = 64A080D91BDBDBFE0001CA0C /* HRBrightnessCursor.m */; };
@@ -279,9 +277,6 @@
 		649194331D15DEDC0025E79C /* SFMono-RegularItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFMono-RegularItalic.otf"; sourceTree = "<group>"; };
 		649B64711C7B618900E0830D /* ContributeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContributeViewController.swift; sourceTree = "<group>"; };
 		64A080B41BDBD9D60001CA0C /* Codinator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Codinator.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		64A080B81BDBD9D60001CA0C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		64A080BA1BDBD9D60001CA0C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		64A080BB1BDBD9D60001CA0C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		64A080C31BDBD9D60001CA0C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../Assets.xcassets; sourceTree = "<group>"; };
 		64A080C61BDBD9D60001CA0C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		64A080C81BDBD9D60001CA0C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = ../Info.plist; sourceTree = "<group>"; };
@@ -612,7 +607,6 @@
 		64A080B71BDBD9D60001CA0C /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				64A080B81BDBD9D60001CA0C /* main.m */,
 				64A0810C1BDBDCF10001CA0C /* PrefixHeader.pch */,
 			);
 			name = "Supporting Files";
@@ -923,8 +917,6 @@
 		64A0827C1BDBE57D0001CA0C /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				64A080BA1BDBD9D60001CA0C /* AppDelegate.h */,
-				64A080BB1BDBD9D60001CA0C /* AppDelegate.m */,
 				648D14F91D29937A00D58BA5 /* AppDelegate.swift */,
 			);
 			name = Main;
@@ -1464,7 +1456,6 @@
 				646EC6F31CA8D0BE00F359C2 /* GCDWebServerResponse.m in Sources */,
 				64A0813D1BDBE0B60001CA0C /* SettingsGeneralViewController.swift in Sources */,
 				646EC6EE1CA8D0BE00F359C2 /* GCDWebServerFileRequest.m in Sources */,
-				64A080BC1BDBD9D60001CA0C /* AppDelegate.m in Sources */,
 				64A080FD1BDBDC3E0001CA0C /* ioapi.c in Sources */,
 				646EC6ED1CA8D0BE00F359C2 /* GCDWebServerErrorResponse.m in Sources */,
 				64A080EC1BDBDBFE0001CA0C /* HRColorMapView.m in Sources */,
@@ -1494,7 +1485,6 @@
 				64EED4DB1CCC3CC400A8BC34 /* ExportViewController.swift in Sources */,
 				646EC6E91CA8D0BE00F359C2 /* GCDWebServer.m in Sources */,
 				647F33921CCDDC8600CA537D /* FilesTableViewControllerPreviewing.swift in Sources */,
-				64A080B91BDBD9D60001CA0C /* main.m in Sources */,
 				64A0829A1BDBE7610001CA0C /* AspectRatioViewController.swift in Sources */,
 				6407BEDC1CCD175B00B35C04 /* UIImage+JTSImageEffects.m in Sources */,
 				646D488E1CCE2BEF0093056B /* PlaygroundDocument.m in Sources */,
@@ -1631,6 +1621,7 @@
 				CODE_SIGN_ENTITLEMENTS = Codinator/Codinator.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Codinator/Frameworks",

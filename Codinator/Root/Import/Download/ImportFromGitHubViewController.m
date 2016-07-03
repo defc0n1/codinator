@@ -8,7 +8,7 @@
 
 #import "ImportFromGitHubViewController.h"
 #import "AFNetworking.h"
-#import "AppDelegate.h"
+#import "Codinator-Swift.h"
 
 @interface ImportFromGitHubViewController (){
     
@@ -117,7 +117,7 @@
     
     
     //Root Path
-    NSString const *root = [AppDelegate storagePath];
+    NSString const *root = [AppDelegate storageURL].path;
     
     //Custom Paths
     NSString const *projectsDirPath = [root stringByAppendingPathComponent:@"Projects"];

@@ -11,7 +11,7 @@
 @import MobileCoreServices;
 @import LocalAuthentication;
 
-#import "AppDelegate.h"
+#import "Codinator-Swift.h"
 
 #import "WelcomeViewController.h"
 #import "SettingsEngine.h"
@@ -136,7 +136,7 @@
         }
         
         
-        NSString *rootPath = [AppDelegate storagePath];
+        NSString *rootPath = [AppDelegate storageURL].path;
         NSString *projectsDirPath = [rootPath stringByAppendingPathComponent:@"Projects"];
         NSString *playgroundsDirPath = [rootPath stringByAppendingPathComponent:@"Playground"];
         
@@ -163,7 +163,7 @@
 
 
 - (void)reload{
-    NSString *rootPath = [AppDelegate storagePath];
+    NSString *rootPath = [AppDelegate storageURL].path;
     NSString *projectsDirPath = [rootPath stringByAppendingPathComponent:@"Projects"];
     NSString *playgroundsDirPath = [rootPath stringByAppendingPathComponent:@"Playground"];
     
@@ -352,7 +352,7 @@
         if (userInfo) {
             
             
-            NSString *root = [AppDelegate storagePath];
+            NSString *root = [AppDelegate storageURL].path;
             NSString *projectsDirPath = [root stringByAppendingPathComponent:@"Projects"];
             
             NSString *projectName = userInfo[CSSearchableItemActivityIdentifier];
@@ -473,7 +473,7 @@
     [cell.imageView setContentMode:UIViewContentModeScaleAspectFill];
     cell.imageView.image = nil;
     
-    NSString const *root = [AppDelegate storagePath];
+    NSString const *root = [AppDelegate storageURL].path;
     
     
     
@@ -570,7 +570,7 @@
 
 - (void)collectionView:(nonnull UICollectionView *)collectionView didSelectItemAtIndexPath:(nonnull NSIndexPath *)indexPath{
     //Root Path
-    NSString *root = [AppDelegate storagePath];
+    NSString *root = [AppDelegate storageURL].path;
     
     //Custom Paths
     NSString *projectsDirPath = [root stringByAppendingPathComponent:@"Projects"];
@@ -694,7 +694,7 @@
     if (sender.state == UIGestureRecognizerStateBegan && indexPath) {
         
         NSString *deletePath;
-        NSString *root = [AppDelegate storagePath];
+        NSString *root = [AppDelegate storageURL].path;
         
         BOOL isProject = indexPath.section == 0;
         
@@ -955,7 +955,7 @@
     
     backgroundOperation.completionBlock = ^{
         //Root Path
-        NSString *root = [AppDelegate storagePath];
+        NSString *root = [AppDelegate storageURL].path;
         
         //Custom Paths
         NSString *projectsDirPath = [root stringByAppendingPathComponent:@"Projects"];
@@ -1146,7 +1146,7 @@
         ProjectZipImporterViewController *destViewController = segue.destinationViewController;
         
         
-        NSString *root = [AppDelegate storagePath];
+        NSString *root = [AppDelegate storageURL].path;
         NSString *projectsDirPath = [root stringByAppendingPathComponent:@"Projects"];
         
         

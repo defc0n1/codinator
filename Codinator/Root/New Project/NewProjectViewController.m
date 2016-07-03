@@ -9,7 +9,7 @@
 
 #import "Polaris.h"
 #import "CodinatorDocument.h"
-#import "AppDelegate.h"
+#import "Codinator-Swift.h"
 #import "NewProjectViewController.h"
 #import "FileTemplates.h"
 #import "Codinator-Swift.h"
@@ -157,7 +157,7 @@ BOOL done;
 - (IBAction)nextDidPush:(id)sender {
     
     //Root Path
-    NSString *root = [AppDelegate storagePath];
+    NSString *root = [AppDelegate storageURL].path;
     
     //Final Path
     NSString *path = [root stringByAppendingPathComponent:@"Projects"];
@@ -201,7 +201,7 @@ BOOL done;
 -(void)createProject{
 
     //Root Path
-    NSString *root = [AppDelegate storagePath];
+    NSString *root = [AppDelegate storageURL].path;
     
     //Final Path
     NSString *path = [root stringByAppendingPathComponent:@"Projects"];

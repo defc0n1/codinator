@@ -24,7 +24,7 @@ extension WelcomeViewController: UIViewControllerPreviewingDelegate, PeekShortPr
     
         let fileName: NSString = projectsArray[(indexPath as NSIndexPath).row].lastPathComponent!
         
-        let root: NSString = AppDelegate.storagePath()
+        let root: NSString = AppDelegate.storageURL.path!
         let projectsRootDirPath: NSString = root.appendingPathComponent("Projects")
         let projectPath = projectsRootDirPath.appendingPathComponent(fileName as String)
 

@@ -17,20 +17,20 @@ class AppDelegate: UIResponder , UIApplicationDelegate, FileManagerDelegate {
     var window: UIWindow?
     lazy var fileManager = FileManager.default()
     
-    class var storagePath: String {
+    class var storageURL: URL {
         get {
             let rootDirectory = try! FileManager.default().urlForUbiquityContainerIdentifier(nil)?.appendingPathComponent("Documents")
                 
             if rootDirectory != nil && UserDefaults.standard().bool(forKey: "CnCloud") == true {
-                return rootDirectory!.path!
+                return rootDirectory!
             }
             
             
             
             let documentDirectory = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first
-            let homeURL = NSURL(fileURLWithPath: documentDirectory!, isDirectory: true)
+            let homeURL = URL(fileURLWithPath: documentDirectory!, isDirectory: true)
             
-            return homeURL.path!
+            return homeURL
         }
     }
     
@@ -87,14 +87,14 @@ class AppDelegate: UIResponder , UIApplicationDelegate, FileManagerDelegate {
     func moveImported(filename: String, at url: URL) -> Bool {
         
         // Get storage path
-        let storagePath = AppDelegate.storagePath
+        let storagePath = AppDelegate.storageURL.path
         
         // Check if dir exists
-        if fileManager.fileExists(atPath: storagePath) {
+        if fileManager.fileExists(atPath: storagePath!) {
             
             // Move file to location
             do {
-                try fileManager.moveItem(at: url, to: URL(fileURLWithPath: storagePath, isDirectory: true).appendingPathComponent(filename))
+                try fileManager.moveItem(at: url, to: URL(fileURLWithPath: storagePath!, isDirectory: true).appendingPathComponent(filename))
                 
                 let navController = self.window?.rootViewController as! UINavigationController
                 let welcomeViewController = navController.viewControllers.first as! WelcomeViewController
