@@ -369,16 +369,21 @@ class EditorViewController: UIViewController, UITextViewDelegate, ProjectSplitVi
         searchBar.isHidden = false
         
         view.layoutIfNeeded()
-        searchBarTopConstraint.constant = 0
+        searchBarTopConstraint.constant = 8
 
+        let scrollInsets = htmlTextView.contentInset
+        
         var insets = htmlTextView.contentInset
-        insets.top = searchBar.frame.height
+        insets.top = searchBar.frame.height + searchBarTopConstraint.constant + 1
+    
         
         UIView.animate(withDuration: 0.4, animations: {
             self.view.layoutIfNeeded()
 
             self.htmlTextView.contentInset = insets
-            self.htmlTextView.scrollIndicatorInsets = insets
+            self.htmlTextView.scrollIndicatorInsets = scrollInsets
+            
+            
         }, completion : { bool in
           self.searchBar.becomeFirstResponder()
         })
@@ -401,7 +406,6 @@ class EditorViewController: UIViewController, UITextViewDelegate, ProjectSplitVi
             self.htmlTextView.contentInset = insets
             self.htmlTextView.scrollIndicatorInsets = insets
 
-            
             }, completion: { bool in
                 self.searchBar.resignFirstResponder()
                 self.searchBar.isHidden = true

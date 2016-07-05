@@ -36,3 +36,5 @@
 #import "WUTextSuggestionDisplayController.h"
 
 #import "UnArchivingViewController.h"
+
+#import "ProjectCollectionViewCell.h"

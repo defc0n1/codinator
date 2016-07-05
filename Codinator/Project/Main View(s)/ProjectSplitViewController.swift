@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol ProjectSplitViewControllerDelegate {
+protocol ProjectSplitViewControllerDelegate: class {
     func webViewSizeDidChange()
     func searchBarAppeared()
     func searchBarDisAppeard()
@@ -25,7 +25,7 @@ class ProjectSplitViewController: UISplitViewController{
     var redoButton: UIBarButtonItem!
     var undoButton: UIBarButtonItem!
 
-    var splitViewDelegate: ProjectSplitViewControllerDelegate?
+    weak var splitViewDelegate: ProjectSplitViewControllerDelegate?
 
     
     weak var assistantViewController: AssistantViewController?

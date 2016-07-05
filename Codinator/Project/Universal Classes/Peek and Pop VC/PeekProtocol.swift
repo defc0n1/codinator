@@ -9,7 +9,7 @@
 import Foundation
 
 protocol PeekProtocol: class {
-    func print()
+    func peekPrint()
     func move()
     func rename()
     func share()

@@ -42,9 +42,9 @@
         UIFont *italicFont = [UIFont fontWithName:@"SFMono-RegularItalic" size:size];
         UIFont *boldFont = [UIFont fontWithName:@"SFMono-Bold" size:size];
 
-        [FontDefaults setWithFont:normalFont key:@"Font: 0"];
-        [FontDefaults setWithFont:italicFont key:@"Font: 1"];
-        [FontDefaults setWithFont:boldFont key:@"Font: 2"];
+        [userDefaults setWithFont:normalFont key:@"Font: 0"];
+        [userDefaults setWithFont:italicFont key:@"Font: 1"];
+        [userDefaults setWithFont:boldFont key:@"Font: 2"];
         
         // Save colors
         UIColor *tagColor = [SyntaxHighlighterDefaultColors purpleColor];
@@ -126,7 +126,7 @@
             
             NSDictionary *attributes = @{
                                          NSForegroundColorAttributeName : [userDefaults colorForKey: colorKey],
-                                         NSFontAttributeName : [FontDefaults fontWithKey:fontKey]
+                                         NSFontAttributeName : [userDefaults fontWithKey:fontKey]
                                          };
             
             [[NSUserDefaults standardUserDefaults] setDic:attributes ForKey:saveKey];

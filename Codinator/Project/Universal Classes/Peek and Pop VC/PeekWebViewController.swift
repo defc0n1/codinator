@@ -34,7 +34,7 @@ class PeekWebViewController: AspectRatioViewController {
         }
         else {
             let printAction = UIPreviewAction(title: "Print", style: .default, handler: { _ in
-                self.delegate?.print()
+                self.delegate?.peekPrint()
             })
             
             

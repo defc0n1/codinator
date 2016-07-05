@@ -10,7 +10,7 @@ import Foundation
 
 extension FilesTableViewController: PeekProtocol {
     
-    func print() {
+    func peekPrint() {
         let printInfo = UIPrintInfo.printInfo()
         printInfo.outputType = .general
         printInfo.jobName = "Print File"

@@ -54,7 +54,7 @@ BOOL madeChanges;
     
     NSString *key = [NSString stringWithFormat:@"Font: %li", (long)self.selectedType];
    
-    self.font = [FontDefaults fontWithKey:key];
+    self.font = [[NSUserDefaults standardUserDefaults] fontWithKey:key];
     self.previewLabel.font = self.font;
     self.previewLabel.text = @"<h1>Lorem ipsum</h1>";
 
@@ -100,7 +100,7 @@ BOOL madeChanges;
     
     NSString *key = [NSString stringWithFormat:@"Font: %li", (long)self.selectedType];
     
-    [FontDefaults setWithFont:self.font key:key];
+    [[NSUserDefaults standardUserDefaults] setWithFont:self.font key:key];
     self.previewLabel.font = self.font;
 }
 

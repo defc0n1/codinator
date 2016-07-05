@@ -36,7 +36,7 @@ class AssistantViewController: UIViewController, SnippetsDelegate, UITextFieldDe
     
     
     weak var delegate: SnippetsDelegate?
-    var renameDelegate: AssistantViewControllerDelegate?
+    weak var renameDelegate: AssistantViewControllerDelegate?
     
     var projectManager: Polaris?
     var prevVC: UIViewController?

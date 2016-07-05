@@ -10,19 +10,19 @@ import UIKit
 
 class JsTextView: CYRTextView {
 
-    var defaultFont: UIFont = FontDefaults.font(key: "Font: 0")! {
+    var defaultFont: UIFont = UserDefaults.standard().font(key: "Font: 0")! {
         didSet {
             tokens = highlightingTokens()
         }
     }
     
-    var boldFont: UIFont = FontDefaults.font(key: "Font: 1")! {
+    var boldFont: UIFont = UserDefaults.standard().font(key: "Font: 1")! {
         didSet {
             tokens = highlightingTokens()
         }
     }
     
-    var italicFont: UIFont = FontDefaults.font(key: "Font: 2")! {
+    var italicFont: UIFont = UserDefaults.standard().font(key: "Font: 2")! {
         didSet {
             tokens = highlightingTokens()
         }

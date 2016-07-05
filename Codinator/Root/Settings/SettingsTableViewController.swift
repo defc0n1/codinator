@@ -63,26 +63,22 @@ class SettingsTableViewController: UITableViewController, SKStoreProductViewCont
     
     @IBAction func showLineNumberSwichChanged(_ sender: AnyObject) {
         userDefauls.set(self.showLineNumberSwitch.isOn, forKey: kLineNumber)
-        userDefauls.synchronize()
     }
     
     
     
     @IBAction func webDavSwichChanged(_ sender: AnyObject) {
         userDefauls.set(self.useWebDavServerSwitch.isOn, forKey: kWebDavServer)
-        userDefauls.synchronize()
     }
     
     
     @IBAction func webServerSwichChanged(_ sender: AnyObject) {
         userDefauls.set(self.useWebServerSwitch.isOn, forKey: kWebDavServer)
-        userDefauls.synchronize()
     }
     
     
     @IBAction func uploadServerSwichChanged(_ sender: AnyObject) {
         userDefauls.set(self.useUploadServerSwitch.isOn, forKey: kWebDavServer)
-        userDefauls.synchronize()
     }
     
     @IBAction func doneDidPush(_ sender: AnyObject) {

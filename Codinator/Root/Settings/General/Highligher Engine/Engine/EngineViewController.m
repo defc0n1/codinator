@@ -131,7 +131,7 @@
     
     NSDictionary *attributes = @{
                                 NSForegroundColorAttributeName : self.changeColorButton.tintColor,
-                                NSFontAttributeName : [FontDefaults fontWithKey:fontKey]
+                                NSFontAttributeName : [[NSUserDefaults standardUserDefaults] fontWithKey:fontKey]
                                 };
     
     [[NSUserDefaults standardUserDefaults] setDic:attributes ForKey:saveKey];

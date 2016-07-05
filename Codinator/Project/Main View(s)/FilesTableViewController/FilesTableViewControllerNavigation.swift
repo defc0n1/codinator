@@ -8,11 +8,11 @@
 
 import Foundation
 
-extension FilesTableViewController {
+extension FilesTableViewController: UITableViewDataSourcePrefetching {
     
+    // MARK: - Cell loading
         
     @objc(numberOfSectionsInTableView:) func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
     
@@ -35,24 +35,34 @@ extension FilesTableViewController {
             cell.textLabel?.text = text
             
             
-                let queue = DispatchQueue.global(attributes: .qosUserInitiated)
-                queue.sync(execute: {
-                    
+            let queue = DispatchQueue.global(attributes: .qosUserInitiated)
+            queue.sync(execute: {
+                
+                // Check if image was already chached
+                if let image = self.prefetchedImages[indexPath] {
+                    if image != cell.imageView!.image {
+                        
+                        cell.imageView!.image = image
+                    }
+                }
+                else {
                     if let url = try! self.projectManager?.inspectorURL.appendingPathComponent(text) {
-                        let image = Thumbnail.sharedInstance.file(with: url)
+                        var image = Thumbnail.sharedInstance.file(with: url)
                         
                         if image.size != CGSize(width: 128, height: 128) {
-                            cell.imageView!.image = Thumbnail.sharedInstance.cropped(image: image, size: CGSize(width: 128, height: 128))
+                            image = Thumbnail.sharedInstance.cropped(image: image, size: CGSize(width: 128, height: 128))!
                         }
-                        else {
+                        
+                        
+                        if image != cell.imageView!.image {
                             cell.imageView!.image = image
+                            self.prefetchedImages[indexPath] = image
                         }
+                        
                     }
-                    
-                })
+                }
                 
-            
-            
+            })
             
             
         }
@@ -65,6 +75,43 @@ extension FilesTableViewController {
         return cell
     }
     
+    
+    
+    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+        
+        
+        // itterate through indexPaths
+        for indexPath in indexPaths {
+            
+            // Check if image wasn't eventually already chached
+            if prefetchedImages[indexPath] == nil {
+                
+                // Get text
+                guard let text = items[(indexPath as NSIndexPath).row].lastPathComponent,
+                    let url = try! self.projectManager?.inspectorURL.appendingPathComponent(text) else {
+                        return
+                }
+                
+                var image = Thumbnail.sharedInstance.file(with: url)
+                
+                if image.size != CGSize(width: 128, height: 128) {
+                    image = Thumbnail.sharedInstance.cropped(image: image, size: CGSize(width: 128, height: 128))!
+                }
+                
+                prefetchedImages[indexPath] = image
+            }
+            
+        }
+        
+    }
+    
+    
+    func tableView(_ tableView: UITableView, cancelPrefetchingForRowsAt indexPaths: [IndexPath]) {
+        
+    }
+    
+    
+    // MARK: - Table View Selection
     
     @objc(tableView:didSelectRowAtIndexPath:) func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let selectedURL = try! inspectorURL?.appendingPathComponent(items[(indexPath as NSIndexPath).row].lastPathComponent!) {
@@ -118,7 +165,7 @@ extension FilesTableViewController {
                     self.present(viewController, animated: true, completion: nil)
                     
                 case "pdf":
-                    projectManager.tmpFileURL = projectManager.selectedFileURL!
+                    projectManager.tmpFileURL = selectedURL
                     self.performSegue(withIdentifier: "run", sender: self)
                     
                     
@@ -167,7 +214,7 @@ extension FilesTableViewController {
             
             
             let printAction = UIAlertAction(title: "Print", style: .default, handler: { _ in
-                self.print()
+                self.peekPrint()
             })
             
             

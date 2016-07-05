@@ -14,6 +14,8 @@
 #import "FileTemplates.h"
 #import "Codinator-Swift.h"
 
+@import CoreSpotlight;
+
 @import LocalAuthentication;
 
 @interface NewProjectViewController() <UITextFieldDelegate>{
@@ -369,6 +371,8 @@ BOOL done;
             [projectManager saveValue:useTouchID forKey:@"TouchID"];
             [projectManager saveValue:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"] forKey:@"CodinatorVersion"];
             
+            [self indexProject];
+            
         }
         else{
             UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error" message:@"Error" preferredStyle:UIAlertControllerStyleAlert];
@@ -387,6 +391,53 @@ BOOL done;
     }
 }
 
+
+#pragma mark - indexing
+
+- (void)indexProject {
+    
+//    CSSearchableItemAttributeSet *attributeSet = [[CSSearchableItemAttributeSet alloc] initWithItemContentType:(NSString *)kUTTypeItem];
+//    
+//    
+//    // Attributes
+//    NSString *title = webPageNameTextField.text;
+//    [attributeSet setTitle:title.stringByDeletingPathExtension];
+//    
+//    NSString *description = @"The Codinator project you've recently worked on";
+//    [attributeSet setContentDescription:description];
+//    
+//    NSString *creator = @"Codinator";
+//    [attributeSet setCreator:creator];
+//    
+//    NSDate *date = [NSDate date];
+//    [attributeSet setContentCreationDate:date];
+//    
+//    [attributeSet setCopyright:copyrightTextField.text];
+//    
+//    
+//    
+//    
+//    NSString *identifier = [NSString stringWithFormat:@"com.vladidanila.codinator.%@", title];
+//    
+//    CSSearchableItem *item = [[CSSearchableItem alloc]
+//                              initWithUniqueIdentifier:title domainIdentifier:identifier attributeSet:attributeSet];
+//    
+//    
+//    
+//    [[CSSearchableIndex defaultSearchableIndex] indexSearchableItems:@[item] completionHandler:^(NSError * __nullable error) {
+//        if (error) {
+//            #ifdef DEBUG
+//            NSLog(@"%@",[error localizedDescription]);
+//            #endif
+//        } else {
+//            #ifdef DEBUG
+//            NSLog(@"Indexed: %@", item.uniqueIdentifier);
+//            #endif
+//        }
+//    }];
+//
+    
+}
 
 
 #pragma mark - delegates

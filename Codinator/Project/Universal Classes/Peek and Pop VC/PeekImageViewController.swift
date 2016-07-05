@@ -23,7 +23,7 @@ class PeekImageViewController: UIViewController {
         
         if isDir == false {
             let printAction = UIPreviewAction(title: "Print", style: .default, handler: { _ in
-            self.delegate?.print()
+                self.delegate?.peekPrint()
             })
             
             items.append(printAction)

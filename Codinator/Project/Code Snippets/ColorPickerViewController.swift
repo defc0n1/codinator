@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol ColorProtocol {
+protocol ColorProtocol: class {
     func colorDidChange(_ color: UIColor)
 }
 
@@ -18,7 +18,7 @@ class ColorPickerViewController: UIViewController{
     
     @IBOutlet weak var colorPickerView: HRColorPickerView!
     weak var delegate: SnippetsDelegate?
-    var colorDelegate: ColorProtocol?
+    weak var colorDelegate: ColorProtocol?
     
     var color: UIColor?
     

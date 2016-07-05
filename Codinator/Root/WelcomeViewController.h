@@ -8,23 +8,30 @@
 
 @import SafariServices;
 #import "CodinatorDocument.h"
+#import "ProjectCollectionViewCell.h"
 
+@interface WelcomeViewController : UIViewController <UITextFieldDelegate, UICollectionViewDelegateFlowLayout, SFSafariViewControllerDelegate>
 
-@interface WelcomeViewController : UIViewController <UITextFieldDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, SFSafariViewControllerDelegate>
+@property (strong, nonatomic, nonnull) NSMutableArray *projectsArray;
+@property (strong, nonatomic, nonnull) NSMutableArray *playgroundsArray;
+@property (strong, nonatomic, nonnull) IBOutlet UICollectionView *collectionView;
 
-@property (strong, nonatomic) NSMutableArray *projectsArray;
-@property (strong, nonatomic) NSMutableArray *playgroundsArray;
-@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (nonatomic, strong, nullable) CodinatorDocument *document;
 
-@property (nonatomic, strong) CodinatorDocument *document;
-
-@property (strong, nonatomic) NSString *forceTouchPath;
+@property (strong, nonatomic, nullable) NSString *forceTouchPath;
 
 @property (nonatomic) BOOL projectIsOpened;
-@property (nonatomic) NSString *projectsPath;
+@property (nonatomic, nullable) NSString *projectsPath;
 
+@property (nonatomic, strong, nonnull) NSDictionary *prefetchedImages;
 
-- (void)indexProjects:(NSArray *)projects;
-- (void)restoreUserActivityState:(NSUserActivity *)activity;
+- (void)dealWithiCloudDownloadForCell:(nonnull ProjectCollectionViewCell *)cell forIndexPath:(nonnull NSIndexPath *)indexPath andFilePath:(nonnull NSString *)path;
+- (void)indexProjects:(nonnull NSArray *)projects;
+- (void)restoreUserActivityState:(nonnull NSUserActivity *)activity;
 - (void)reloadData;
+
+
+- (void)tableViewCellWasLongPressed:(nonnull UILongPressGestureRecognizer *)sender;
+
+
 @end

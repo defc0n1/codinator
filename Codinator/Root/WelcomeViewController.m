@@ -16,8 +16,6 @@
 #import "WelcomeViewController.h"
 #import "SettingsEngine.h"
 
-#import "ProjectCollectionViewCell.h"
-
 
 
 ///ZipImport
@@ -79,6 +77,8 @@
     
     self.collectionView.contentInset = insets;
     
+    self.collectionView.prefetchDataSource = self;
+    self.prefetchedImages = [[NSMutableDictionary alloc] init];
     
     
     
@@ -117,10 +117,6 @@
     // delete old indexed files
     [[CSSearchableIndex defaultSearchableIndex] deleteAllSearchableItemsWithCompletionHandler:nil];
     [[CSSearchableIndex defaultSearchableIndex] deleteAllSearchableItemsWithCompletionHandler:^(NSError * _Nullable error) {
-        if (error) {
-            NSLog(@"%@", [error localizedDescription]);
-        }
-        
         
         if (document) {
             if (projectIsOpened) {
@@ -292,7 +288,6 @@
         [projects enumerateObjectsUsingBlock:^(id  __nonnull obj, NSUInteger idx, BOOL * __nonnull stop) {
             
             
-            
             CSSearchableItemAttributeSet *attributeSet = [[CSSearchableItemAttributeSet alloc] initWithItemContentType:(NSString *)kUTTypeItem];
             
             NSString *title = [projects[idx] lastPathComponent];
@@ -322,17 +317,7 @@
             
             
             
-            [[CSSearchableIndex defaultSearchableIndex] indexSearchableItems:@[item] completionHandler:^(NSError * __nullable error) {
-                if (error) {
-#ifdef DEBUG
-                    NSLog(@"%@",[error localizedDescription]);
-#endif
-                } else {
-#ifdef DEBUG
-                    NSLog(@"Indexed: %@", item.uniqueIdentifier);
-#endif
-                }
-            }];
+            [[CSSearchableIndex defaultSearchableIndex] indexSearchableItems:@[item] completionHandler: nil];
             
             
         }];
@@ -436,22 +421,6 @@
 }
 
 
-- (NSInteger)collectionView:(nonnull UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    switch (section) {
-        case 0:
-            return [projectsArray count];
-            break;
-        case 1:
-            return [playgroundsArray count];
-        default:
-            return 0;
-            break;
-    }
-}
-
-- (NSInteger)numberOfSectionsInCollectionView:(nonnull UICollectionView *)collectionView{
-    return 2;
-}
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -463,82 +432,6 @@
     }
 }
 
-
-- (UICollectionViewCell *)collectionView:(nonnull UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath{
-    
-    // Get cell
-    ProjectCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Document" forIndexPath:indexPath];
-    
-    // Set the imageView content mode to aspect fit in case that it was modified by a cell displaying an i.e png file
-    [cell.imageView setContentMode:UIViewContentModeScaleAspectFill];
-    cell.imageView.image = nil;
-    
-    NSString const *root = [AppDelegate storageURL].path;
-    
-    
-    
-    //If 'projects' is selected
-    if (indexPath.section == 0) {
-        
-        NSURL *url = projectsArray[indexPath.row];
-        cell.name.text = [[projectsArray[indexPath.row] lastPathComponent] stringByDeletingPathExtension];
-        
-        
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-            
-            UIImage *image = [[Thumbnail sharedInstance] fileWith:url size: CGSizeMake(108, 144)];
-            
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    cell.imageView.image = image;
-                });
-            
-            
-        });
-        
-            
-            
-        
-        NSString const *projectsDirPath = [root stringByAppendingPathComponent:@"Projects"];
-        NSString *path = [projectsDirPath stringByAppendingPathComponent:[projectsArray[indexPath.row] lastPathComponent]];
-        [self dealWithiCloudDownloadForCell:cell forIndexPath:indexPath andFilePath:path];
-        
-        
-    }
-    else{ //If 'playgrounds' section
-        
-        
-        //Paths
-        NSString const *playgroudPaths = [root stringByAppendingPathComponent:@"Playground"];
-        NSString *path = [playgroudPaths stringByAppendingPathComponent:[playgroundsArray[indexPath.row] lastPathComponent]];
-        
-        
-        cell.imageView.image =  [[Thumbnail sharedInstance] fileWith:[NSURL fileURLWithPath: path] size: CGSizeMake(100, 100)];
-        
-        
-        
-        if ([path.pathExtension isEqualToString:@"icloud"]) {
-            [self dealWithiCloudDownloadForCell:cell forIndexPath:indexPath andFilePath:path];
-            
-            NSString *cellText = [[[playgroundsArray[indexPath.row] lastPathComponent] stringByDeletingPathExtension] stringByDeletingPathExtension];
-            cell.name.text = cellText;
-        }
-        else{
-            cell.name.text = [[playgroundsArray[indexPath.row] lastPathComponent] stringByDeletingPathExtension];
-            
-        }
-        
-    }
-    
-    
-    
-    // Create long press Gesture Recognizer
-    
-    UILongPressGestureRecognizer *longPressRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(tableViewCellWasLongPressed:)];
-    [cell addGestureRecognizer:longPressRecognizer];
-    
-    
-    return cell;
-}
 
 
 - (void)dealWithiCloudDownloadForCell:(nonnull ProjectCollectionViewCell *)cell forIndexPath:(nonnull NSIndexPath *)indexPath andFilePath:(nonnull NSString *)path{
@@ -590,8 +483,7 @@
             
             document = [[CodinatorDocument alloc] initWithFileURL:[NSURL fileURLWithPath:path]];
             
-            Polaris *projectManager = [[Polaris alloc] initWithProjectPath:path currentView:nil WithWebServer:NO UploadServer:NO andWebDavServer:NO];
-            
+            Polaris *projectManager = [[Polaris alloc] initWithProjectPath:path];
             NSString *requiresTouchID = [projectManager getSettingsDataForKey:@"TouchID"];
             NSLog(@"Requires TouchID: %@", requiresTouchID);
             
@@ -679,7 +571,7 @@
 
 
 
-- (IBAction)tableViewCellWasLongPressed:(UILongPressGestureRecognizer *)sender {
+- (void)tableViewCellWasLongPressed:(UILongPressGestureRecognizer *)sender {
     
     
     CGPoint p = [sender locationInView:self.collectionView];
@@ -754,7 +646,7 @@
                     
                     BOOL isDir;
                     if ([[NSFileManager defaultManager] fileExistsAtPath:deletePath isDirectory:&isDir] && isDir && [deletePath.pathExtension isEqualToString:@"cnProj"]) {
-                        Polaris *polaris = [[Polaris alloc] initWithProjectPath:deletePath currentView:nil WithWebServer:false UploadServer:false andWebDavServer:false];
+                        Polaris *polaris = [[Polaris alloc] initWithProjectPath:deletePath];
                         [polaris updateSettingsValueForKey:@"ProjectName" withValue:newName.stringByDeletingPathExtension];
                     }
                     
@@ -925,12 +817,6 @@
                 NSError *error;
                 [[NSFileManager defaultManager] startDownloadingUbiquitousItemAtURL:fileURL error:&error];
                 
-#ifdef DEBUG
-                if (error) {
-                    NSLog(@"%@", error.localizedDescription);
-                }
-#endif
-                
             }
             
             
@@ -954,6 +840,9 @@
     backgroundOperation.qualityOfService = NSOperationQualityOfServiceUtility;
     
     backgroundOperation.completionBlock = ^{
+        
+        self.prefetchedImages = [[NSMutableDictionary alloc] init];
+        
         //Root Path
         NSString *root = [AppDelegate storageURL].path;
         
@@ -988,9 +877,6 @@
     
     
     [[NSOperationQueue mainQueue] addOperation:backgroundOperation];
-    
-    
-    
 }
 
 

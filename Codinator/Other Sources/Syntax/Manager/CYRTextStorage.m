@@ -53,7 +53,7 @@
 {
     if (self = [super init])
     {
-        _defaultFont = [FontDefaults fontWithKey:@"Font: 0"];
+        _defaultFont = [[NSUserDefaults standardUserDefaults] fontWithKey:@"Font: 0"];
         _defaultTextColor = [UIColor whiteColor];
         
         

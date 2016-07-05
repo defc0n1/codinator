@@ -57,10 +57,10 @@ extension WelcomeViewController: UIViewControllerPreviewingDelegate, PeekShortPr
     
     public func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
      
-        if forceTouchPath.characters.count > 5 {
+        if forceTouchPath!.characters.count > 5 {
             
-            self.document = CodinatorDocument(fileURL: URL(fileURLWithPath: forceTouchPath))
-            document.open { sucess in
+            self.document = CodinatorDocument(fileURL: URL(fileURLWithPath: forceTouchPath!))
+            document?.open { sucess in
                 
                 if sucess {
                     self.projectIsOpened = true
@@ -83,7 +83,7 @@ extension WelcomeViewController: UIViewControllerPreviewingDelegate, PeekShortPr
     // MARK: - Actions
     
     func rename() {
-        let message = "Rename \(((forceTouchPath as NSString).lastPathComponent as NSString).deletingPathExtension)"
+        let message = "Rename \(((forceTouchPath! as NSString).lastPathComponent as NSString).deletingPathExtension)"
         
         let alertController = UIAlertController(title: "Rename", message: message, preferredStyle: .alert)
         
@@ -94,14 +94,14 @@ extension WelcomeViewController: UIViewControllerPreviewingDelegate, PeekShortPr
         }
         
         let processRenaming = UIAlertAction(title: "Rename", style: .default) { _ in
-            let newName = alertController.textFields![0].text! + ".cnProj"
-            let newPath = (self.forceTouchPath as NSString).deletingLastPathComponent + newName
+            let newName = alertController.textFields!.first!.text! + ".cnProj"
+            let newPath = (self.forceTouchPath! as NSString).deletingLastPathComponent + newName
             
-            let polaris = Polaris(projectPath: self.forceTouchPath!, currentView: nil, withWebServer: false, uploadServer: false, andWebDavServer: false)
+            let polaris = Polaris(projectPath: self.forceTouchPath!, withWebServer: false, uploadServer: false, andWebDavServer: false)
             polaris.updateSettingsValue(forKey: "ProjectName", withValue: (newName as NSString).deletingPathExtension)
             
             do {
-                try FileManager.default().moveItem(atPath: self.forceTouchPath, toPath: newPath)
+                try FileManager.default().moveItem(atPath: self.forceTouchPath!, toPath: newPath)
                 self.reloadData()
                 
             } catch let error as NSError {
@@ -124,7 +124,7 @@ extension WelcomeViewController: UIViewControllerPreviewingDelegate, PeekShortPr
     func delete() {
         
         do {
-            try FileManager.default().removeItem(atPath: self.forceTouchPath)
+            try FileManager.default().removeItem(atPath: self.forceTouchPath!)
             forceTouchPath = ""
             self.reloadData()
         } catch let error as NSError{

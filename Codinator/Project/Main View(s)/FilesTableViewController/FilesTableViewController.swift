@@ -13,6 +13,8 @@ class FilesTableViewController: UIViewController, UITableViewDelegate, UITableVi
     @IBOutlet var tableView: UITableView!
     @IBOutlet weak var toolBar: UIToolbar!
     
+    var prefetchedImages = [IndexPath : UIImage]()
+    
     
     var documentInteractionController: UIDocumentInteractionController?
     
@@ -59,6 +61,10 @@ class FilesTableViewController: UIViewController, UITableViewDelegate, UITableVi
         let insets = UIEdgeInsetsMake(0, 0, toolBar.frame.height, 0)
         tableView.contentInset = insets
         tableView.scrollIndicatorInsets = insets
+        
+        if #available(iOS 10.0, *) {
+            tableView.prefetchDataSource = self
+        }
         
         if traitCollection.forceTouchCapability == .available {
             registerForPreviewing(with: self, sourceView: self.tableView)
