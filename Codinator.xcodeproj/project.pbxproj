@@ -113,7 +113,6 @@
 		64A0817E1BDBE28D0001CA0C /* WelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64A0817D1BDBE28D0001CA0C /* WelcomeViewController.m */; };
 		64A0828F1BDBE6AF0001CA0C /* QuickStartQuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64A0828E1BDBE6AF0001CA0C /* QuickStartQuide.swift */; };
 		64A0829A1BDBE7610001CA0C /* AspectRatioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64A082991BDBE7610001CA0C /* AspectRatioViewController.swift */; };
-		64A082AF1BDBE81F0001CA0C /* qsgProjects.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 64A082AB1BDBE81F0001CA0C /* qsgProjects.storyboard */; };
 		64A082B01BDBE81F0001CA0C /* History.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 64A082AC1BDBE81F0001CA0C /* History.storyboard */; };
 		64A082B11BDBE81F0001CA0C /* extra.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 64A082AD1BDBE81F0001CA0C /* extra.storyboard */; };
 		64A082B21BDBE81F0001CA0C /* core.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 64A082AE1BDBE81F0001CA0C /* core.storyboard */; };
@@ -336,7 +335,6 @@
 		64A0817D1BDBE28D0001CA0C /* WelcomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WelcomeViewController.m; sourceTree = "<group>"; };
 		64A0828E1BDBE6AF0001CA0C /* QuickStartQuide.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuickStartQuide.swift; sourceTree = "<group>"; };
 		64A082991BDBE7610001CA0C /* AspectRatioViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AspectRatioViewController.swift; sourceTree = "<group>"; };
-		64A082AB1BDBE81F0001CA0C /* qsgProjects.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = qsgProjects.storyboard; sourceTree = "<group>"; };
 		64A082AC1BDBE81F0001CA0C /* History.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = History.storyboard; sourceTree = "<group>"; };
 		64A082AD1BDBE81F0001CA0C /* extra.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = extra.storyboard; sourceTree = "<group>"; };
 		64A082AE1BDBE81F0001CA0C /* core.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = core.storyboard; sourceTree = "<group>"; };
@@ -995,7 +993,6 @@
 		64A082AA1BDBE8080001CA0C /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
-				64A082AB1BDBE81F0001CA0C /* qsgProjects.storyboard */,
 				64A082AC1BDBE81F0001CA0C /* History.storyboard */,
 				64A082AD1BDBE81F0001CA0C /* extra.storyboard */,
 				64A082AE1BDBE81F0001CA0C /* core.storyboard */,
@@ -1358,7 +1355,6 @@
 				64A080C71BDBD9D60001CA0C /* LaunchScreen.storyboard in Resources */,
 				649194341D15DF9D0025E79C /* SFMono-Bold.otf in Resources */,
 				649194351D15DFA00025E79C /* SFMono-RegularItalic.otf in Resources */,
-				64A082AF1BDBE81F0001CA0C /* qsgProjects.storyboard in Resources */,
 				64A082B11BDBE81F0001CA0C /* extra.storyboard in Resources */,
 				646EC6E61CA8D0BE00F359C2 /* GCDWebUploader.bundle in Resources */,
 				64A080C41BDBD9D60001CA0C /* Assets.xcassets in Resources */,

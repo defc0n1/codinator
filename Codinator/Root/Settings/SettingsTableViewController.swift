@@ -37,12 +37,6 @@ class SettingsTableViewController: UITableViewController, SKStoreProductViewCont
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-        
         cells.forEach { $0.backgroundColor = tableView.backgroundColor }
         
         self.showLineNumberSwitch.isOn = userDefauls.bool(forKey: kLineNumber)
