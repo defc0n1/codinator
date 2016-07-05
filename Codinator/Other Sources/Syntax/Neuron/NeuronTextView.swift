@@ -39,7 +39,7 @@ class NeuronTextView: SourceCodeTextView {
                 expression: "\\b(algin|width|height|color|text|border|bgcolor|description|name|content|href|src|initialScale|charset|class|role|id|<!DOCTYPE html>|border)\\b",
                 attributes:
                 [
-                    NSForegroundColorAttributeName : UserDefaults.standard().color(forKey: "Color: 5"),
+                    NSForegroundColorAttributeName : UserDefaults.standard.color(forKey: "Color: 5"),
                     NSFontAttributeName : self.defaultFont
                 ]
             ),
@@ -48,7 +48,7 @@ class NeuronTextView: SourceCodeTextView {
                 expression: "\\b(P|B|I|)\\b",
                 attributes:
                 [
-                    NSForegroundColorAttributeName : UserDefaults.standard().color(forKey: "Color: 3"),
+                    NSForegroundColorAttributeName : UserDefaults.standard.color(forKey: "Color: 3"),
                     NSFontAttributeName : self.defaultFont
                 ]
             ),
@@ -58,7 +58,7 @@ class NeuronTextView: SourceCodeTextView {
                 expression: "\\b[A-Z][A-Z0-9]+\\b",
                 attributes:
                 [
-                    NSForegroundColorAttributeName : UserDefaults.standard().color(forKey: "Color: 3"),
+                    NSForegroundColorAttributeName : UserDefaults.standard.color(forKey: "Color: 3"),
                     NSFontAttributeName : self.defaultFont
                 ]
             ),

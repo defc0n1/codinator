@@ -23,7 +23,7 @@ class ServersViewController: UIViewController {
 
         let wifiErrorMessage = "No Wi-Fi"
         let offErrorMessage = "Turned Off"
-        let userDefaults = UserDefaults.standard()
+        let userDefaults = UserDefaults.standard
         
         if let webDavIp = projectManager.webDavServerURL() {
             if webDavIp.isEmpty {

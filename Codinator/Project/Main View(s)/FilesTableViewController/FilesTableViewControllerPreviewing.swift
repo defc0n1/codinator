@@ -84,7 +84,7 @@ extension FilesTableViewController: UIViewControllerPreviewingDelegate {
             projectManager.selectedFileURL = path
             projectManager.deleteURL = nil
             
-            if let data = FileManager.default().contents(atPath: path!.path!) {
+            if let data = FileManager.default.contents(atPath: path!.path!) {
                 let contents = NSString(data: data, encoding: String.Encoding.utf8.rawValue)
                 
                 getSplitView.editorView!.text = contents as? String

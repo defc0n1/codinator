@@ -72,15 +72,15 @@ class AssistantViewController: UIViewController, SnippetsDelegate, UITextFieldDe
         pathLabel.text = projectManager.fakePathForFileSelectedFile()
         
         do {
-            let attributes = try FileManager.default().attributesOfItem(atPath: projectManager.selectedFileURL!.path!)
+            let attributes = try FileManager.default.attributesOfItem(atPath: projectManager.selectedFileURL!.path!)
             
             
             let dateFormatter = DateFormatter()
-            dateFormatter.dateStyle = .shortStyle
+            dateFormatter.dateStyle = .short
             
-            let fileSize = (attributes["NSFileSize"] as! Int)
-            let createdDate = attributes["NSFileCreationDate"] as! Date
-            let modifiedDate = attributes["NSFileModificationDate"] as! Date
+            let fileSize = (attributes["NSFileSize" as FileAttributeKey] as! Int)
+            let createdDate = attributes["NSFileCreationDate" as FileAttributeKey] as! Date
+            let modifiedDate = attributes["NSFileModificationDate" as FileAttributeKey] as! Date
             
             fileSizeLabel.text = "Size: \(fileSize) B"
             createdLabel.text = "Created: " + dateFormatter.string(from: createdDate)
@@ -164,7 +164,7 @@ class AssistantViewController: UIViewController, SnippetsDelegate, UITextFieldDe
                 fileNameTextField?.becomeFirstResponder()
             }
             else {
-                let fileManager = FileManager.default()
+                let fileManager = FileManager.default
                 
                 do {
                     try fileManager.moveItem(at: fileUrl!, to: fileUrl!.deletingLastPathComponent().appendingPathComponent(fileNameTextField!.text! + "." + fileExtensionTextField!.text!))

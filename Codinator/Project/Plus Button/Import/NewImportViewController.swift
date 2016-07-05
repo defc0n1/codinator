@@ -181,7 +181,7 @@ class NewImportViewController: UIViewController,UINavigationControllerDelegate,U
             let image = info[UIImagePickerControllerOriginalImage] as! UIImage
             
             if let content = UIImagePNGRepresentation(image) {
-                FileManager.default().createFile(atPath: (fileUrl.path)!, contents: content, attributes: nil)
+                FileManager.default.createFile(atPath: (fileUrl.path)!, contents: content, attributes: nil)
             }
             
             
@@ -268,7 +268,7 @@ class NewImportViewController: UIViewController,UINavigationControllerDelegate,U
             let pathToWriteFile = self.inspectorPath! + "/" + name
 
             let content = try? Data(contentsOf: url)
-            FileManager.default().createFile(atPath: pathToWriteFile, contents: content, attributes: nil)
+            FileManager.default.createFile(atPath: pathToWriteFile, contents: content, attributes: nil)
             
                 
                 DispatchQueue.main.async(execute: { 

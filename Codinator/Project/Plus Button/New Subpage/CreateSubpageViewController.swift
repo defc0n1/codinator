@@ -31,7 +31,7 @@ class CreateSubpageViewController: UIViewController, UITextFieldDelegate {
             
             let dirUrl = try! projectManager.inspectorURL.appendingPathComponent(textField.text!, isDirectory: true)
             
-            let fileManager = FileManager.default()
+            let fileManager = FileManager.default
             
             // Create folder
             do {

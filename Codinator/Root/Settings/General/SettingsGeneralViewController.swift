@@ -18,7 +18,7 @@ class SettingsGeneralViewController: UIViewController {
     @IBOutlet weak var useWebServerSwitch: UISwitch!
     @IBOutlet weak var useUploadServerSwitch: UISwitch!
     
-    let userDefauls = UserDefaults.standard()
+    let userDefauls = UserDefaults.standard
     
     let kLineNumber = "CnLineNumber"
     let kWebServer = "CnWebServer"

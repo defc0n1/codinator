@@ -10,7 +10,7 @@ import UIKit
 
 class cloudHelper {
     class func cloudAvailable() -> Bool {
-        if let _ = try! FileManager.default().urlForUbiquityContainerIdentifier(nil)?.appendingPathComponent("Documents") {
+        if let _ = try! FileManager.default.urlForUbiquityContainerIdentifier(nil)?.appendingPathComponent("Documents") {
            return true
         }
         else {
@@ -30,7 +30,7 @@ class CloudSettingsTableViewController: UITableViewController {
     
     
     let kUseCloud = "CnCloud"
-    let userDefauls = UserDefaults.standard()
+    let userDefauls = UserDefaults.standard
 
     
     override func viewDidLoad() {
@@ -39,7 +39,7 @@ class CloudSettingsTableViewController: UITableViewController {
         cells.forEach { $0.backgroundColor = tableView.backgroundColor }
         
         
-        if let _ = try! FileManager.default().urlForUbiquityContainerIdentifier(nil)?.appendingPathComponent("Documents") {
+        if let _ = try! FileManager.default.urlForUbiquityContainerIdentifier(nil)?.appendingPathComponent("Documents") {
             useCloud.isOn = !userDefauls.bool(forKey: kUseCloud)
             cloudAvailableLabel.text = ""
         }
@@ -53,7 +53,7 @@ class CloudSettingsTableViewController: UITableViewController {
 
     @IBAction func cloudSwitchChanged(_ sender: UISwitch) {
         userDefauls.set(!useCloud.isOn, forKey: kUseCloud)
-        NotificationCenter.default().post(name: Notification.Name(rawValue: "reload"), object: nil)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "reload"), object: nil)
     }
     
     

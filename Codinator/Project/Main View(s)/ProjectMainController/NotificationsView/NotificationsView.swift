@@ -16,6 +16,11 @@ class NotificationsView: UIVisualEffectView {
         
         textLabel.text = " \(text) "
         
+        let hex = UIPasteboard.general().string
+        let color = UIColor(hexString: hex)
+        
+        textLabel.textColor = color
+        
         UIView.animate(withDuration: 0.3) {
             self.alpha = 1.0
         }

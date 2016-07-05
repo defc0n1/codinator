@@ -16,7 +16,7 @@ class FileMoverViewController: UIViewController, UITableViewDelegate, UITableVie
     
     var items: [URL]?
     
-    let fileManager = FileManager.default()
+    let fileManager = FileManager.default
     
     
     weak var delegate: NewFilesDelegate?
@@ -145,7 +145,7 @@ class FileMoverViewController: UIViewController, UITableViewDelegate, UITableVie
         
         var isDirectory : ObjCBool = ObjCBool(false)
         
-        if (FileManager.default().fileExists(atPath: selectedUrl!.path!, isDirectory: &isDirectory) && Bool(isDirectory) == true) {
+        if (FileManager.default.fileExists(atPath: selectedUrl!.path!, isDirectory: &isDirectory) && Bool(isDirectory) == true) {
             
             do {
                 inspectorUrl = selectedUrl

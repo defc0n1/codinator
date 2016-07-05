@@ -27,7 +27,7 @@ class SettingsTableViewController: UITableViewController, SKStoreProductViewCont
     @IBOutlet weak var useWebServerSwitch: UISwitch!
     @IBOutlet weak var useUploadServerSwitch: UISwitch!
     
-    let userDefauls = UserDefaults.standard()
+    let userDefauls = UserDefaults.standard
 
     
     

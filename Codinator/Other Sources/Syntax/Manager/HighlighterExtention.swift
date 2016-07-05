@@ -11,7 +11,7 @@ import Foundation
 class HighlighterExtention {
     
     class func attributesForKey(_ key: HighlightingDictionaryKey) -> [NSObject:AnyObject] {
-        guard let attriutes = UserDefaults.standard().dic(forKey: key.rawValue) else {
+        guard let attriutes = UserDefaults.standard.dic(forKey: key.rawValue) else {
             return [:]
         }
         
@@ -19,7 +19,7 @@ class HighlighterExtention {
     }
     
     class func macroForKey(_ key: HighlightingMacroKey) -> String {
-        guard let macro = UserDefaults.standard().string(forKey: key.rawValue) else {
+        guard let macro = UserDefaults.standard.string(forKey: key.rawValue) else {
             return ""
         }
         

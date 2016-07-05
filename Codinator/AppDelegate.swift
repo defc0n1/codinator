@@ -7,21 +7,21 @@
 //
 
 import UIKit
-import Fabric
-import Crashlytics
+//import Fabric
+//import Crashlytics
 
 
 @UIApplicationMain
 class AppDelegate: UIResponder , UIApplicationDelegate, FileManagerDelegate {
 
     var window: UIWindow?
-    lazy var fileManager = FileManager.default()
+    lazy var fileManager = FileManager.default
     
     class var storageURL: URL {
         get {
-            let rootDirectory = try! FileManager.default().urlForUbiquityContainerIdentifier(nil)?.appendingPathComponent("Documents")
+            let rootDirectory = try! FileManager.default.urlForUbiquityContainerIdentifier(nil)?.appendingPathComponent("Documents")
                 
-            if rootDirectory != nil && UserDefaults.standard().bool(forKey: "CnCloud") == true {
+            if rootDirectory != nil && UserDefaults.standard.bool(forKey: "CnCloud") == true {
                 return rootDirectory!
             }
             
@@ -37,7 +37,7 @@ class AppDelegate: UIResponder , UIApplicationDelegate, FileManagerDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 
-        Fabric.with([Crashlytics.self])
+//        Fabric.with([Crashlytics.self])
         
         
         // Create FileSystem

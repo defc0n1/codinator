@@ -36,11 +36,8 @@ extension FilesTableViewController: PeekProtocol {
                 printController.printFormatter = textView.viewPrintFormatter()
             }
             else {
-                
                 Notifications.sharedInstance.alertWithMessage(nil, title: "File type not supported")
-                
             }
-            
         }
         
         printController.present(animated: true, completionHandler: nil)
@@ -59,7 +56,7 @@ extension FilesTableViewController: PeekProtocol {
     }
     
     func rename() {
-        let message = "Rename \(self.projectManager.deleteURL!.lastPathComponent)"
+        let message = "Rename \(self.projectManager.deleteURL!.lastPathComponent!)"
         
         let alert = UIAlertController(title: "Rename", message: message, preferredStyle: .alert)
         
@@ -79,7 +76,7 @@ extension FilesTableViewController: PeekProtocol {
             
             do {
                 
-                try FileManager.default().moveItem(at: self.projectManager.deleteURL!, to: newURL)
+                try FileManager.default.moveItem(at: self.projectManager.deleteURL!, to: newURL)
                 
                 self.reloadDataWithSelection(true)
                 
@@ -126,7 +123,7 @@ extension FilesTableViewController: PeekProtocol {
     }
     
     func delete() {
-        let fileExists = FileManager.default().fileExists(atPath: self.projectManager.deleteURL!.path!)
+        let fileExists = FileManager.default.fileExists(atPath: self.projectManager.deleteURL!.path!)
         
         if fileExists {
             
@@ -136,7 +133,7 @@ extension FilesTableViewController: PeekProtocol {
             let delete = UIAlertAction(title: "Delete", style: .destructive, handler: { _ in
                 
                 do {
-                    try FileManager.default().removeItem(at: self.projectManager.deleteURL!)
+                    try FileManager.default.removeItem(at: self.projectManager.deleteURL!)
                     
                     self.reloadDataWithSelection(true)
                     

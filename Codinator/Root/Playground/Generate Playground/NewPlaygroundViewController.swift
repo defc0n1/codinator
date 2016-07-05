@@ -59,8 +59,8 @@ class NewPlaygroundViewController: UIViewController, UITextFieldDelegate{
         document.save(to: url, for: .forOverwriting) { (success) in
             if success {
                 self.dismiss(animated: true, completion: { 
-                    NotificationCenter.default().post(name: Notification.Name(rawValue: "createdProj"), object: nil, userInfo: nil)
-                    NotificationCenter.default().post(name: Notification.Name(rawValue: "reload"), object: self, userInfo: nil)
+                    NotificationCenter.default.post(name: Notification.Name(rawValue: "createdProj"), object: nil, userInfo: nil)
+                    NotificationCenter.default.post(name: Notification.Name(rawValue: "reload"), object: self, userInfo: nil)
                 })
             }
             else {

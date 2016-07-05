@@ -91,7 +91,7 @@ class FilesTableViewController: UIViewController, UITableViewDelegate, UITableVi
         }
                 
         // Keyboard show/hide notifications
-        let notificationCenter = NotificationCenter.default()
+        let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         notificationCenter.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         
@@ -162,7 +162,7 @@ class FilesTableViewController: UIViewController, UITableViewDelegate, UITableVi
         getSplitView.assistantViewController?.renameDelegate = self
     
         
-        NotificationCenter.default().addObserver(self, selector: #selector(FilesTableViewController._reloadData), name: "relaodData", object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(FilesTableViewController._reloadData), name: "relaodData" as NSNotification.Name, object: nil)
     }
     
     

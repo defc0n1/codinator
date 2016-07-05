@@ -68,7 +68,7 @@ extension EditorViewController: WUTextSuggestionDisplayControllerDataSource {
     
     func range() {
         
-        guard let rangeString = UserDefaults.standard().string(forKey: "range") else {
+        guard let rangeString = UserDefaults.standard.string(forKey: "range") else {
             return
         }
         

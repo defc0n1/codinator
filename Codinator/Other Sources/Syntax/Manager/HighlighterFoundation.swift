@@ -58,7 +58,7 @@ class HighlighterFoundation: UITextView {
     
     var startRange: NSRange?
     
-    var displayLineNumber = UserDefaults.standard().bool(forKey: "CnLineNumber")
+    var displayLineNumber = UserDefaults.standard.bool(forKey: "CnLineNumber")
     var lineNumberLayoutManager: CYRLayoutManager?
     
     

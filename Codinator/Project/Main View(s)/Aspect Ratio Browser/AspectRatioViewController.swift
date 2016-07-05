@@ -101,12 +101,12 @@ class AspectRatioViewController: UIViewController {
     
     
     func close(){
-        NotificationCenter.default().post(name: Notification.Name(rawValue: "resetCloseBool"), object: self, userInfo: nil)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "resetCloseBool"), object: self, userInfo: nil)
         self.dismiss(animated: true, completion: nil);
     }
     
     @IBAction func closeDidPush(_ sender: AnyObject) {
-        NotificationCenter.default().post(name: Notification.Name(rawValue: "resetCloseBool"), object: self, userInfo: nil)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "resetCloseBool"), object: self, userInfo: nil)
         self.dismiss(animated: true, completion: nil);
     }
 

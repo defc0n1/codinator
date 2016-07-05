@@ -117,7 +117,7 @@ extension FilesTableViewController: UITableViewDataSourcePrefetching {
         if let selectedURL = try! inspectorURL?.appendingPathComponent(items[(indexPath as NSIndexPath).row].lastPathComponent!) {
             var isDirectory : ObjCBool = ObjCBool(false)
             
-            if (FileManager.default().fileExists(atPath: selectedURL.path!, isDirectory: &isDirectory) && Bool(isDirectory) == true) {
+            if (FileManager.default.fileExists(atPath: selectedURL.path!, isDirectory: &isDirectory) && Bool(isDirectory) == true) {
                                 
                 projectManager.inspectorURL = selectedURL
                 
@@ -171,7 +171,7 @@ extension FilesTableViewController: UITableViewDataSourcePrefetching {
                     
                 default:
                     
-                    if let data = FileManager.default().contents(atPath: selectedURL.path!) {
+                    if let data = FileManager.default.contents(atPath: selectedURL.path!) {
                         let contents = NSString(data: data, encoding: String.Encoding.utf8.rawValue)
                         
                         projectManager?.selectedFileURL = selectedURL

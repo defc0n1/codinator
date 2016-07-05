@@ -77,7 +77,7 @@ class ProjectMainViewController: UIViewController, UISplitViewControllerDelegate
         
         // webView
         getSplitView.webView = webView
-        getSplitView.projectManager = Polaris(projectPath: path, withWebServer: UserDefaults.standard().bool(forKey: "CnWebServer"), uploadServer: UserDefaults.standard().bool(forKey: "CnUploadServer"), andWebDavServer: UserDefaults.standard().bool(forKey: "CnWebDavServer"))
+        getSplitView.projectManager = Polaris(projectPath: path, withWebServer: UserDefaults.standard.bool(forKey: "CnWebServer"), uploadServer: UserDefaults.standard.bool(forKey: "CnUploadServer"), andWebDavServer: UserDefaults.standard.bool(forKey: "CnWebDavServer"))
         getSplitView.mainViewController = self
         
         getSplitView.delegate = self

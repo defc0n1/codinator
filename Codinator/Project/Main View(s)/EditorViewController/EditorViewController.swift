@@ -188,7 +188,7 @@ class EditorViewController: UIViewController, UITextViewDelegate, ProjectSplitVi
         
         // Auto Completion
         suggestionDisplayController.dataSource = self
-        NotificationCenter.default().addObserver(self, selector: #selector(range), name: "range", object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(range), name: "range" as NSNotification.Name, object: nil)
 
         
         
@@ -215,10 +215,10 @@ class EditorViewController: UIViewController, UITextViewDelegate, ProjectSplitVi
         
         
         // Keyboard show/hide notifications 
-        let notificationCenter = NotificationCenter.default()
+        let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         notificationCenter.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
-        notificationCenter.addObserver(self, selector: #selector(keyboardWillHide), name: "changedWebViewSize", object: nil)
+        notificationCenter.addObserver(self, selector: #selector(keyboardWillHide), name: "changedWebViewSize" as NSNotification.Name, object: nil)
         
         self.view.bringSubview(toFront: searchBar)
         searchBar.keyboardAppearance = .dark
@@ -230,7 +230,7 @@ class EditorViewController: UIViewController, UITextViewDelegate, ProjectSplitVi
         super.viewDidDisappear(animated)
     
         // Remove Keyboard show/hide notifications
-        let notificationCenter = NotificationCenter.default()
+        let notificationCenter = NotificationCenter.default
         notificationCenter.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         notificationCenter.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
@@ -259,7 +259,7 @@ class EditorViewController: UIViewController, UITextViewDelegate, ProjectSplitVi
             
         }
         
-        OperationQueue.main().addOperation(operation)
+        OperationQueue.main.addOperation(operation)
         
         if textView == jsTextView {
             jsVariableNames(text: textView.text, completion: { (varNames) in
@@ -427,15 +427,15 @@ class EditorViewController: UIViewController, UITextViewDelegate, ProjectSplitVi
     
     var startedSearchInstance = false
     func searchForText(_ text: String) {
-            let range = (htmlTextView.text as NSString).range(of: text, options: .caseInsensitiveSearch)
-            
-            if range.location == NSNotFound {
-                getSplitView?.mainViewController.notificationsView.notify(with: "No occupancy found!")
-            }
-            else {
-                htmlTextView.becomeFirstResponder()
-                htmlTextView.selectedRange = range
-            }
+        let range = (htmlTextView.text as NSString).range(of: text, options: .caseInsensitive)
+        
+        if range.location == NSNotFound {
+            getSplitView?.mainViewController.notificationsView.notify(with: "No occupancy found!")
+        }
+        else {
+            htmlTextView.becomeFirstResponder()
+            htmlTextView.selectedRange = range
+        }
         
     }
     

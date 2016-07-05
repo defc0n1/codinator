@@ -153,11 +153,11 @@ class PlaygroundViewController: UIViewController, UITextViewDelegate {
         
         
         let key = "PlaygroundQSGWasDisplayedOnce"
-        let display = UserDefaults.standard().bool(forKey: key)
+        let display = UserDefaults.standard.bool(forKey: key)
         
         if display == false {
             self.performSegue(withIdentifier: "QSG", sender: self)
-            UserDefaults.standard().set(true, forKey: key)
+            UserDefaults.standard.set(true, forKey: key)
         }
      
     }

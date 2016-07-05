@@ -29,7 +29,7 @@ class ColorPickerViewController: UIViewController{
             colorPickerView.color = predefinedColor
         }
         else {
-            if let color = UserDefaults.standard().color(forKey: "colorPickerCn"){
+            if let color = UserDefaults.standard.color(forKey: "colorPickerCn"){
                 colorPickerView.color = color
             }
             else{

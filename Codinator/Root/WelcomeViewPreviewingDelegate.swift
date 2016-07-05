@@ -101,7 +101,7 @@ extension WelcomeViewController: UIViewControllerPreviewingDelegate, PeekShortPr
             polaris.updateSettingsValue(forKey: "ProjectName", withValue: (newName as NSString).deletingPathExtension)
             
             do {
-                try FileManager.default().moveItem(atPath: self.forceTouchPath!, toPath: newPath)
+                try FileManager.default.moveItem(atPath: self.forceTouchPath!, toPath: newPath)
                 self.reloadData()
                 
             } catch let error as NSError {
@@ -124,7 +124,7 @@ extension WelcomeViewController: UIViewControllerPreviewingDelegate, PeekShortPr
     func delete() {
         
         do {
-            try FileManager.default().removeItem(atPath: self.forceTouchPath!)
+            try FileManager.default.removeItem(atPath: self.forceTouchPath!)
             forceTouchPath = ""
             self.reloadData()
         } catch let error as NSError{
