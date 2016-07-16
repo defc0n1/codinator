@@ -15,7 +15,7 @@ protocol SnippetsDelegate: class {
 }
 
 
-class ImgSnippetsViewController: UIViewController,UITextFieldDelegate {
+final class ImgSnippetsViewController: UIViewController,UITextFieldDelegate {
    
     @IBOutlet var textField: UITextField!
     
@@ -80,7 +80,7 @@ class ImgSnippetsViewController: UIViewController,UITextFieldDelegate {
 
 
 
-class LinkSnippetsViewController :UIViewController,UITextFieldDelegate{
+final class LinkSnippetsViewController :UIViewController,UITextFieldDelegate{
     @IBOutlet var textField: UITextField!
     @IBOutlet var nameTextField: UITextField!
     
@@ -149,7 +149,7 @@ class LinkSnippetsViewController :UIViewController,UITextFieldDelegate{
 
 
 
-class ListSnippetsViewController :UIViewController{
+final class ListSnippetsViewController :UIViewController{
     @IBOutlet var stepper: UIStepper!
     @IBOutlet var enumNumberLabel: UILabel!
     

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NotificationsView: UIVisualEffectView {
+final class NotificationsView: UIVisualEffectView {
 
     @IBOutlet var textLabel: UILabel!
     

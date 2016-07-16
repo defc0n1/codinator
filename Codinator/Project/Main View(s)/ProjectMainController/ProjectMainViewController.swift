@@ -10,7 +10,7 @@ import UIKit
 import WebKit
 
 
-class ProjectMainViewController: UIViewController, UISplitViewControllerDelegate {
+final class ProjectMainViewController: UIViewController, UISplitViewControllerDelegate {
 
     
     var path: String!

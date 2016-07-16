@@ -14,7 +14,7 @@ protocol ProjectSplitViewControllerDelegate: class {
     func searchBarDisAppeard()
 }
 
-class ProjectSplitViewController: UISplitViewController{
+final class ProjectSplitViewController: UISplitViewController{
 
     var rootVC: ProjectMainViewController!
     

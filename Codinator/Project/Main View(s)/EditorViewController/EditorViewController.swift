@@ -8,7 +8,7 @@
 
 import UIKit
 
-class EditorViewController: UIViewController, UITextViewDelegate, ProjectSplitViewControllerDelegate, UISearchBarDelegate, SnippetsDelegate {
+final class EditorViewController: UIViewController, UITextViewDelegate, ProjectSplitViewControllerDelegate, UISearchBarDelegate, SnippetsDelegate {
     
     // Properties
     @IBOutlet weak var searchBar: UISearchBar!
@@ -244,8 +244,11 @@ class EditorViewController: UIViewController, UITextViewDelegate, ProjectSplitVi
             
             let fileURL = self.projectManager!.selectedFileURL
             let root = try! self.projectManager!.selectedFileURL!.deletingLastPathComponent()
-            
-            DispatchQueue.main.async(execute: { 
+
+            DispatchQueue.main.async(execute: {
+
+                self.getSplitView?.assistantViewController?.setFilePathTo(self.projectManager!)
+
                 if let splitViewController = self.splitViewController as? ProjectSplitViewController {
                     splitViewController.webView!.loadFileURL(fileURL!, allowingReadAccessTo: root)
                 }

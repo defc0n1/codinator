@@ -15,7 +15,7 @@ import UIKit
 class AppDelegate: UIResponder , UIApplicationDelegate, FileManagerDelegate {
 
     var window: UIWindow?
-    lazy var fileManager = FileManager.default
+    let fileManager = FileManager.default
     
     class var storageURL: URL {
         get {
@@ -43,23 +43,25 @@ class AppDelegate: UIResponder , UIApplicationDelegate, FileManagerDelegate {
         // Create FileSystem
         let path = (NSHomeDirectory() as NSString).appendingPathComponent("Documents")
         let url = URL(fileURLWithPath: path, isDirectory: true)
-        
-        do {
-            let playgroundsURL = try url.appendingPathComponent("Playgrounds")
-            let projectsURL = try url.appendingPathComponent("Projects")
 
-            
-            try fileManager.createDirectory(at: playgroundsURL, withIntermediateDirectories: false, attributes: nil)
-            try fileManager.createDirectory(at: projectsURL, withIntermediateDirectories: false, attributes: nil)
-            
-            let rootDirectory = try fileManager.urlForUbiquityContainerIdentifier(nil)?.appendingPathComponent("Documents")
+        let queue = DispatchQueue.global(attributes: .qosBackground)
+        queue.async { 
+            do {
+                let playgroundsURL = try url.appendingPathComponent("Playgrounds")
+                let projectsURL = try url.appendingPathComponent("Projects")
 
 
-            try fileManager.setUbiquitous(true, itemAt: playgroundsURL, destinationURL: rootDirectory!.appendingPathComponent("Playgrounds"))
-            try fileManager.setUbiquitous(true, itemAt: projectsURL, destinationURL: rootDirectory!.appendingPathComponent("Projects"))
-            
-        } catch {}
-      
+                try self.fileManager.createDirectory(at: playgroundsURL, withIntermediateDirectories: false, attributes: nil)
+                try self.fileManager.createDirectory(at: projectsURL, withIntermediateDirectories: false, attributes: nil)
+
+                let rootDirectory = try self.fileManager.urlForUbiquityContainerIdentifier(nil)?.appendingPathComponent("Documents")
+
+
+                try self.fileManager.setUbiquitous(true, itemAt: playgroundsURL, destinationURL: rootDirectory!.appendingPathComponent("Playgrounds"))
+                try self.fileManager.setUbiquitous(true, itemAt: projectsURL, destinationURL: rootDirectory!.appendingPathComponent("Projects"))
+                
+            } catch {}
+        }
         
         
         return true

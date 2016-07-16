@@ -10,19 +10,19 @@ import UIKit
 
 class SourceCodeTextView: CYRTextView {
 
-    var defaultFont: UIFont = UserDefaults.standard.font(key: "Font: 0")! {
+    final var defaultFont: UIFont = UserDefaults.standard.font(key: "Font: 0")! {
         didSet {
             tokens = highlightingTokens()
         }
     }
     
-    var boldFont: UIFont = UserDefaults.standard.font(key: "Font: 1")! {
+    final var boldFont: UIFont = UserDefaults.standard.font(key: "Font: 1")! {
         didSet {
             tokens = highlightingTokens()
         }
     }
     
-    var italicFont: UIFont = UserDefaults.standard.font(key: "Font: 2")! {
+    final var italicFont: UIFont = UserDefaults.standard.font(key: "Font: 2")! {
         didSet {
             tokens = highlightingTokens()
         }
@@ -31,5 +31,24 @@ class SourceCodeTextView: CYRTextView {
 
     func highlightingTokens() -> [CYRToken] {
         return []
+    }
+
+
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.commonSetUp()
+    }
+
+
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        self.commonSetUp()
+    }
+
+
+
+    func commonSetUp() {
+        preconditionFailure("This method must be overridden")
     }
 }

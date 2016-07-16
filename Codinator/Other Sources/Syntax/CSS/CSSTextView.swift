@@ -8,39 +8,9 @@
 
 import UIKit
 
-class CSSTextView: CYRTextView {
+final class CSSTextView: SourceCodeTextView {
     
-    var defaultFont: UIFont = UserDefaults.standard.font(key: "Font: 0")! {
-        didSet {
-            tokens = highlightingTokens()
-        }
-    }
-    
-    var boldFont: UIFont = UserDefaults.standard.font(key: "Font: 1")! {
-        didSet {
-            tokens = highlightingTokens()
-        }
-    }
-    
-    var italicFont: UIFont = UserDefaults.standard.font(key: "Font: 2")! {
-        didSet {
-            tokens = highlightingTokens()
-        }
-    }
-    
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        self.commonSetUp()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        self.commonSetUp()
-    }
-    
-    
-    func commonSetUp() {
+   override func commonSetUp() {
         self.font = defaultFont
         self.textColor = UIColor.white()
         self.indicatorStyle = .white
@@ -48,7 +18,7 @@ class CSSTextView: CYRTextView {
         self.tokens = highlightingTokens()
     }
     
-    func highlightingTokens() -> [CYRToken] {
+    override func highlightingTokens() -> [CYRToken] {
         
         
         let commentAttributes = [

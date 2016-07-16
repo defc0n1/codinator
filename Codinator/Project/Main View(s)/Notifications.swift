@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Notifications: NSObject {
+final class Notifications: NSObject {
     static let sharedInstance = Notifications()
     
     var viewController: UIViewController!

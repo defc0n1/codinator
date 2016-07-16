@@ -16,7 +16,7 @@ protocol AssistantViewControllerDelegate: class {
 }
 
 
-class AssistantViewController: UIViewController, SnippetsDelegate, UITextFieldDelegate {
+final class AssistantViewController: UIViewController, SnippetsDelegate, UITextFieldDelegate {
 
     @IBOutlet weak var scrollView: UIScrollView!
     
@@ -29,7 +29,7 @@ class AssistantViewController: UIViewController, SnippetsDelegate, UITextFieldDe
     @IBOutlet weak var createdLabel: UILabel!
     @IBOutlet weak var modifiedLabel: UILabel!
     
-    
+    @IBOutlet weak var snippetsSuperView: UIVisualEffectView!
     
     @IBOutlet weak var snippetsViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var snippetsSegmentControl: UISegmentedControl!
@@ -58,9 +58,12 @@ class AssistantViewController: UIViewController, SnippetsDelegate, UITextFieldDe
        
         fileNameTextField?.delegate = self
         fileExtensionTextField?.delegate = self
-    
+
+        snippetsSuperView.layer.cornerRadius = 5
+        snippetsSuperView.layer.masksToBounds = true
+        snippetsSuperView.layer.drawsAsynchronously = true
     }
-    
+
     var fileUrl: URL?
     func setFilePathTo(_ projectManager: Polaris) {
         
@@ -70,19 +73,24 @@ class AssistantViewController: UIViewController, SnippetsDelegate, UITextFieldDe
         fileExtensionTextField!.text = fileUrl?.pathExtension
         
         pathLabel.text = projectManager.fakePathForFileSelectedFile()
-        
+
         do {
             let attributes = try FileManager.default.attributesOfItem(atPath: projectManager.selectedFileURL!.path!)
             
             
             let dateFormatter = DateFormatter()
             dateFormatter.dateStyle = .short
-            
-            let fileSize = (attributes["NSFileSize" as FileAttributeKey] as! Int)
-            let createdDate = attributes["NSFileCreationDate" as FileAttributeKey] as! Date
-            let modifiedDate = attributes["NSFileModificationDate" as FileAttributeKey] as! Date
-            
-            fileSizeLabel.text = "Size: \(fileSize) B"
+
+
+            let fileSize = (attributes[.size] as! Int)
+            let createdDate = attributes[.creationDate] as! Date
+            let modifiedDate = attributes[.modificationDate] as! Date
+
+            let numberFormatter = NumberFormatter()
+            numberFormatter.numberStyle = .decimal
+            let number = numberFormatter.string(from: fileSize as NSNumber)
+
+            fileSizeLabel.text = "Size: \(number!) B"
             createdLabel.text = "Created: " + dateFormatter.string(from: createdDate)
             modifiedLabel.text = "Modified: " + dateFormatter.string(from: modifiedDate)
             

@@ -9,7 +9,7 @@
 import UIKit
 import SafariServices
 
-class PlaygroundViewController: UIViewController, UITextViewDelegate {
+final class PlaygroundViewController: UIViewController, UITextViewDelegate {
     
     
     @IBOutlet weak var changeFileSegment: UISegmentedControl!

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CreateFileViewController: UIViewController, UITextFieldDelegate {
+final class CreateFileViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet var nameTextField: UITextField!
     @IBOutlet var extensionTextField: UITextField!

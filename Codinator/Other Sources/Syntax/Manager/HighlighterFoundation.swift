@@ -22,9 +22,9 @@ enum HighlightingMacroKey: String {
     case String = "Macro:6"
 }
 
-class HighlighterFoundation: UITextView {
+final class HighlighterFoundation: UITextView {
     
-    var tokens: [CYRToken]? {
+    private var tokens: [CYRToken]? {
         get {
             
             guard let textStorage: CYRTextStorage = self.textStorage as? CYRTextStorage else {
@@ -46,25 +46,25 @@ class HighlighterFoundation: UITextView {
         
     }
     
-    var singleFingerPanRecognizer: UIPanGestureRecognizer?
-    var doubleFingerPanRecognizer: UIPanGestureRecognizer?
+    private var singleFingerPanRecognizer: UIPanGestureRecognizer?
+    private var doubleFingerPanRecognizer: UIPanGestureRecognizer?
     
-    let cursorVelocity: CGFloat = 1/8
+    private let cursorVelocity: CGFloat = 1/8
     
-    let lineColor: UIColor = UIColor.black()
-    let bgColor: UIColor = UIColor(white: 0, alpha: 1)
+    private let lineColor: UIColor = UIColor.black()
+    private let bgColor: UIColor = UIColor(white: 0, alpha: 1)
     
-    var lineCursorEnabled = true
+    private var lineCursorEnabled = true
     
-    var startRange: NSRange?
+    private var startRange: NSRange?
     
-    var displayLineNumber = UserDefaults.standard.bool(forKey: "CnLineNumber")
-    var lineNumberLayoutManager: CYRLayoutManager?
+    private var displayLineNumber = UserDefaults.standard.bool(forKey: "CnLineNumber")
+    private var lineNumberLayoutManager: CYRLayoutManager?
     
     
     // WARNING: - This is incomplete
-    var syntaxLayoutManager: CYRLayoutManager?
-    var syntaxTextStorage: CYRTextStorage?
+    private var syntaxLayoutManager: CYRLayoutManager?
+    private var syntaxTextStorage: CYRTextStorage?
     
 
     override init(frame: CGRect, textContainer: NSTextContainer?) {

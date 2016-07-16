@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FilesTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, NewFilesDelegate, AssistantViewControllerDelegate{
+final class FilesTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, NewFilesDelegate, AssistantViewControllerDelegate{
     
     @IBOutlet var tableView: UITableView!
     @IBOutlet weak var toolBar: UIToolbar!

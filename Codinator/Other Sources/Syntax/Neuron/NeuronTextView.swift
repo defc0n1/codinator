@@ -8,20 +8,9 @@
 
 import UIKit
 
-class NeuronTextView: SourceCodeTextView {
+final class NeuronTextView: SourceCodeTextView {
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        self.commonSetUp()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        self.commonSetUp()
-    }
-    
-    
-    func commonSetUp() {
+    override func commonSetUp() {
         self.font = defaultFont
         self.textColor = UIColor.white()
         self.indicatorStyle = .white
