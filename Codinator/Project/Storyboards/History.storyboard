@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11129.15" systemVersion="16A201w" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11163.2" systemVersion="16A239j" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11103.10"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11133"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -12,7 +12,7 @@
         <scene sceneID="Yxj-D8-SSA">
             <objects>
                 <navigationController storyboardIdentifier="archive" useStoryboardIdentifierAsRestorationIdentifier="YES" id="aFe-qe-ZPp" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="ghQ-pf-08L">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" barStyle="black" id="ghQ-pf-08L">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -33,7 +33,7 @@
                         <viewControllerLayoutGuide type="bottom" id="0Ps-9V-j7B"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" id="O0u-d4-sIL">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Commit message" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G34-5P-YUV">
@@ -85,7 +85,7 @@
         <scene sceneID="M9F-Na-91X">
             <objects>
                 <navigationController storyboardIdentifier="history" useStoryboardIdentifierAsRestorationIdentifier="YES" id="g4C-zO-PXG" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="IyK-SY-E0W">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" barStyle="black" id="IyK-SY-E0W">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -105,19 +105,19 @@
                         <viewControllerLayoutGuide type="top" id="vfo-Qg-bLF"/>
                         <viewControllerLayoutGuide type="bottom" id="35z-fi-HKh"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" misplaced="YES" id="bsI-rk-Bt7">
-                        <rect key="frame" x="0.0" y="44" width="768" height="980"/>
+                    <view key="view" contentMode="scaleToFill" id="bsI-rk-Bt7">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="162" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="mrR-NG-qdV">
-                                <color key="backgroundColor" red="0.1764705882" green="0.1764705882" blue="0.15686274510000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.17778494950000001" green="0.1777901053" blue="0.17778736349999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="sectionIndexBackgroundColor" red="0.17778494950000001" green="0.1777901053" blue="0.17778736349999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="historyRow" rowHeight="77" id="1yB-TA-gvZ" customClass="HistoryRow">
-                                        <frame key="frameInset" minY="22" width="768" height="77"/>
+                                        <frame key="frameInset" minY="66" width="1024" height="77"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1yB-TA-gvZ" id="6Jg-8p-jgO">
-                                            <frame key="frameInset" width="768" height="77"/>
+                                            <frame key="frameInset" width="1024" height="77"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" alpha="0.42999999999999999" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="archive" translatesAutoresizingMaskIntoConstraints="NO" id="5S5-hA-cZK">
@@ -137,7 +137,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
-                                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="backgroundColor" red="0.17778494950000001" green="0.1777901053" blue="0.17778736349999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstItem="O0C-TD-f25" firstAttribute="top" secondItem="Bqt-GN-Uys" secondAttribute="bottom" constant="5" id="B09-QZ-tfM"/>
                                                 <constraint firstItem="O0C-TD-f25" firstAttribute="centerY" secondItem="6Jg-8p-jgO" secondAttribute="centerY" constant="8" id="fEy-Np-zqK"/>
@@ -188,18 +188,17 @@
                                 <color key="tintColor" red="0.59976761879999996" green="0.3591421494" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </toolbar>
                         </subviews>
-                        <color key="backgroundColor" red="0.1764705882" green="0.1764705882" blue="0.15686274510000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.17778494950000001" green="0.1777901053" blue="0.17778736349999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="01A-Cm-OHF" secondAttribute="trailing" constant="-20" id="309-OJ-OM7"/>
                             <constraint firstItem="01A-Cm-OHF" firstAttribute="leading" secondItem="bsI-rk-Bt7" secondAttribute="leadingMargin" constant="-20" id="Ec0-l6-47a"/>
-                            <constraint firstItem="mrR-NG-qdV" firstAttribute="top" secondItem="bsI-rk-Bt7" secondAttribute="topMargin" id="PBo-DH-hwg"/>
                             <constraint firstItem="35z-fi-HKh" firstAttribute="top" secondItem="mrR-NG-qdV" secondAttribute="bottom" id="RzY-ku-nrH"/>
                             <constraint firstAttribute="trailingMargin" secondItem="mrR-NG-qdV" secondAttribute="trailing" constant="-20" id="Xle-2J-2BU"/>
+                            <constraint firstItem="mrR-NG-qdV" firstAttribute="top" secondItem="bsI-rk-Bt7" secondAttribute="topMargin" id="Yoy-0e-eeH"/>
                             <constraint firstItem="35z-fi-HKh" firstAttribute="top" secondItem="01A-Cm-OHF" secondAttribute="bottom" id="eBJ-bj-BJV"/>
                             <constraint firstItem="mrR-NG-qdV" firstAttribute="leading" secondItem="bsI-rk-Bt7" secondAttribute="leadingMargin" constant="-20" id="qRR-Lf-h11"/>
                         </constraints>
                     </view>
-                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <navigationItem key="navigationItem" title="Commit History" id="Ps5-on-137">
                         <barButtonItem key="leftBarButtonItem" systemItem="done" id="eib-Qa-13F">
                             <connections>
@@ -221,7 +220,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EzS-s5-yDU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2120" y="1977"/>
+            <point key="canvasLocation" x="2119.53125" y="1976.9531249999998"/>
         </scene>
         <!--History Web View Controller-->
         <scene sceneID="sTy-Xm-xjQ">
@@ -232,7 +231,7 @@
                         <viewControllerLayoutGuide type="bottom" id="esg-J0-V8t"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="AR5-ct-lTR">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="n0c-88-1a7">
@@ -289,7 +288,7 @@
                         <viewControllerLayoutGuide type="bottom" id="YiT-ba-Mg0"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="4jQ-ak-syy">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <navigationBar contentMode="scaleToFill" barStyle="black" translatesAutoresizingMaskIntoConstraints="NO" id="N3p-Ip-qG8">

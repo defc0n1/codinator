@@ -53,8 +53,8 @@ class NewPlaygroundViewController: UIViewController, UITextFieldDelegate{
     
     // Generate a new File
     @IBAction func nextDidPush(_ sender: AnyObject) {
-        let document = PlaygroundFileCreator.generatePlaygroundFileWithName(fileNameTextField.text!)
-        let url = PlaygroundFileCreator.fileUrlForPlaygroundWithName(fileNameTextField.text!)
+        let document = PlaygroundFileCreator.generatePlaygroundFile(withName: fileNameTextField.text!)
+        let url = document.fileURL
 
         document.save(to: url, for: .forOverwriting) { (success) in
             if success {

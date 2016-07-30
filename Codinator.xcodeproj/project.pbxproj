@@ -52,7 +52,6 @@
 		646EC6E11CA8D0BE00F359C2 /* RNCryptorEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 646EC6A71CA8D0BE00F359C2 /* RNCryptorEngine.m */; };
 		646EC6E21CA8D0BE00F359C2 /* RNDecryptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 646EC6A91CA8D0BE00F359C2 /* RNDecryptor.m */; };
 		646EC6E31CA8D0BE00F359C2 /* RNEncryptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 646EC6AB1CA8D0BE00F359C2 /* RNEncryptor.m */; };
-		646EC6E41CA8D0BE00F359C2 /* UIBarButtonItem+BlocksKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 646EC6AD1CA8D0BE00F359C2 /* UIBarButtonItem+BlocksKit.m */; };
 		646EC6E61CA8D0BE00F359C2 /* GCDWebUploader.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 646EC6B11CA8D0BE00F359C2 /* GCDWebUploader.bundle */; };
 		646EC6E71CA8D0BE00F359C2 /* GCDWebUploader.m in Sources */ = {isa = PBXBuildFile; fileRef = 646EC6B31CA8D0BE00F359C2 /* GCDWebUploader.m */; };
 		646EC6E81CA8D0BE00F359C2 /* GCDWebDAVServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 646EC6B61CA8D0BE00F359C2 /* GCDWebDAVServer.m */; };
@@ -151,6 +150,7 @@
 		64E4A9E11D157CE700A9B4F9 /* EditorViewAutoCompletionAnalyzis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E4A9E01D157CE700A9B4F9 /* EditorViewAutoCompletionAnalyzis.swift */; };
 		64E77DDF1CCE752E003FE752 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E77DDE1CCE752E003FE752 /* SettingsTableViewController.swift */; };
 		64EA73441D2BD23D00F7C75D /* WelcomeViewControllerTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64EA73431D2BD23D00F7C75D /* WelcomeViewControllerTableView.swift */; };
+		64ECFA791D3DA5A500444213 /* WelcomeViewControllerAlertControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64ECFA781D3DA5A500444213 /* WelcomeViewControllerAlertControllers.swift */; };
 		64EED4D91CCAF40200A8BC34 /* ColorPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64EED4D81CCAF40200A8BC34 /* ColorPickerViewController.swift */; };
 		64EED4DB1CCC3CC400A8BC34 /* ExportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64EED4DA1CCC3CC400A8BC34 /* ExportViewController.swift */; };
 		64EED4DE1CCCE67700A8BC34 /* EditorViewControllerAutoCompletion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64EED4DD1CCCE67700A8BC34 /* EditorViewControllerAutoCompletion.swift */; };
@@ -222,8 +222,6 @@
 		646EC6A91CA8D0BE00F359C2 /* RNDecryptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNDecryptor.m; sourceTree = "<group>"; };
 		646EC6AA1CA8D0BE00F359C2 /* RNEncryptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNEncryptor.h; sourceTree = "<group>"; };
 		646EC6AB1CA8D0BE00F359C2 /* RNEncryptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNEncryptor.m; sourceTree = "<group>"; };
-		646EC6AC1CA8D0BE00F359C2 /* UIBarButtonItem+BlocksKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+BlocksKit.h"; sourceTree = "<group>"; };
-		646EC6AD1CA8D0BE00F359C2 /* UIBarButtonItem+BlocksKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+BlocksKit.m"; sourceTree = "<group>"; };
 		646EC6B11CA8D0BE00F359C2 /* GCDWebUploader.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = GCDWebUploader.bundle; sourceTree = "<group>"; };
 		646EC6B21CA8D0BE00F359C2 /* GCDWebUploader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDWebUploader.h; sourceTree = "<group>"; };
 		646EC6B31CA8D0BE00F359C2 /* GCDWebUploader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDWebUploader.m; sourceTree = "<group>"; };
@@ -393,6 +391,7 @@
 		64E4A9E01D157CE700A9B4F9 /* EditorViewAutoCompletionAnalyzis.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditorViewAutoCompletionAnalyzis.swift; sourceTree = "<group>"; };
 		64E77DDE1CCE752E003FE752 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		64EA73431D2BD23D00F7C75D /* WelcomeViewControllerTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeViewControllerTableView.swift; sourceTree = "<group>"; };
+		64ECFA781D3DA5A500444213 /* WelcomeViewControllerAlertControllers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeViewControllerAlertControllers.swift; sourceTree = "<group>"; };
 		64EED4D81CCAF40200A8BC34 /* ColorPickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorPickerViewController.swift; sourceTree = "<group>"; };
 		64EED4DA1CCC3CC400A8BC34 /* ExportViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExportViewController.swift; sourceTree = "<group>"; };
 		64EED4DD1CCCE67700A8BC34 /* EditorViewControllerAutoCompletion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditorViewControllerAutoCompletion.swift; sourceTree = "<group>"; };
@@ -496,8 +495,6 @@
 				646EC6A91CA8D0BE00F359C2 /* RNDecryptor.m */,
 				646EC6AA1CA8D0BE00F359C2 /* RNEncryptor.h */,
 				646EC6AB1CA8D0BE00F359C2 /* RNEncryptor.m */,
-				646EC6AC1CA8D0BE00F359C2 /* UIBarButtonItem+BlocksKit.h */,
-				646EC6AD1CA8D0BE00F359C2 /* UIBarButtonItem+BlocksKit.m */,
 			);
 			path = Encrytion;
 			sourceTree = "<group>";
@@ -746,6 +743,7 @@
 				64A0817D1BDBE28D0001CA0C /* WelcomeViewController.m */,
 				64EA73431D2BD23D00F7C75D /* WelcomeViewControllerTableView.swift */,
 				645FA87C1CCE06140098A0BD /* WelcomeViewPreviewingDelegate.swift */,
+				64ECFA781D3DA5A500444213 /* WelcomeViewControllerAlertControllers.swift */,
 			);
 			path = Root;
 			sourceTree = "<group>";
@@ -1384,7 +1382,6 @@
 				64A083281BDD155C0001CA0C /* WUTextSuggestionDisplayController.m in Sources */,
 				64EED4D91CCAF40200A8BC34 /* ColorPickerViewController.swift in Sources */,
 				64E4A9E11D157CE700A9B4F9 /* EditorViewAutoCompletionAnalyzis.swift in Sources */,
-				646EC6E41CA8D0BE00F359C2 /* UIBarButtonItem+BlocksKit.m in Sources */,
 				3201D00B1CA6E02600204373 /* FilesTableViewController.swift in Sources */,
 				646EC6EA1CA8D0BE00F359C2 /* GCDWebServerConnection.m in Sources */,
 				64A080E91BDBDBFE0001CA0C /* HRBrightnessSlider.m in Sources */,
@@ -1414,6 +1411,7 @@
 				64AFD1241D2B07C3001AF613 /* AFURLSessionManager.m in Sources */,
 				640AFA331CDCF7D60063727D /* EditorViewControllerTextViewsExtension.swift in Sources */,
 				64CF9A581D182BC700451FF4 /* Thumbnail.swift in Sources */,
+				64ECFA791D3DA5A500444213 /* WelcomeViewControllerAlertControllers.swift in Sources */,
 				64A081001BDBDC3E0001CA0C /* zip.c in Sources */,
 				6436F35F1CE68E8C000FAEE4 /* ProjectMainViewControllerSplitViewExtension.swift in Sources */,
 				64A081351BDBE07E0001CA0C /* ProjectCollectionViewCell.m in Sources */,
@@ -1617,7 +1615,7 @@
 				GCC_PREFIX_HEADER = Codinator/PrefixHeader.pch;
 				HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				INFOPLIST_FILE = Codinator/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.vladidanila.codinator;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1647,7 +1645,7 @@
 				GCC_PREFIX_HEADER = Codinator/PrefixHeader.pch;
 				HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				INFOPLIST_FILE = Codinator/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.vladidanila.codinator;
 				PRODUCT_NAME = "$(TARGET_NAME)";

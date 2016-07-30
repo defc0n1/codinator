@@ -29,8 +29,8 @@ final class NotificationsView: UIVisualEffectView {
         
     }
     
-    
-    func hide() {
+
+    @objc private func hide() {
         UIView.animate(withDuration: 0.3) {
             self.alpha = 0
         }

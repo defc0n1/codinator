@@ -24,18 +24,14 @@ class ContributeViewController: UIViewController {
 
     @IBAction func contributeOnGitHubDidPush(_ sender: AnyObject) {
       
-        if #available(iOS 10.0, *) {
-            UIApplication.shared().open(
-                URL(string: "https://github.com/VWAS/Codinator")!
-                , options: [:], completionHandler: nil
-            )
-        } else {
-            UIApplication.shared().openURL(URL(string: "https://github.com/VWAS/Codinator")!)
-        }
-        
+        UIApplication.shared().open(
+            URL(string: "https://github.com/VWAS/Codinator")!
+            , options: [:], completionHandler: nil
+        )
+
     }
-    
-    
+
+
     @IBAction func joinUsOnSlackDidPush(_ sender: AnyObject) {
         let sfController = SFSafariViewController(url:
             URL(string: "https://vwas-slack.herokuapp.com")!

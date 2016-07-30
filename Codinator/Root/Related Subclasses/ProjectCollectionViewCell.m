@@ -21,9 +21,10 @@
     
     self.imageView.layer.cornerRadius = 5;
     self.layer.masksToBounds = YES;
-    
-    
-    self.layer.drawsAsynchronously = YES;
+
+    self.layer.rasterizationScale = 3.0;
+    self.layer.shouldRasterize = true;
+
 }
 
 

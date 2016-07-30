@@ -206,9 +206,6 @@ extension ProjectMainViewController {
         assistantGrabberConstraint.constant = view.frame.width - sender.location(in: view).x
         
         self.view.layoutIfNeeded()
-        UIView.animate(withDuration: 0.4) {
-            self.view.layoutIfNeeded()
-        }
         
     }
     

@@ -174,7 +174,6 @@
     
     [self.collectionView reloadData];
     [self indexProjects:projectsArray];
-    //    [self performSelector:@selector(indexProjects:) withObject:projectsArray afterDelay:1.0];
 }
 
 
@@ -191,8 +190,6 @@
              [UIKeyCommand keyCommandWithInput:@"N" modifierFlags:UIKeyModifierCommand action:@selector(newProjCommand) discoverabilityTitle:@"New Project"],
              [UIKeyCommand keyCommandWithInput:@"P" modifierFlags:UIKeyModifierCommand action:@selector(newPlayCommand) discoverabilityTitle:@"New Playground"],
              [UIKeyCommand keyCommandWithInput:@"S" modifierFlags:UIKeyModifierShift action:@selector(settingsCommand) discoverabilityTitle:@"Settings"],
-             [UIKeyCommand keyCommandWithInput:@"N" modifierFlags:UIKeyModifierShift action:@selector(newsCommand) discoverabilityTitle:@"News"],
-             [UIKeyCommand keyCommandWithInput:@"N" modifierFlags:UIKeyModifierShift action:@selector(forumCommand) discoverabilityTitle:@"Forum"]
              ];
 }
 
@@ -210,25 +207,7 @@
     [self performSegueWithIdentifier:@"settings" sender:nil];
 }
 
-- (void)newsCommand{
-    //Display news feed
-    
-    NSURL *url = [NSURL URLWithString:@"https://twitter.com/vwasstudios"];
-    SFSafariViewController *webVC = [[SFSafariViewController alloc] initWithURL:url];
-    webVC.view.tintColor = [UIColor purpleColor];
-    webVC.delegate = self;
-    
-    [self presentViewController:webVC animated:YES completion:nil];
-}
 
-- (void)forumCommand{
-    NSURL *url = [NSURL URLWithString:@"http://vwas.cf/solvinator/"];
-    SFSafariViewController *webVC = [[SFSafariViewController alloc] initWithURL:url];
-    webVC.view.tintColor = [UIColor purpleColor];
-    webVC.delegate = self;
-    
-    [self presentViewController:webVC animated:YES completion:nil];
-}
 
 
 
@@ -372,7 +351,7 @@
                         }
                         else{
                             NSString *message = [NSString stringWithFormat:@"%@ can't be opened right now...", path.lastPathComponent];
-                            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error" message:message preferredStyle:UIAlertControllerStyleAlert];
+                            UIAlertController *alert = [self alertControllerWithTitle:@"Error" message:message preferredStyle:UIAlertControllerStyleAlert];
                             UIAlertAction *closeAlert = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
                             [alert addAction:closeAlert];
                             [self presentViewController:alert animated:YES completion:nil];
@@ -386,7 +365,7 @@
                     
                     // Failed Opening other file type
                     NSString *message = [NSString stringWithFormat:@"Failed opening %@", projectName];
-                    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error" message:message preferredStyle:UIAlertControllerStyleAlert];
+                    UIAlertController *alert = [self alertControllerWithTitle:@"Error" message:message preferredStyle:UIAlertControllerStyleAlert];
                     UIAlertAction *closeAlert = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
                     [alert addAction:closeAlert];
                     [self presentViewController:alert animated:YES completion:nil];
@@ -400,7 +379,7 @@
                 
                 // Failed Opening other file type
                 NSString *message = [NSString stringWithFormat:@"Document wasn't found"];
-                UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error" message:message preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertController *alert = [self alertControllerWithTitle:@"Error" message:message preferredStyle:UIAlertControllerStyleAlert];
                 UIAlertAction *closeAlert = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
                 [alert addAction:closeAlert];
                 [self presentViewController:alert animated:YES completion:nil];
@@ -621,9 +600,8 @@
             // RENAME FILE DIALOGE
             NSString *message = [NSString stringWithFormat:@"Rename \"%@\"", deletePath.lastPathComponent.stringByDeletingPathExtension];
             
-            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Rename" message:message preferredStyle:UIAlertControllerStyleAlert];
-            alert.view.tintColor = [UIColor blackColor];
-            
+            UIAlertController *alert = [self alertControllerWithTitle:@"Rename" message:message preferredStyle:UIAlertControllerStyleAlert];
+
             
             [alert addTextFieldWithConfigurationHandler:^(UITextField * __nonnull textField) {
                 textField.placeholder = @"Projects new name";
@@ -675,8 +653,7 @@
         backgroundOperation.completionBlock = ^{
             
             
-            UIAlertController *popup = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-            popup.view.tintColor = [UIColor blackColor];
+            UIAlertController *popup = [self alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
             
             
             // Move to project -> Just if is file in Project Dir
@@ -737,7 +714,7 @@
 
 - (UIAlertController *)moveFileAlertControllerWithPosition:(CGRect)position sourceView:(UIView *)view andSelectedFilePath:(NSString *)filePath {
     
-    UIAlertController *fileLister = [UIAlertController alertControllerWithTitle:@"Select a Project" message:@"The file will me moved to the selected one" preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertController *fileLister = [self alertControllerWithTitle:@"Select a Project" message:@"The file will me moved to the selected one" preferredStyle:UIAlertControllerStyleActionSheet];
 
     
     [projectsArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -755,7 +732,7 @@
                 if (error) {
                     
                     // Error message popup
-                    UIAlertController *errorAlert = [UIAlertController alertControllerWithTitle:[error localizedDescription] message:nil preferredStyle:UIAlertControllerStyleAlert];
+                    UIAlertController *errorAlert = [self alertControllerWithTitle:[error localizedDescription] message:nil preferredStyle:UIAlertControllerStyleAlert];
                     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
                     [errorAlert addAction:cancelAction];
                     
@@ -774,7 +751,7 @@
     
     
     if (fileLister.actions.count == 0) {
-        fileLister = [UIAlertController alertControllerWithTitle:@"No Projects" message:nil preferredStyle:UIAlertControllerStyleAlert];
+        fileLister = [self alertControllerWithTitle:@"No Projects" message:nil preferredStyle:UIAlertControllerStyleAlert];
     }
     else {
         fileLister.popoverPresentationController.sourceView = self.collectionView;
@@ -883,80 +860,24 @@
 
 
 
-- (IBAction)versionDidPush:(id)sender {
-    
-    NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
-    NSString *build = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
-    
-    
-    NSString *versionString = [NSString stringWithFormat:@"Version: %@", version];
-    NSString *buildString = [NSString stringWithFormat:@"Build (%@)", build];
-    
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:versionString message:buildString preferredStyle:UIAlertControllerStyleActionSheet];
-    
-    UIAlertAction *close = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
-    [alert addAction:close];
-    
-    
-    UIAlertAction *settings = [UIAlertAction actionWithTitle:@"Settings" style:UIAlertActionStyleDefault handler:^(UIAlertAction * __nonnull action) {
-        
-        [self performSegueWithIdentifier:@"settings" sender:nil];
-        
-    }];
-    
-    [alert addAction:settings];
-    
-    
-    UIAlertAction *newsFeed = [UIAlertAction actionWithTitle:@"News" style:UIAlertActionStyleDefault handler:^(UIAlertAction * __nonnull action) {
-        
-        //Display news feed
-        
-        NSURL *url = [NSURL URLWithString:@"https://twitter.com/vwasstudios"];
-        SFSafariViewController *webVC = [[SFSafariViewController alloc] initWithURL:url];
-        webVC.view.tintColor = [UIColor purpleColor];
-        webVC.delegate = self;
-        webVC.modalPresentationStyle = UIModalPresentationFormSheet;
-        
-        [self presentViewController:webVC animated:YES completion:nil];
-        
-    }];
-    
-    [alert addAction:newsFeed];
-    
-    
-    alert.modalPresentationStyle = UIModalPresentationPopover;
-    UIPopoverPresentationController *popPresenter = [alert popoverPresentationController];
-    popPresenter.sourceView = sender;
-    
-    UIBarButtonItem *senderButton = sender;
-    popPresenter.barButtonItem = senderButton;
-    
-    alert.view.tintColor = [UIColor purpleColor];
-    
-    
-    [self presentViewController:alert animated:true completion:^{
-        alert.view.tintColor = [UIColor purpleColor];
-    }];
-    
-}
-
 - (IBAction)plusDidPush:(id)sender {
-    
-    UIBarButtonItem *plusButton = sender;
-    
-    
-    
-    UIAlertController *newDoc = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-    
-    
+
+
     UIAlertAction *projectAction = [UIAlertAction actionWithTitle:@"Project" style:UIAlertActionStyleDefault handler:^(UIAlertAction * __nonnull action) {
         
         
-        UIAlertController *projectAlert = [UIAlertController alertControllerWithTitle:nil message:@"Do you want to create a new project or import an existing one?" preferredStyle:UIAlertControllerStyleActionSheet];
+        UIAlertController *projectAlert = [self alertControllerWithTitle:nil message:@"Do you want to create a new project or import an existing one?" preferredStyle:UIAlertControllerStyleActionSheet];
         
-        projectAlert.popoverPresentationController.sourceView = self.plusButtonSuperView;
-        projectAlert.popoverPresentationController.barButtonItem = plusButton;
-        
+        projectAlert.popoverPresentationController.sourceView = self.navigationController.navigationBar;
+        projectAlert.popoverPresentationController.barButtonItem = sender;
+
+        // Set background color
+        UIView * firstView = projectAlert.view.subviews.firstObject;
+        UIView * nextView = firstView.subviews.firstObject;
+        nextView.backgroundColor = self.collectionView.backgroundColor;
+        projectAlert.view.tintColor = self.view.tintColor;
+
+
         UIAlertAction *createProjectAction = [UIAlertAction actionWithTitle:@"Create" style:UIAlertActionStyleDefault handler:^(UIAlertAction * __nonnull action) {
             [self performSegueWithIdentifier:@"newProj" sender:self];
         }];
@@ -967,9 +888,7 @@
         }];
         
         UIAlertAction *importProjectAction = [UIAlertAction actionWithTitle:@"Import" style:UIAlertActionStyleDefault handler:^(UIAlertAction * __nonnull action) {
-            
             [self performSegueWithIdentifier:@"import" sender:self];
-            
         }];
         
         
@@ -977,9 +896,7 @@
         [projectAlert addAction:importProjectAction];
         [projectAlert addAction:cancelProjectCreationAction];
         
-        [self presentViewController:projectAlert animated:true completion:^{
-            //projectAlert.view.tintColor = [UIColor purpleColor];
-        }];
+        [self presentViewController:projectAlert animated:true completion: nil];
         
     }];
     
@@ -994,17 +911,16 @@
     
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
     
-    
+
+    UIAlertController *newDoc = [self alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     [newDoc addAction:projectAction];
     [newDoc addAction:playgroundAction];
     [newDoc addAction:cancelAction];
-    //newDoc.view.tintColor = [UIColor purpleColor];
-    
     
     newDoc.popoverPresentationController.sourceView = self.plusButtonSuperView;
-    newDoc.popoverPresentationController.barButtonItem = plusButton;
-    
-    
+    newDoc.popoverPresentationController.barButtonItem = sender;
+    newDoc.view.tintColor = self.view.tintColor;
+
     [self presentViewController:newDoc animated:YES completion:nil];
 }
 
@@ -1051,6 +967,9 @@
         destViewController.path = self.projectsPath;
     }else if ([segue.identifier isEqualToString:@"settings"]){
         
+    } else if ([segue.identifier isEqualToString:@"popover"]) {
+        UINavigationController *destViewController = segue.destinationViewController;
+        destViewController.popoverPresentationController.backgroundColor = destViewController.viewControllers.firstObject.view.backgroundColor;
     }
 }
 
@@ -1061,7 +980,6 @@
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
     [self reload];
 }
-
 
 
 

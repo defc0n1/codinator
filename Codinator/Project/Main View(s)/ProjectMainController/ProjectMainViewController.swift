@@ -59,7 +59,7 @@ final class ProjectMainViewController: UIViewController, UISplitViewControllerDe
         configuration.allowsInlineMediaPlayback = true
         configuration.allowsAirPlayForMediaPlayback = true
         configuration.applicationNameForUserAgent = "Codinator"
-        if #available(iOS 10.0, *) { configuration.mediaTypesRequiringUserActionForPlayback = .all }
+        configuration.mediaTypesRequiringUserActionForPlayback = .all
     
         
         webView = WKWebView(frame: bottomView.frame, configuration: configuration)
@@ -146,7 +146,10 @@ final class ProjectMainViewController: UIViewController, UISplitViewControllerDe
             
             // Present the app picker display
             documentInteractionController!.presentOptionsMenu(from: sender, animated: true)
-   
+
+
+//            if let effectView = findEffectView(in: documentInteractionController)
+
         }
         else {
             Notifications.sharedInstance.alertWithMessage(nil, title: "Select a file first", viewController: self)
@@ -247,6 +250,28 @@ final class ProjectMainViewController: UIViewController, UISplitViewControllerDe
         
         
     }
+
+    // MARK: - Private
+
+    private func findEffectView(in view: UIView) -> UIVisualEffectView? {
+
+        if let visualEffectView = view as? UIVisualEffectView
+        {
+            return visualEffectView
+        }
+        else {
+
+            for subview in view.subviews {
+                if let found = findEffectView(in: subview) {
+                    return found
+                }
+            }
+
+        }
+        
+        return nil
+    }
+
     
 
 

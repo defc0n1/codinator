@@ -26,7 +26,7 @@ class AspectRatioViewController: UIViewController {
      
         configuration.applicationNameForUserAgent = "Codinator"
         configuration.allowsAirPlayForMediaPlayback = true
-        if #available(iOS 10.0, *) { configuration.mediaTypesRequiringUserActionForPlayback = .all }
+        configuration.mediaTypesRequiringUserActionForPlayback = .all 
         configuration.allowsPictureInPictureMediaPlayback = true
         
         

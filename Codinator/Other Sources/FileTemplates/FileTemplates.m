@@ -14,9 +14,11 @@
 
 + (NSString *)htmlTemplateFileForName:(NSString *)name {
     
-    NSString *indexBody = [NSString stringWithFormat:@"<!DOCTYPE html> \n\
+    NSString *indexBody = [NSString stringWithFormat:
+@"<!DOCTYPE html> \n\
 <html> \n\
     <head> \n\
+        <meta charset=\"UTF-8\"> \n\
         <title>%@</title> \n\
         <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"> \n\
         %@\n\

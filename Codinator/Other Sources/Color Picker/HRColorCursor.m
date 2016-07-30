@@ -37,7 +37,6 @@
 
 @implementation HRColorCursor {
     CALayer *_backLayer;
-    CALayer *_colorLayer;
     UIColor *_color;
     BOOL _editing;
 }
@@ -67,13 +66,8 @@
         _backLayer.cornerRadius = CGRectGetHeight(self.frame) / 2;
         _backLayer.borderColor = [[UIColor colorWithWhite:0.65 alpha:1.] CGColor];
         _backLayer.borderWidth = 1.0 / [[UIScreen mainScreen] scale];
-        _backLayer.backgroundColor = [[UIColor colorWithWhite:1. alpha:.7] CGColor];
+        _backLayer.backgroundColor = [[UIColor whiteColor] CGColor];
         [self.layer addSublayer:_backLayer];
-
-        _colorLayer = [[CALayer alloc] init];
-        _colorLayer.frame = CGRectInset(backFrame, 5.5, 5.5);
-        _colorLayer.cornerRadius = CGRectGetHeight(_colorLayer.frame) / 2;
-        [self.layer addSublayer:_colorLayer];
     }
     return self;
 }
@@ -88,14 +82,13 @@
     [CATransaction begin];
     [CATransaction setValue:(id) kCFBooleanTrue
                      forKey:kCATransactionDisableActions];
-    _colorLayer.backgroundColor = [_color CGColor];
     if (self.isGrayCursor != shouldBeGrayCursor) {
         if (shouldBeGrayCursor) {
             _backLayer.borderColor = [[UIColor colorWithWhite:0 alpha:0.3] CGColor];
-            _backLayer.backgroundColor = [[UIColor colorWithWhite:0. alpha:0.2] CGColor];
+            _backLayer.backgroundColor = [[UIColor whiteColor] CGColor];
         } else {
-            _backLayer.borderColor = [[UIColor colorWithWhite:0.65 alpha:1] CGColor];
-            _backLayer.backgroundColor = [[UIColor colorWithWhite:1. alpha:0.7] CGColor];
+            _backLayer.borderColor = [[UIColor whiteColor] CGColor];
+            _backLayer.backgroundColor = [[UIColor whiteColor] CGColor];
         }
         self.grayCursor = shouldBeGrayCursor;
     }
@@ -111,11 +104,9 @@
     _editing = editing;
     void (^showState)() = ^{
         _backLayer.transform = CATransform3DMakeScale(1.6, 1.6, 1.0);
-        _colorLayer.transform = CATransform3DMakeScale(1.4, 1.4, 1.0);
     };
     void (^hiddenState)() = ^{
         _backLayer.transform = CATransform3DIdentity;
-        _colorLayer.transform = CATransform3DIdentity;
     };
     if (_editing) {
         hiddenState();

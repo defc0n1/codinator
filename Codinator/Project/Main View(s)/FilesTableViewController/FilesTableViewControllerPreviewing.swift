@@ -29,7 +29,7 @@ extension FilesTableViewController: UIViewControllerPreviewingDelegate {
         case "png", "jpg", "jpeg", "bmp", "":
             
             guard let previewVC = storyboard?.instantiateViewController(withIdentifier: "imageViewPeek") as? PeekImageViewController,
-            imageView = previewVC.view.subviews.first as? UIImageView else {
+            let imageView = previewVC.view.subviews.first as? UIImageView else {
                 return nil
             }
             

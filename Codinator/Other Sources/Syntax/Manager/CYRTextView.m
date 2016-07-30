@@ -130,16 +130,14 @@ static const float kCursorVelocity = 1.0f/8.0f;
         self.textContainerInset = UIEdgeInsetsMake(8, 0, 8, 0);
     }
         
-    // Setup the gesture recognizers for Ipad
-    if (UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad){
+    // Setup the gesture recognizers
     _singleFingerPanRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(singleFingerPanHappend:)];
     _singleFingerPanRecognizer.maximumNumberOfTouches = 1;
     [self addGestureRecognizer:_singleFingerPanRecognizer];
-    
+
     _doubleFingerPanRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(doubleFingerPanHappend:)];
-    _doubleFingerPanRecognizer.minimumNumberOfTouches = 2;
+    _doubleFingerPanRecognizer.minimumNumberOfTouches = 3;
     [self addGestureRecognizer:_doubleFingerPanRecognizer];
-    }
 }
 
 

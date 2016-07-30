@@ -23,7 +23,7 @@ final class PlaygroundViewController: UIViewController, UITextViewDelegate {
 
     
     var neuronTextView: NeuronTextView = NeuronTextView()
-    var cssTextView: HTMLTextView = HTMLTextView()
+    var cssTextView: CSSTextView = CSSTextView()
     var jsTextView: JsTextView = JsTextView()
    
     

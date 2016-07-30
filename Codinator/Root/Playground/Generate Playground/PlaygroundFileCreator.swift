@@ -8,25 +8,28 @@
 
 import UIKit
 
-class PlaygroundFileCreator: NSObject {
+final class PlaygroundFileCreator: NSObject {
 
     /// Returns the file url of a Playground with a name
-    class func fileUrlForPlaygroundWithName(_ fileName: String) -> URL {
+    class func fileUrlForPlayground(for fileName: String) -> URL {
         
         let fileName = fileName + ".cnPlay"
-        
+
         let rootUrl = AppDelegate.storageURL
-        let playgroundPaths = try! rootUrl.appendingPathComponent("Playground", isDirectory: true)
-        let fileUrl = try! playgroundPaths.appendingPathComponent(fileName, isDirectory: false)
-        
+        let playgroundsURL = try! rootUrl.appendingPathComponent("Playground", isDirectory: true)
+
+        // Make sure file exists
+        try! FileManager.default.createDirectory(at: playgroundsURL, withIntermediateDirectories: true, attributes: nil)
+
+        let fileUrl = try! playgroundsURL.appendingPathComponent(fileName, isDirectory: false)
         return fileUrl
     }
     
     
-    class func generatePlaygroundFileWithName(_ fileName: String) -> PlaygroundDocument {
+    class func generatePlaygroundFile(withName fileName: String) -> PlaygroundDocument {
         
         // Get URL
-        let fileUrl = PlaygroundFileCreator.fileUrlForPlaygroundWithName(fileName)
+        let fileUrl = PlaygroundFileCreator.fileUrlForPlayground(for: fileName)
         
         // Create document
         let document = PlaygroundDocument(fileURL: fileUrl)
@@ -62,9 +65,6 @@ class PlaygroundFileCreator: NSObject {
         document.contents.add(neuronFile)
         document.contents.add(cssFile!)
         document.contents.add(jsFile!)
-//        document.setFile(.Neuron, toFile: neuronFile)
-//        document.setFile(.JS, toFile: jsFile)
-//        document.setFile(.CSS, toFile: cssFile)
         
         return document
     }

@@ -62,10 +62,8 @@ final class FilesTableViewController: UIViewController, UITableViewDelegate, UIT
         tableView.contentInset = insets
         tableView.scrollIndicatorInsets = insets
         
-        if #available(iOS 10.0, *) {
-            tableView.prefetchDataSource = self
-        }
-        
+        tableView.prefetchDataSource = self
+
         if traitCollection.forceTouchCapability == .available {
             registerForPreviewing(with: self, sourceView: self.tableView)
         }
@@ -226,15 +224,13 @@ final class FilesTableViewController: UIViewController, UITableViewDelegate, UIT
 
         
         
-        let popup = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let popup = alertController(title: nil, message: nil, preferredStyle: .actionSheet)
         popup.addAction(Import)
         popup.addAction(newFile)
         popup.addAction(newSubpage)
         popup.addAction(newDir)
         popup.addAction(cancel)
-        
-        popup.view.tintColor = UIColor.purple()
-        
+
         popup.popoverPresentationController?.barButtonItem = sender
         
         if getSplitView.displayMode != .primaryOverlay {
@@ -280,16 +276,14 @@ final class FilesTableViewController: UIViewController, UITableViewDelegate, UIT
         })
         
         
-        let popup = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let popup = alertController(title: nil, message: nil, preferredStyle: .actionSheet)
         popup.addAction(archive)
         popup.addAction(export)
         popup.addAction(localServer)
         popup.addAction(history)
         popup.addAction(run)
         popup.addAction(cancel)
-        
-        popup.view.tintColor = UIColor.purple()
-        
+
         popup.popoverPresentationController?.barButtonItem = sender
 
         
@@ -464,4 +458,23 @@ final class FilesTableViewController: UIViewController, UITableViewDelegate, UIT
         }
         
     }
+
+
+    // MARK: - UIAlertController modifications
+
+    /// Create an UIAlertController in Codinator design
+    private func alertController(title: String?, message: String?, preferredStyle: UIAlertControllerStyle) -> UIAlertController {
+
+        let controller = UIAlertController(title: title, message: message, preferredStyle: preferredStyle)
+
+        let firstView = controller.view.subviews.first
+        let nextView = firstView?.subviews.first
+        nextView?.backgroundColor = tableView.backgroundColor
+
+        controller.view.tintColor = self.view.tintColor
+        controller.popoverPresentationController?.backgroundColor = tableView.backgroundColor
+
+        return controller
+    }
+
 }

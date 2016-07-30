@@ -37,6 +37,8 @@ class SourceCodeTextView: CYRTextView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+
+        self.layer.drawsAsynchronously = true 
         self.commonSetUp()
     }
 

@@ -85,16 +85,8 @@ final class LinkSnippetsViewController :UIViewController,UITextFieldDelegate{
     @IBOutlet var nameTextField: UITextField!
     
     weak var delegate: SnippetsDelegate?
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        textField.attributedPlaceholder = AttributedString(string:"name", attributes:[NSForegroundColorAttributeName: UIColor.darkGray()])
-        nameTextField.attributedPlaceholder = AttributedString(string:"http link", attributes:[NSForegroundColorAttributeName: UIColor.darkGray()])
-        
-        
-    }
-    
+
+
     @IBAction func cancelDidPush(_ sender: AnyObject) {
         self.dismiss(animated: true, completion: nil)
     }
@@ -142,7 +134,6 @@ final class LinkSnippetsViewController :UIViewController,UITextFieldDelegate{
     }
     
 }
-
 
 
 

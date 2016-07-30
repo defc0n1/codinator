@@ -194,21 +194,21 @@ final class AssistantViewController: UIViewController, SnippetsDelegate, UITextF
     // MARK: - Navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: AnyObject?) {
+        let vc = segue.destinationViewController as! UINavigationController
+        vc.popoverPresentationController?.backgroundColor = vc.viewControllers.first?.view.backgroundColor
+
+
         switch segue.identifier! {
         case "img":
-            let vc = segue.destinationViewController as! UINavigationController
             (vc.viewControllers.first as! ImgSnippetsViewController).delegate = self
             
         case "link":
-            let vc = segue.destinationViewController as! UINavigationController
             (vc.viewControllers.first as! LinkSnippetsViewController).delegate = self
             
         case "list":
-            let vc = segue.destinationViewController as! UINavigationController
             (vc.viewControllers.first as! ListSnippetsViewController).delegate = self
             
         case "colorPicker":
-            let vc = segue.destinationViewController as! UINavigationController
             (vc.viewControllers.first as! ColorPickerViewController).delegate = self
             
         default:

@@ -51,14 +51,16 @@ class AppDelegate: UIResponder , UIApplicationDelegate, FileManagerDelegate {
                 let projectsURL = try url.appendingPathComponent("Projects")
 
 
-                try self.fileManager.createDirectory(at: playgroundsURL, withIntermediateDirectories: false, attributes: nil)
-                try self.fileManager.createDirectory(at: projectsURL, withIntermediateDirectories: false, attributes: nil)
+                try self.fileManager.createDirectory(at: playgroundsURL, withIntermediateDirectories: true, attributes: nil)
+                try self.fileManager.createDirectory(at: projectsURL, withIntermediateDirectories: true, attributes: nil)
 
-                let rootDirectory = try self.fileManager.urlForUbiquityContainerIdentifier(nil)?.appendingPathComponent("Documents")
+                guard let rootDirectory = try self.fileManager.urlForUbiquityContainerIdentifier(nil)?.appendingPathComponent("Documents") else {
+                    return
+                }
 
 
-                try self.fileManager.setUbiquitous(true, itemAt: playgroundsURL, destinationURL: rootDirectory!.appendingPathComponent("Playgrounds"))
-                try self.fileManager.setUbiquitous(true, itemAt: projectsURL, destinationURL: rootDirectory!.appendingPathComponent("Projects"))
+                try self.fileManager.setUbiquitous(true, itemAt: playgroundsURL, destinationURL: rootDirectory.appendingPathComponent("Playgrounds"))
+                try self.fileManager.setUbiquitous(true, itemAt: projectsURL, destinationURL: rootDirectory.appendingPathComponent("Projects"))
                 
             } catch {}
         }
