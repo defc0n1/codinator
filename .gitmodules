@@ -1,0 +1,3 @@
+[submodule "Codinator/Other Sources/Polaris"]
+	path = Codinator/Other Sources/Polaris
+	url = https://github.com/VWAS/polaris.git
