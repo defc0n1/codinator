@@ -32,11 +32,9 @@ class NewImportViewController: UIViewController,UINavigationControllerDelegate,U
     
     
     // MARK: - Shortcuts
-    
-    override func canBecomeFirstResponder() -> Bool {
+    override var canResignFirstResponder: Bool {
         return true
     }
-    
     
     override var keyCommands: [UIKeyCommand]? {
         return [UIKeyCommand(input: "W", modifierFlags: .command, action: #selector(NewImportViewController.close2), discoverabilityTitle: "Close Window")]
@@ -65,7 +63,7 @@ class NewImportViewController: UIViewController,UINavigationControllerDelegate,U
         
         if let webUploaderReference = webUploaderURL{
             let controller = UIAlertController(title: "Importing", message: "Visit this URL on another device (In the same network) to transfer your files:\n\n" + webUploaderReference, preferredStyle: .alert)
-            controller.view.tintColor = UIColor.black()
+            controller.view.tintColor = UIColor.black
             let reloadDataBase = UIAlertAction(title: "Reload File-Database ", style: .default) { (UIAlertAction) -> Void in
                 
                 self.dismiss(animated: true, completion: {
@@ -85,7 +83,7 @@ class NewImportViewController: UIViewController,UINavigationControllerDelegate,U
         }
         else{
             
-            let deviceName = UIDevice.current().model
+            let deviceName = UIDevice.current.model
             Notifications.sharedInstance.alertWithMessage("Please connect your " + deviceName + " to a Wi-Fi network and make sure web uploader is enabled in Settings.", title: "Error ❌", viewController: self)
             
         }
@@ -147,7 +145,7 @@ class NewImportViewController: UIViewController,UINavigationControllerDelegate,U
     
     // MARK: - Image Picker
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+    private func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         
         
         // Load animation
@@ -159,29 +157,29 @@ class NewImportViewController: UIViewController,UINavigationControllerDelegate,U
         
         
         
-        DispatchQueue.global(attributes: .qosUserInitiated).async(execute: { 
-          
+        DispatchQueue.global(qos: .userInitiated).async(execute: {
+
             let pathToWriteFile = self.inspectorPath! + "/" + self.textField.text!
             var fileUrl = URL(fileURLWithPath: pathToWriteFile)
             
             if (fileUrl.lastPathComponent == ""){
-                fileUrl = try! fileUrl.appendingPathExtension("png")
+                fileUrl = fileUrl.appendingPathExtension("png")
             }
             else{
-                fileUrl = try! fileUrl.deletingPathExtension()
-                fileUrl = try! fileUrl.appendingPathExtension("png")
+                fileUrl = fileUrl.deletingPathExtension()
+                fileUrl = fileUrl.appendingPathExtension("png")
             }
             
             
             
-            let newFileName = NewFiles.availableName(fileUrl.lastPathComponent!, nameWithoutExtension: try! fileUrl.deletingPathExtension().lastPathComponent!, Extension: fileUrl.pathExtension!, items: self.items)
-            fileUrl = try! fileUrl.deletingLastPathComponent().appendingPathComponent(newFileName)
+            let newFileName = NewFiles.availableName(fileUrl.lastPathComponent, nameWithoutExtension: fileUrl.deletingPathExtension().lastPathComponent, Extension: fileUrl.pathExtension, items: self.items)
+            fileUrl = fileUrl.deletingLastPathComponent().appendingPathComponent(newFileName)
             
             
             let image = info[UIImagePickerControllerOriginalImage] as! UIImage
             
             if let content = UIImagePNGRepresentation(image) {
-                FileManager.default.createFile(atPath: (fileUrl.path)!, contents: content, attributes: nil)
+                FileManager.default.createFile(atPath: (fileUrl.path), contents: content, attributes: nil)
             }
             
             
@@ -260,11 +258,11 @@ class NewImportViewController: UIViewController,UINavigationControllerDelegate,U
             
             
             
-            DispatchQueue.global(attributes: .qosUserInitiated).async(execute: {
+            DispatchQueue.global(qos: .userInitiated).async(execute: {
             
             
             
-            let name = url.lastPathComponent!
+            let name = url.lastPathComponent
             let pathToWriteFile = self.inspectorPath! + "/" + name
 
             let content = try? Data(contentsOf: url)

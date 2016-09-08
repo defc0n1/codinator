@@ -17,7 +17,7 @@ class PeekImageViewController: UIViewController {
     var isDir = false
     
     
-    override func previewActionItems() -> [UIPreviewActionItem] {
+    override var previewActionItems: [UIPreviewActionItem] {
         
         var items = [UIPreviewActionItem]()
         

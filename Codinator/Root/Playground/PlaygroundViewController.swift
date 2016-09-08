@@ -50,7 +50,7 @@ final class PlaygroundViewController: UIViewController, UITextViewDelegate {
                     self.cssText = self.document.contents[1] as! String
                     self.jsText = self.document.contents[2] as! String
                 }
-                self.navigationItem.title = (self.document.fileURL.lastPathComponent! as NSString).deletingPathExtension + " Playground"
+                self.navigationItem.title = (self.document.fileURL.lastPathComponent as NSString).deletingPathExtension + " Playground"
                 
             }
             else{
@@ -65,9 +65,9 @@ final class PlaygroundViewController: UIViewController, UITextViewDelegate {
         
         self.applyFramesForViewSize(self.textViewSpace.frame.size)
         
-        self.neuronTextView.backgroundColor = UIColor.black()
-        self.cssTextView.backgroundColor = UIColor.black()
-        self.jsTextView.backgroundColor = UIColor.black()
+        self.neuronTextView.backgroundColor = UIColor.black
+        self.cssTextView.backgroundColor = UIColor.black
+        self.jsTextView.backgroundColor = UIColor.black
         
         
         // Add to subView
@@ -99,7 +99,7 @@ final class PlaygroundViewController: UIViewController, UITextViewDelegate {
         self.cssTextView.keyboardDismissMode = .interactive
         self.jsTextView.keyboardDismissMode = .interactive
         
-        let textViewTintColor = UIColor.white()
+        let textViewTintColor = UIColor.white
         self.neuronTextView.tintColor = textViewTintColor
         self.cssTextView.tintColor = textViewTintColor
         self.jsTextView.tintColor = textViewTintColor
@@ -410,7 +410,7 @@ final class PlaygroundViewController: UIViewController, UITextViewDelegate {
     @IBAction func actionsDidPush(_ sender: UIBarButtonItem) {
         
         let popup = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.actionSheet)
-        popup.view.tintColor = UIColor.orange()
+        popup.view.tintColor = UIColor.orange
         
         popup.popoverPresentationController?.barButtonItem = sender
         
@@ -424,7 +424,7 @@ final class PlaygroundViewController: UIViewController, UITextViewDelegate {
             pi.duplex = UIPrintInfoDuplex.longEdge
             
             
-            let pic = UIPrintInteractionController.shared()
+            let pic = UIPrintInteractionController.shared
             pic.printInfo = pi
             pic.printFormatter = self.webView.viewPrintFormatter()
             
@@ -439,7 +439,7 @@ final class PlaygroundViewController: UIViewController, UITextViewDelegate {
             let cssString = self.document.contents[1] as! String
             let jsString = self.document.contents[2] as! String
             
-            let pasteboard = UIPasteboard.general()
+            let pasteboard = UIPasteboard.general
             pasteboard.string = Neuron.neuronCode(startingHTMLString, cssString: cssString, jsString: jsString)
         }
         
@@ -460,7 +460,7 @@ final class PlaygroundViewController: UIViewController, UITextViewDelegate {
     @IBAction func documentationDidPush(_ sender: UIBarButtonItem) {
         
         let popup = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.actionSheet)
-        popup.view.tintColor = UIColor.orange()
+        popup.view.tintColor = UIColor.orange
         
         popup.popoverPresentationController?.barButtonItem = sender
         

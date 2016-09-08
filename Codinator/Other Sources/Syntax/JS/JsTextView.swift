@@ -42,7 +42,7 @@ class JsTextView: CYRTextView {
     
     func commonSetUp() {
         self.font = defaultFont
-        self.textColor = UIColor.white()
+        self.textColor = UIColor.white
         self.indicatorStyle = .white
         
         self.tokens = highlightingTokens()
@@ -55,7 +55,7 @@ class JsTextView: CYRTextView {
         ]
         
         let commentAttributes: [NSObject : AnyObject] = [
-                NSForegroundColorAttributeName : SyntaxHighlighterDefaultColors.commentGreen,
+                NSForegroundColorAttributeName as NSObject : SyntaxHighlighterDefaultColors.commentGreen,
         ]
     
         

@@ -14,8 +14,9 @@ class PeekWebViewController: AspectRatioViewController {
     
     var projectsDelegate: PeekShortProtocol?
     var isProjects = false
-    
-    override func previewActionItems() -> [UIPreviewActionItem] {
+
+
+    override var previewActionItems: [UIPreviewActionItem] {
         
         if isProjects {
             
@@ -79,7 +80,7 @@ class PeekWebViewController: AspectRatioViewController {
 
 extension WKWebView {
     private struct key {
-        static let scale = unsafeBitCast(#selector(getter: UIWebView.scalesPageToFit), to: UnsafePointer<Void>.self)
+        static let scale = unsafeBitCast(#selector(getter: UIWebView.scalesPageToFit), to: UnsafeRawPointer.self)
     }
     private var sourceOfUserScript: String {
         return "(function(){\n" +

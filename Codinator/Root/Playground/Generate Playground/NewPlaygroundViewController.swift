@@ -23,11 +23,11 @@ class NewPlaygroundViewController: UIViewController, UITextFieldDelegate{
         
         
         // Configure next Button
-        nextButton.backgroundColor = UIColor.gray()
+        nextButton.backgroundColor = UIColor.gray
         nextButton.isEnabled = false
 
         // Configure fileNameTextField
-        fileNameTextField.attributedPlaceholder = AttributedString(string: "Playground name", attributes: [NSForegroundColorAttributeName: UIColor.gray()])
+        fileNameTextField.attributedPlaceholder = NSAttributedString(string: "Playground name", attributes: [NSForegroundColorAttributeName: UIColor.gray])
         
         fileNameTextField.layer.masksToBounds = true
         fileNameTextField.layer.borderColor = violett?.cgColor
@@ -37,8 +37,8 @@ class NewPlaygroundViewController: UIViewController, UITextFieldDelegate{
         fileNameTextField.addTarget(self, action: #selector(NewPlaygroundViewController.textFieldDidChange), for: UIControlEvents.editingChanged)
 
         
-        self.nextButton.backgroundColor = UIColor.gray()
-        self.nextButton.setTitleColor(UIColor.darkGray(), for: UIControlState())
+        self.nextButton.backgroundColor = UIColor.gray
+        self.nextButton.setTitleColor(UIColor.darkGray, for: UIControlState())
         
     }
 
@@ -97,8 +97,8 @@ class NewPlaygroundViewController: UIViewController, UITextFieldDelegate{
             nextButton.isEnabled = false
             
             UIView.animate(withDuration: 0.2, animations: { 
-                self.nextButton.backgroundColor = UIColor.gray()
-                self.nextButton.setTitleColor(UIColor.darkGray(), for: UIControlState())
+                self.nextButton.backgroundColor = UIColor.gray
+                self.nextButton.setTitleColor(UIColor.darkGray, for: UIControlState())
 
             })
         }

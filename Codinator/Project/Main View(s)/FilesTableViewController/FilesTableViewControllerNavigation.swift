@@ -11,10 +11,11 @@ import Foundation
 extension FilesTableViewController: UITableViewDataSourcePrefetching {
     
     // MARK: - Cell loading
-        
+
     @objc(numberOfSectionsInTableView:) func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
+
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return items.count
@@ -27,15 +28,15 @@ extension FilesTableViewController: UITableViewDataSourcePrefetching {
         // Configure the cell...
         
         let bgColorView = UIView()
-        bgColorView.backgroundColor = UIColor.black()
+        bgColorView.backgroundColor = UIColor.black
         cell.selectedBackgroundView = bgColorView
         
-        
-        if let text = items[(indexPath as NSIndexPath).row].lastPathComponent {
+        let text = items[(indexPath as NSIndexPath).row].lastPathComponent
+        if text != "" {
             cell.textLabel?.text = text
             
-            
-            let queue = DispatchQueue.global(attributes: .qosUserInitiated)
+
+            let queue = DispatchQueue.global(qos: .userInitiated)
             queue.sync(execute: {
                 
                 // Check if image was already chached
@@ -46,7 +47,7 @@ extension FilesTableViewController: UITableViewDataSourcePrefetching {
                     }
                 }
                 else {
-                    if let url = try! self.projectManager?.inspectorURL.appendingPathComponent(text) {
+                    if let url = self.projectManager?.inspectorURL.appendingPathComponent(text) {
                         var image = Thumbnail.sharedInstance.file(with: url)
                         
                         if image.size != CGSize(width: 128, height: 128) {
@@ -87,8 +88,8 @@ extension FilesTableViewController: UITableViewDataSourcePrefetching {
             if prefetchedImages[indexPath] == nil {
                 
                 // Get text
-                guard let text = items[(indexPath as NSIndexPath).row].lastPathComponent,
-                    let url = try! self.projectManager?.inspectorURL.appendingPathComponent(text) else {
+                let text = items[(indexPath as NSIndexPath).row].lastPathComponent
+                guard let url = self.projectManager?.inspectorURL.appendingPathComponent(text) else {
                         return
                 }
                 
@@ -114,10 +115,10 @@ extension FilesTableViewController: UITableViewDataSourcePrefetching {
     // MARK: - Table View Selection
     
     @objc(tableView:didSelectRowAtIndexPath:) func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let selectedURL = try! inspectorURL?.appendingPathComponent(items[(indexPath as NSIndexPath).row].lastPathComponent!) {
+        if let selectedURL = inspectorURL?.appendingPathComponent(items[(indexPath as NSIndexPath).row].lastPathComponent) {
             var isDirectory : ObjCBool = ObjCBool(false)
             
-            if (FileManager.default.fileExists(atPath: selectedURL.path!, isDirectory: &isDirectory) && Bool(isDirectory) == true) {
+            if (FileManager.default.fileExists(atPath: selectedURL.path, isDirectory: &isDirectory) && isDirectory.boolValue == true) {
                                 
                 projectManager.inspectorURL = selectedURL
                 
@@ -133,7 +134,7 @@ extension FilesTableViewController: UITableViewDataSourcePrefetching {
             } else {
                 
                 
-                switch selectedURL.pathExtension! {
+                switch selectedURL.pathExtension {
                     
                 case "png","img","jpg","jpeg", "gif", "PNG","IMG","JPG","JPEG", "GIF":
                     
@@ -144,7 +145,7 @@ extension FilesTableViewController: UITableViewDataSourcePrefetching {
                     
                     
                     let imageInfo = JTSImageInfo()
-                    imageInfo.image = UIImage(contentsOfFile: selectedURL.path!)
+                    imageInfo.image = UIImage(contentsOfFile: selectedURL.path)
                     
                     imageInfo.referenceRect = cell.imageView!.frame
                     imageInfo.referenceView = cell.imageView?.superview
@@ -171,7 +172,7 @@ extension FilesTableViewController: UITableViewDataSourcePrefetching {
                     
                 default:
                     
-                    if let data = FileManager.default.contents(atPath: selectedURL.path!) {
+                    if let data = FileManager.default.contents(atPath: selectedURL.path) {
                         let contents = NSString(data: data, encoding: String.Encoding.utf8.rawValue)
                         
                         projectManager?.selectedFileURL = selectedURL
@@ -200,7 +201,7 @@ extension FilesTableViewController: UITableViewDataSourcePrefetching {
         
         let indexPath = tableView.indexPathForRow(at: point)
         if sender.state == .began && indexPath != nil {
-            projectManager.deleteURL = try! projectManager.inspectorURL.appendingPathComponent(items[(indexPath! as NSIndexPath).row].lastPathComponent!)
+            projectManager.deleteURL = projectManager.inspectorURL.appendingPathComponent(items[(indexPath! as NSIndexPath).row].lastPathComponent)
             
             
             let deleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: { _ in
@@ -246,7 +247,7 @@ extension FilesTableViewController: UITableViewDataSourcePrefetching {
             
             let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
             
-            let pathExtension = self.projectManager.deleteURL!.pathExtension!
+            let pathExtension = self.projectManager.deleteURL!.pathExtension
             
             
             if pathExtension != "" {

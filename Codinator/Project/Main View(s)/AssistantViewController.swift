@@ -69,13 +69,13 @@ final class AssistantViewController: UIViewController, SnippetsDelegate, UITextF
         
         fileUrl = projectManager.selectedFileURL
         
-        fileNameTextField!.text = try! fileUrl?.deletingPathExtension().lastPathComponent
+        fileNameTextField!.text = fileUrl?.deletingPathExtension().lastPathComponent
         fileExtensionTextField!.text = fileUrl?.pathExtension
         
         pathLabel.text = projectManager.fakePathForFileSelectedFile()
 
         do {
-            let attributes = try FileManager.default.attributesOfItem(atPath: projectManager.selectedFileURL!.path!)
+            let attributes = try FileManager.default.attributesOfItem(atPath: projectManager.selectedFileURL!.path)
             
             
             let dateFormatter = DateFormatter()
@@ -193,8 +193,8 @@ final class AssistantViewController: UIViewController, SnippetsDelegate, UITextF
     
     // MARK: - Navigation
     
-    override func prepare(for segue: UIStoryboardSegue, sender: AnyObject?) {
-        let vc = segue.destinationViewController as! UINavigationController
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let vc = segue.destination as! UINavigationController
         vc.popoverPresentationController?.backgroundColor = vc.viewControllers.first?.view.backgroundColor
 
 

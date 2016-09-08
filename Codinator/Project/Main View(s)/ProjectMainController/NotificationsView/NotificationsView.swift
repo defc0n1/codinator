@@ -16,7 +16,7 @@ final class NotificationsView: UIVisualEffectView {
         
         textLabel.text = " \(text) "
         
-        let hex = UIPasteboard.general().string
+        let hex = UIPasteboard.general.string
         let color = UIColor(hexString: hex)
         
         textLabel.textColor = color

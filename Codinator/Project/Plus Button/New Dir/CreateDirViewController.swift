@@ -27,7 +27,7 @@ class CreateDirViewController: UIViewController, UITextFieldDelegate {
             
             // Create dir
             
-            let dirUrl = try! projectManager.inspectorURL.appendingPathComponent(textField.text!, isDirectory: true)
+            let dirUrl = projectManager.inspectorURL.appendingPathComponent(textField.text!, isDirectory: true)
             
             let fileManager = FileManager.default
             do {

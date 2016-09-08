@@ -57,8 +57,8 @@ final class FilesTableViewController: UIViewController, UITableViewDelegate, UIT
         
         reloadDataWithSelection(true)
         
-    
-        let insets = UIEdgeInsetsMake(0, 0, toolBar.frame.height, 0)
+        // 44 is the height of the toolbar
+        let insets = UIEdgeInsetsMake(0, 0, 44, 0)
         tableView.contentInset = insets
         tableView.scrollIndicatorInsets = insets
         
@@ -95,7 +95,7 @@ final class FilesTableViewController: UIViewController, UITableViewDelegate, UIT
         
             if hasntOpenIndexFileYet {
                 // Find 'index.html' and save index of it in the array itself
-                let items = self.items.enumerated().filter { ($0.element.absoluteString?.hasSuffix("index.html"))!}
+                let items = self.items.enumerated().filter { ($0.element.absoluteString.hasSuffix("index.html"))}
                 
                 // if 'items' isn't empty sellect the corresponding cell
                 if items.isEmpty != true {
@@ -111,16 +111,16 @@ final class FilesTableViewController: UIViewController, UITableViewDelegate, UIT
                         return
                     }
                     
-                    let url = try! projectManager.inspectorURL.appendingPathComponent(items.first!.element.lastPathComponent!)
+                    let url = projectManager.inspectorURL.appendingPathComponent(items.first!.element.lastPathComponent)
                     
-                    webView.loadFileURL(url, allowingReadAccessTo: try! url.deletingLastPathComponent())
+                    webView.loadFileURL(url, allowingReadAccessTo: url.deletingLastPathComponent())
                     
                     
                     hasntOpenIndexFileYet = false
                 }
                 else {
                     
-                    guard let filePath = self.items.first?.lastPathComponent! else {
+                    guard let filePath = self.items.first?.lastPathComponent else {
                         return
                     }
                     
@@ -141,9 +141,7 @@ final class FilesTableViewController: UIViewController, UITableViewDelegate, UIT
                                 return
                             }
                             
-                            guard let path = try! projectManager.inspectorURL.appendingPathComponent(filePath).path else {
-                                return
-                            }
+                            let path = projectManager.inspectorURL.appendingPathComponent(filePath).path
                             
                             webView.loadFileURL( URL(fileURLWithPath: path, isDirectory: false), allowingReadAccessTo: URL(fileURLWithPath: path, isDirectory: true))
                         }
@@ -159,8 +157,7 @@ final class FilesTableViewController: UIViewController, UITableViewDelegate, UIT
         
         getSplitView.assistantViewController?.renameDelegate = self
     
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(FilesTableViewController._reloadData), name: "relaodData" as NSNotification.Name, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(FilesTableViewController._reloadData), name: NSNotification.Name("relaodData"), object: nil)
     }
     
     
@@ -179,7 +176,7 @@ final class FilesTableViewController: UIViewController, UITableViewDelegate, UIT
         reloadDataWithSelection(false)
         
         // Find 'name' and save index of it in the array itself
-        let items = self.items.enumerated().filter { ($0.element.absoluteString?.hasSuffix(name))!}
+        let items = self.items.enumerated().filter { ($0.element.absoluteString.hasSuffix(name))}
         
         // if 'items' isn't empty sellect the corresponding cell
         if items.isEmpty == false {
@@ -327,7 +324,7 @@ final class FilesTableViewController: UIViewController, UITableViewDelegate, UIT
 
     func _reloadData() {
         
-        self.items = projectManager!.contentsOfDirectory(atPath: inspectorURL!.path!).map { $0 as! URL}
+        self.items = projectManager!.contentsOfDirectory(atPath: inspectorURL!.path).map { $0 as! URL}
         
             let ip = tableView.indexPathForSelectedRow
             
@@ -343,7 +340,7 @@ final class FilesTableViewController: UIViewController, UITableViewDelegate, UIT
     
     func reloadDataWithSelection(_ selection: Bool) {
     
-        self.items = projectManager!.contentsOfDirectory(atPath: inspectorURL!.path!).map { $0 as! URL}
+        self.items = projectManager!.contentsOfDirectory(atPath: inspectorURL!.path).map { $0 as! URL}
         
         if selection == true {
             let ip = tableView.indexPathForSelectedRow
@@ -361,37 +358,37 @@ final class FilesTableViewController: UIViewController, UITableViewDelegate, UIT
 
     // MARK: - Storyboards
     
-    override func prepare(for segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let identifier = segue.identifier {
             switch identifier {
                
             case "newFile":
-                let viewController = (segue.destinationViewController as! UINavigationController).viewControllers.first as! CreateFileViewController
+                let viewController = (segue.destination as! UINavigationController).viewControllers.first as! CreateFileViewController
                 viewController.path = projectManager.inspectorURL.path
-                viewController.items = self.items.map { $0.lastPathComponent! }
+                viewController.items = self.items.map { $0.lastPathComponent }
                 viewController.projectManager = projectManager
                 viewController.delegate = self
  
             case "newSubpage":
-                let viewController = (segue.destinationViewController as! UINavigationController).viewControllers.first as! CreateSubpageViewController
+                let viewController = (segue.destination as! UINavigationController).viewControllers.first as! CreateSubpageViewController
                 viewController.projectManager = projectManager
                 viewController.delegate = self
                 
             case "newDir":
-                let viewController = (segue.destinationViewController as! UINavigationController).viewControllers.first as! CreateDirViewController
+                let viewController = (segue.destination as! UINavigationController).viewControllers.first as! CreateDirViewController
                 viewController.projectManager = projectManager
                 viewController.delegate = self
                 
             case "import":
-                let viewController = (segue.destinationViewController as! UINavigationController).viewControllers.first as! NewImportViewController
+                let viewController = (segue.destination as! UINavigationController).viewControllers.first as! NewImportViewController
                
-                viewController.items = self.items.map{ $0.lastPathComponent! }
+                viewController.items = self.items.map{ $0.lastPathComponent }
                 viewController.webUploaderURL = projectManager.webUploaderServerURL()
                 viewController.inspectorPath = projectManager.inspectorURL.path
                 viewController.delegate = self
             
             case "run":
-                let viewController = (segue.destinationViewController as! UINavigationController).viewControllers.first as! AspectRatioViewController
+                let viewController = (segue.destination as! UINavigationController).viewControllers.first as! AspectRatioViewController
                 
                             
                 
@@ -406,10 +403,10 @@ final class FilesTableViewController: UIViewController, UITableViewDelegate, UIT
                 }
                 else {
                     if let tmpPath = projectManager.tmpFileURL {
-                        if tmpPath.path!.isEmpty {
+                        if tmpPath.path.isEmpty {
                             
                             if projectManager.inspectorURL.lastPathComponent != "index.html" {
-                                viewController.previewURL = try! projectManager.inspectorURL.appendingPathComponent("index.html")
+                                viewController.previewURL = projectManager.inspectorURL.appendingPathComponent("index.html")
                             }
                             else {
                                 viewController.previewURL = projectManager.inspectorURL
@@ -423,7 +420,7 @@ final class FilesTableViewController: UIViewController, UITableViewDelegate, UIT
                     }
                     else {
                         if projectManager.inspectorURL.lastPathComponent != "index.html" {
-                            viewController.previewURL = try! projectManager.inspectorURL.appendingPathComponent("index.html")
+                            viewController.previewURL = projectManager.inspectorURL.appendingPathComponent("index.html")
                         }
                         else {
                             viewController.previewURL = projectManager.inspectorURL
@@ -435,19 +432,19 @@ final class FilesTableViewController: UIViewController, UITableViewDelegate, UIT
                 
                 
             case "archive":
-                let viewController = (segue.destinationViewController as! UINavigationController).viewControllers.first as! ArchiveViewController
+                let viewController = (segue.destination as! UINavigationController).viewControllers.first as! ArchiveViewController
                 viewController.projectManager = projectManager
                 
             case "Pulse":
-                let viewController = (segue.destinationViewController as! UINavigationController).viewControllers.first as! ServersViewController
+                let viewController = (segue.destination as! UINavigationController).viewControllers.first as! ServersViewController
                 viewController.projectManager = projectManager
                 
             case "history":
-                let viewController = (segue.destinationViewController as! UINavigationController).viewControllers.first as! HistoryViewController
+                let viewController = (segue.destination as! UINavigationController).viewControllers.first as! HistoryViewController
                 viewController.projectManager = projectManager
                
             case "moveFile":
-                let viewController = (segue.destinationViewController as! UINavigationController).viewControllers.first as! FileMoverViewController
+                let viewController = (segue.destination as! UINavigationController).viewControllers.first as! FileMoverViewController
                 viewController.fileUrl = projectManager.deleteURL
                 viewController.delegate = self
                 

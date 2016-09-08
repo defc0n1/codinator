@@ -106,7 +106,7 @@ final class ProjectMainViewController: UIViewController, UISplitViewControllerDe
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.white()]
+        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.white]
     }
     
     
@@ -242,14 +242,13 @@ final class ProjectMainViewController: UIViewController, UISplitViewControllerDe
     
     
     // MARK: - Navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: AnyObject?) {
-        
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "assistantView" {
-            self.getSplitView!.assistantViewController = segue.destinationViewController as? AssistantViewController
+            self.getSplitView!.assistantViewController = segue.destination as? AssistantViewController
         }
-        
-        
     }
+
 
     // MARK: - Private
 

@@ -19,9 +19,25 @@ class AppDelegate: UIResponder , UIApplicationDelegate, FileManagerDelegate {
     
     class var storageURL: URL {
         get {
-            let rootDirectory = try! FileManager.default.urlForUbiquityContainerIdentifier(nil)?.appendingPathComponent("Documents")
+
+            func createResources(at homeURL: URL) {
+                let playgroundsURL =  homeURL.appendingPathComponent("Playgrounds")
+                let projectsURL = homeURL.appendingPathComponent("Projects")
+
+                print("Project: \(try? projectsURL.checkResourceIsReachable()),Playground: \(try? playgroundsURL.checkResourceIsReachable())")
+
+                let needsResources = try? projectsURL.checkResourceIsReachable() || playgroundsURL.checkResourceIsReachable()
+                if needsResources != nil && needsResources! {
+                    let fileManager = FileManager.default
+                    try? fileManager.createDirectory(at: playgroundsURL, withIntermediateDirectories: true, attributes: nil)
+                    try? fileManager.createDirectory(at: projectsURL, withIntermediateDirectories: true, attributes: nil)
+                }
+            }
+
+            let rootDirectory = FileManager.default.url(forUbiquityContainerIdentifier: nil)?.appendingPathComponent("Documents")
                 
             if rootDirectory != nil && UserDefaults.standard.bool(forKey: "CnCloud") == true {
+                createResources(at: rootDirectory!)
                 return rootDirectory!
             }
             
@@ -29,32 +45,35 @@ class AppDelegate: UIResponder , UIApplicationDelegate, FileManagerDelegate {
             
             let documentDirectory = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first
             let homeURL = URL(fileURLWithPath: documentDirectory!, isDirectory: true)
-            
+            createResources(at: homeURL)
+
+
             return homeURL
         }
     }
     
     
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+    private func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 
 //        Fabric.with([Crashlytics.self])
-        
+
+        // TODO: - Evaluate if this process is really required
         
         // Create FileSystem
         let path = (NSHomeDirectory() as NSString).appendingPathComponent("Documents")
         let url = URL(fileURLWithPath: path, isDirectory: true)
 
-        let queue = DispatchQueue.global(attributes: .qosBackground)
+        let queue = DispatchQueue.global(qos: .background)
         queue.async { 
             do {
-                let playgroundsURL = try url.appendingPathComponent("Playgrounds")
-                let projectsURL = try url.appendingPathComponent("Projects")
+                let playgroundsURL = url.appendingPathComponent("Playgrounds")
+                let projectsURL = url.appendingPathComponent("Projects")
 
 
                 try self.fileManager.createDirectory(at: playgroundsURL, withIntermediateDirectories: true, attributes: nil)
                 try self.fileManager.createDirectory(at: projectsURL, withIntermediateDirectories: true, attributes: nil)
 
-                guard let rootDirectory = try self.fileManager.urlForUbiquityContainerIdentifier(nil)?.appendingPathComponent("Documents") else {
+                guard let rootDirectory = self.fileManager.url(forUbiquityContainerIdentifier: nil)?.appendingPathComponent("Documents") else {
                     return
                 }
 
@@ -69,13 +88,13 @@ class AppDelegate: UIResponder , UIApplicationDelegate, FileManagerDelegate {
         return true
     }
     
-    func application(_ app: UIApplication, open url: URL, options: [String : AnyObject] = [:]) -> Bool {
-        return self.moveImported(filename: url.lastPathComponent!, at: url)
+    private func application(_ app: UIApplication, open url: URL, options: [String : AnyObject] = [:]) -> Bool {
+        return self.moveImported(filename: url.lastPathComponent, at: url)
     }
     
     // MARK: - Hand off
     
-    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: ([AnyObject]?) -> Void) -> Bool {
+    private func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: ([AnyObject]?) -> Void) -> Bool {
         
         let navController = self.window?.rootViewController as! UINavigationController
         let welcomeViewController = navController.viewControllers.first as! WelcomeViewController
@@ -94,11 +113,11 @@ class AppDelegate: UIResponder , UIApplicationDelegate, FileManagerDelegate {
         let storagePath = AppDelegate.storageURL.path
         
         // Check if dir exists
-        if fileManager.fileExists(atPath: storagePath!) {
+        if fileManager.fileExists(atPath: storagePath) {
             
             // Move file to location
             do {
-                try fileManager.moveItem(at: url, to: URL(fileURLWithPath: storagePath!, isDirectory: true).appendingPathComponent(filename))
+                try fileManager.moveItem(at: url, to: URL(fileURLWithPath: storagePath, isDirectory: true).appendingPathComponent(filename))
                 
                 let navController = self.window?.rootViewController as! UINavigationController
                 let welcomeViewController = navController.viewControllers.first as! WelcomeViewController

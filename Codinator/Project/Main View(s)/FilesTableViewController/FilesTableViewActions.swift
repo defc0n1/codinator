@@ -17,14 +17,14 @@ extension FilesTableViewController: PeekProtocol {
         printInfo.orientation = .portrait
         printInfo.duplex = .longEdge
         
-        let printController = UIPrintInteractionController.shared()
+        let printController = UIPrintInteractionController.shared
         printController.printInfo = printInfo
         
-        let pathExtension = self.projectManager.deleteURL!.pathExtension!
+        let pathExtension = self.projectManager.deleteURL!.pathExtension
         switch pathExtension {
             
         case "jpg", "jped", "png", "bmp":
-            let image = UIImage(contentsOfFile: self.projectManager.deleteURL!.path!)
+            let image = UIImage(contentsOfFile: self.projectManager.deleteURL!.path)
             let imageView = UIImageView(image: image)
             printController.printFormatter = imageView.viewPrintFormatter()
             
@@ -56,12 +56,12 @@ extension FilesTableViewController: PeekProtocol {
     }
     
     func rename() {
-        let message = "Rename \(self.projectManager.deleteURL!.lastPathComponent!)"
+        let message = "Rename \(self.projectManager.deleteURL!.lastPathComponent)"
         
         let alert = UIAlertController(title: "Rename", message: message, preferredStyle: .alert)
         
         alert.addTextField(configurationHandler: { textField in
-            textField.placeholder = self.projectManager.deleteURL!.lastPathComponent!
+            textField.placeholder = self.projectManager.deleteURL!.lastPathComponent
             
             textField.keyboardAppearance = .dark
             textField.autocorrectionType = .no
@@ -72,7 +72,7 @@ extension FilesTableViewController: PeekProtocol {
         let processAction = UIAlertAction(title: "Rename", style: .default, handler: { _ in
             
             let newName = alert.textFields?.first?.text
-            let newURL = try! self.projectManager.deleteURL!.deletingLastPathComponent().appendingPathComponent(newName!)
+            let newURL = self.projectManager.deleteURL!.deletingLastPathComponent().appendingPathComponent(newName!)
             
             do {
                 
@@ -123,11 +123,11 @@ extension FilesTableViewController: PeekProtocol {
     }
     
     func delete() {
-        let fileExists = FileManager.default.fileExists(atPath: self.projectManager.deleteURL!.path!)
+        let fileExists = FileManager.default.fileExists(atPath: self.projectManager.deleteURL!.path)
         
         if fileExists {
             
-            let alert = UIAlertController(title: "Are you sure you want to delete \(self.projectManager.deleteURL!.lastPathComponent!)?", message: nil, preferredStyle: .alert)
+            let alert = UIAlertController(title: "Are you sure you want to delete \(self.projectManager.deleteURL!.lastPathComponent)?", message: nil, preferredStyle: .alert)
             
             let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
             let delete = UIAlertAction(title: "Delete", style: .destructive, handler: { _ in

@@ -69,7 +69,7 @@ final class CreateFileViewController: UIViewController, UITextFieldDelegate {
         }
        
         
-        let fileUrl = try! URL(fileURLWithPath: path!, isDirectory: false).appendingPathComponent(fileName)
+        let fileUrl = URL(fileURLWithPath: path!, isDirectory: false).appendingPathComponent(fileName)
         
         do {
             try fileContent.write(to: fileUrl, atomically: true, encoding: String.Encoding.utf8)

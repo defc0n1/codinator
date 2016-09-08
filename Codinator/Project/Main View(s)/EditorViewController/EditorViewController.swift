@@ -26,14 +26,14 @@ final class EditorViewController: UIViewController, UITextViewDelegate, ProjectS
     // Computed properties
     var fileExtension: String? {
         get {
-            return projectManager?.selectedFileURL!.pathExtension!
+            return projectManager?.selectedFileURL!.pathExtension
         }
     }
     
     var text: String? {
         get {
             if let polaris = projectManager {
-                let fileExtension = polaris.selectedFileURL!.pathExtension!
+                let fileExtension = polaris.selectedFileURL!.pathExtension
                 switch fileExtension {
                 case "css":
                     return cssTextView.text
@@ -61,12 +61,12 @@ final class EditorViewController: UIViewController, UITextViewDelegate, ProjectS
                     htmlTextView.isHidden = true
                     cssTextView.isHidden = false
                     
-                    if htmlTextView.isFirstResponder() {
+                    if htmlTextView.isFirstResponder {
                         htmlTextView.resignFirstResponder()
                         cssTextView.becomeFirstResponder()
                     }
                     
-                    if jsTextView.isFirstResponder() {
+                    if jsTextView.isFirstResponder {
                         jsTextView.resignFirstResponder()
                         cssTextView.becomeFirstResponder()
                     }
@@ -82,12 +82,12 @@ final class EditorViewController: UIViewController, UITextViewDelegate, ProjectS
                     suggestionController = WUTextSuggestionController(textView: jsTextView, suggestionDisplayController: suggestionDisplayController)
                     suggestionController!.suggestionType = .JS
                     
-                    if htmlTextView.isFirstResponder() {
+                    if htmlTextView.isFirstResponder {
                         htmlTextView.resignFirstResponder()
                         jsTextView.becomeFirstResponder()
                     }
                     
-                    if cssTextView.isFirstResponder() {
+                    if cssTextView.isFirstResponder {
                         cssTextView.resignFirstResponder()
                         jsTextView.becomeFirstResponder()
                     }
@@ -102,12 +102,12 @@ final class EditorViewController: UIViewController, UITextViewDelegate, ProjectS
                     suggestionController = WUTextSuggestionController(textView: htmlTextView, suggestionDisplayController: suggestionDisplayController)
                     suggestionController!.suggestionType = .tag
                     
-                    if jsTextView.isFirstResponder() {
+                    if jsTextView.isFirstResponder {
                         jsTextView.resignFirstResponder()
                         htmlTextView.becomeFirstResponder()
                     }
                     
-                    if cssTextView.isFirstResponder() {
+                    if cssTextView.isFirstResponder {
                         cssTextView.resignFirstResponder()
                         htmlTextView.becomeFirstResponder()
                     }
@@ -121,11 +121,11 @@ final class EditorViewController: UIViewController, UITextViewDelegate, ProjectS
     
     var textView: CYRTextView {
         get {
-            let fileExtension = projectManager!.selectedFileURL!.pathExtension!
+            let fileExtension = projectManager!.selectedFileURL?.pathExtension
             switch fileExtension {
-            case "css":
+            case "css"?:
                 return cssTextView
-            case "js":
+            case "js"?:
                 return jsTextView
                 
             default:
@@ -188,7 +188,7 @@ final class EditorViewController: UIViewController, UITextViewDelegate, ProjectS
         
         // Auto Completion
         suggestionDisplayController.dataSource = self
-        NotificationCenter.default.addObserver(self, selector: #selector(range), name: "range" as NSNotification.Name, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(range), name: NSNotification.Name("range") as NSNotification.Name, object: nil)
 
         
         
@@ -218,8 +218,8 @@ final class EditorViewController: UIViewController, UITextViewDelegate, ProjectS
         let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         notificationCenter.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
-        notificationCenter.addObserver(self, selector: #selector(keyboardWillHide), name: "changedWebViewSize" as NSNotification.Name, object: nil)
-        
+        notificationCenter.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name("changedWebViewSize"), object: nil)
+
         self.view.bringSubview(toFront: searchBar)
         searchBar.keyboardAppearance = .dark
         
@@ -243,7 +243,7 @@ final class EditorViewController: UIViewController, UITextViewDelegate, ProjectS
         operation.completionBlock = {
             
             let fileURL = self.projectManager!.selectedFileURL
-            let root = try! self.projectManager!.selectedFileURL!.deletingLastPathComponent()
+            let root = self.projectManager!.selectedFileURL!.deletingLastPathComponent()
 
             DispatchQueue.main.async(execute: {
 
@@ -451,7 +451,7 @@ final class EditorViewController: UIViewController, UITextViewDelegate, ProjectS
     
     func keyboardWillShow(_ notification: Notification) {
         let userInfo = (notification as NSNotification).userInfo!
-        keyboardHeight = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue().height
+        keyboardHeight = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue.height
         
         dealWithAddingInsetsOnKeyboard()
         
@@ -530,7 +530,7 @@ final class EditorViewController: UIViewController, UITextViewDelegate, ProjectS
         
         let colorHex = color.toHexString()
         
-        let pasteBoard = UIPasteboard.general()
+        let pasteBoard = UIPasteboard.general
         pasteBoard.string = colorHex
         
         getSplitView?.mainViewController.notificationsView.notify(with: "HEX Color was copied")

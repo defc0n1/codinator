@@ -10,15 +10,17 @@ import Foundation
 
 extension EditorViewController {
    
-    func jsVariableNames(text: String, completion: (varNames: [String]) -> Void){
-        
-        DispatchQueue.global(attributes: .qosUtility).async(execute: {
+    func jsVariableNames(text: String, completion: @escaping (_ varNames: [String]) -> Void){
+
+
+
+        DispatchQueue.global(qos: .utility).async(execute: {
             
             let resource = text.components(separatedBy: "\n")
             
             // Get lines with 'var'
             let linesContainingVar = resource.filter { $0.contains("var") }.joined(separator: " ")
-            
+
             // Get lines by word
             let split = linesContainingVar.characters.split(separator: " ").map(String.init)
             
@@ -38,7 +40,7 @@ extension EditorViewController {
             let optimizedNames = variableNames.filter { $0 != "" }
             
             
-            completion(varNames: optimizedNames)
+            completion(optimizedNames)
 
             
         })

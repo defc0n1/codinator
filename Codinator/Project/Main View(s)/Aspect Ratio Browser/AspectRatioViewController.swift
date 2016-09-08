@@ -46,14 +46,14 @@ class AspectRatioViewController: UIViewController {
         
     
         // Load url
-        webView.loadFileURL(previewURL, allowingReadAccessTo: try! previewURL.deletingLastPathComponent())
+        webView.loadFileURL(previewURL, allowingReadAccessTo: previewURL.deletingLastPathComponent())
     }
 
     
     
     // MARK: - Shortcuts
-    
-    override func canBecomeFirstResponder() -> Bool {
+
+    override var canBecomeFirstResponder: Bool {
         return true
     }
     
@@ -76,7 +76,7 @@ class AspectRatioViewController: UIViewController {
         printInfo.duplex = UIPrintInfoDuplex.longEdge
         
         
-        let printInteractionController = UIPrintInteractionController.shared()
+        let printInteractionController = UIPrintInteractionController.shared
         printInteractionController.printInfo = printInfo
         printInteractionController.printFormatter = self.webView.viewPrintFormatter()
         

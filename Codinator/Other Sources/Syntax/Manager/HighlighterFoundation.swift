@@ -51,7 +51,7 @@ final class HighlighterFoundation: UITextView {
     
     private let cursorVelocity: CGFloat = 1/8
     
-    private let lineColor: UIColor = UIColor.black()
+    private let lineColor: UIColor = UIColor.black
     private let bgColor: UIColor = UIColor(white: 0, alpha: 1)
     
     private var lineCursorEnabled = true
@@ -114,7 +114,7 @@ final class HighlighterFoundation: UITextView {
         
         // Setup defaults 
         self.font = UIFont.systemFont(ofSize: 16.0)
-        self.textColor = UIColor.white()
+        self.textColor = UIColor.white
         
         self.autocapitalizationType = .none
         self.autocorrectionType = .no
@@ -170,7 +170,7 @@ final class HighlighterFoundation: UITextView {
             if lineCursorEnabled {
                 self.lineNumberLayoutManager!.selectedRange = self.selectedRange
                 
-                let string: NSString = (self.lineNumberLayoutManager?.textStorage?.string)!
+                let string: NSString = (self.lineNumberLayoutManager?.textStorage?.string)! as NSString
                 let tmpGlyphRange = string.paragraphRange(for: self.selectedRange)
                 
                 let glyphRange = self.lineNumberLayoutManager?.glyphRange(forCharacterRange: tmpGlyphRange, actualCharacterRange: nil)
@@ -225,7 +225,7 @@ final class HighlighterFoundation: UITextView {
         let cursorLocation = Int(max(CGFloat(startRange!.location) + sender.translation(in: self).x * cursorVelocity, 0))
         
         
-        if cursorLocation > startRange?.location {
+        if cursorLocation > (startRange?.location)! {
             self.selectedRange = NSMakeRange(startRange!.location, Int(fabs(Double(startRange!.location - cursorLocation))))
         }
         else {

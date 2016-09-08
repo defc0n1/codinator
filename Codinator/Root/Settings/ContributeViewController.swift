@@ -24,7 +24,7 @@ class ContributeViewController: UIViewController {
 
     @IBAction func contributeOnGitHubDidPush(_ sender: AnyObject) {
       
-        UIApplication.shared().open(
+        UIApplication.shared.open(
             URL(string: "https://github.com/VWAS/Codinator")!
             , options: [:], completionHandler: nil
         )

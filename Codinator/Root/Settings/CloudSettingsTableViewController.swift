@@ -10,7 +10,8 @@ import UIKit
 
 class cloudHelper {
     class func cloudAvailable() -> Bool {
-        if let _ = try! FileManager.default.urlForUbiquityContainerIdentifier(nil)?.appendingPathComponent("Documents") {
+
+        if let _ = FileManager.default.url(forUbiquityContainerIdentifier: nil)?.appendingPathComponent("Documents") {
            return true
         }
         else {
@@ -39,7 +40,7 @@ class CloudSettingsTableViewController: UITableViewController {
         cells.forEach { $0.backgroundColor = tableView.backgroundColor }
         
         
-        if let _ = try! FileManager.default.urlForUbiquityContainerIdentifier(nil)?.appendingPathComponent("Documents") {
+        if let _ = FileManager.default.url(forUbiquityContainerIdentifier: nil)?.appendingPathComponent("Documents") {
             useCloud.isOn = !userDefauls.bool(forKey: kUseCloud)
             cloudAvailableLabel.text = ""
         }

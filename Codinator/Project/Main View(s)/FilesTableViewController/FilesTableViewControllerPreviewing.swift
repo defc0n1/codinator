@@ -19,12 +19,12 @@ extension FilesTableViewController: UIViewControllerPreviewingDelegate {
         }
         
 
-        let fileName = items[(indexPath as NSIndexPath).row].lastPathComponent!
-        let path = try! inspectorURL!.appendingPathComponent(fileName)
+        let fileName = items[(indexPath as NSIndexPath).row].lastPathComponent
+        let path = inspectorURL!.appendingPathComponent(fileName)
         
         self.projectManager.deleteURL = path
         
-        switch path.pathExtension! {
+        switch path.pathExtension {
     
         case "png", "jpg", "jpeg", "bmp", "":
             
@@ -68,7 +68,7 @@ extension FilesTableViewController: UIViewControllerPreviewingDelegate {
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
         let path = self.projectManager.deleteURL
         
-        switch path!.pathExtension! {
+        switch path!.pathExtension {
         case "png", "jpg", "jpeg", "bmp", "":
             break
             
@@ -79,19 +79,19 @@ extension FilesTableViewController: UIViewControllerPreviewingDelegate {
             }
             
             
-            webView.loadFileURL(path!, allowingReadAccessTo: try! path!.deletingLastPathComponent())
+            webView.loadFileURL(path!, allowingReadAccessTo: path!.deletingLastPathComponent())
             
             projectManager.selectedFileURL = path
             projectManager.deleteURL = nil
             
-            if let data = FileManager.default.contents(atPath: path!.path!) {
+            if let data = FileManager.default.contents(atPath: path!.path) {
                 let contents = NSString(data: data, encoding: String.Encoding.utf8.rawValue)
                 
                 getSplitView.editorView!.text = contents as? String
                 
                 getSplitView.assistantViewController?.setFilePathTo(projectManager)
                 
-                _ = self.selectFileWithName(path!.lastPathComponent!)
+                _ = self.selectFileWithName(path!.lastPathComponent)
                 
             }
             

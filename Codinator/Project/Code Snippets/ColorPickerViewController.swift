@@ -33,7 +33,7 @@ class ColorPickerViewController: UIViewController{
                 colorPickerView.color = color
             }
             else{
-                colorPickerView.color = UIColor.purple()
+                colorPickerView.color = UIColor.purple
             }
         }
         

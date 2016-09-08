@@ -28,11 +28,10 @@ class QuickStartQuide: UIViewController {
         self.view.layer.borderWidth = 3
         
     }
-    
 
-    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         
-        if (UIDevice.current().userInterfaceIdiom == .phone){
+        if (UIDevice.current.userInterfaceIdiom == .phone){
             return UIInterfaceOrientationMask.portrait
         }
         else{

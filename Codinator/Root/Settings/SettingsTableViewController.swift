@@ -9,7 +9,6 @@
 import UIKit
 import StoreKit
 import MessageUI
-//import Twitter
 
 class SettingsTableViewController: UITableViewController, SKStoreProductViewControllerDelegate, MFMailComposeViewControllerDelegate {
 
@@ -115,8 +114,7 @@ class SettingsTableViewController: UITableViewController, SKStoreProductViewCont
                 self.present(storeProductViewController, animated: true, completion: nil)
                 
                 
-            case 2:
-                break
+//            case 2:
 //                if (SLComposeViewController.isAvailableForServiceType(SLServiceTypeTwitter)){
 //                    
 //                    let tweetSheet = SLComposeViewController(forServiceType: SLServiceTypeTwitter)
@@ -129,7 +127,7 @@ class SettingsTableViewController: UITableViewController, SKStoreProductViewCont
 //                    
 //                    
 //                }
-                
+
             default:
                 break
             }
@@ -154,7 +152,7 @@ class SettingsTableViewController: UITableViewController, SKStoreProductViewCont
         viewController.dismiss(animated: true, completion: nil)
     }
     
-    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: NSError?) {
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
         controller.dismiss(animated: true, completion: nil)
     }
     

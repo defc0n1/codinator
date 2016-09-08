@@ -26,7 +26,7 @@ final class ImgSnippetsViewController: UIViewController,UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        textField.attributedPlaceholder = AttributedString(string:"link or path to projects", attributes:[NSForegroundColorAttributeName: UIColor.darkGray()])
+        textField.attributedPlaceholder = NSAttributedString(string:"link or path to projects", attributes:[NSForegroundColorAttributeName: UIColor.darkGray])
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -48,7 +48,7 @@ final class ImgSnippetsViewController: UIViewController,UITextFieldDelegate {
             let code = "<img src=\"\(text!)\" alt=\"\(imageName)\"  width=\"\(width.text!)\" height=\"\(height.text!)\">"
             status = "copied"
             
-            let pasteboard = UIPasteboard.general()
+            let pasteboard = UIPasteboard.general
             pasteboard.string = code
         }
         else{
@@ -101,7 +101,7 @@ final class LinkSnippetsViewController :UIViewController,UITextFieldDelegate{
         }
         else{
             let code = "<a href=\"\(textField.text!)\">\(nameTextField.text!)</a>"
-            let pasteBoard = UIPasteboard.general()
+            let pasteBoard = UIPasteboard.general
             pasteBoard.string = code
             
             self.dismiss(animated: true, completion: {
@@ -173,7 +173,7 @@ final class ListSnippetsViewController :UIViewController{
         }
         tags += "</ul> "
         
-        let pasteBoard = UIPasteboard.general()
+        let pasteBoard = UIPasteboard.general
         pasteBoard.string = tags
         
         self.dismiss(animated: true, completion: {

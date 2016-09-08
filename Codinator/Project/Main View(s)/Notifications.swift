@@ -22,7 +22,7 @@ final public class Notifications: NSObject {
         viewController.present(alert, animated: true, completion: nil)
     }
 
-    public func alertWithMessage(_ message: String?, title: String?, viewController: UIViewController, completion: (Void) -> Void) {
+    public func alertWithMessage(_ message: String?, title: String?, viewController: UIViewController, completion: @escaping (Void) -> Void) {
         let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler: { _ in completion()})
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         

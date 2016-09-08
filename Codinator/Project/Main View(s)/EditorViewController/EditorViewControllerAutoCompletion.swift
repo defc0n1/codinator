@@ -9,9 +9,8 @@
 import Foundation
 
 extension EditorViewController: WUTextSuggestionDisplayControllerDataSource {
-    
-    
-    func textSuggestionDisplayController(_ textSuggestionDisplayController: WUTextSuggestionDisplayController!, suggestionDisplayItemsFor suggestionType: WUTextSuggestionType, query suggestionQuery: String!) -> [AnyObject]! {
+
+    func textSuggestionDisplayController(_ textSuggestionDisplayController: WUTextSuggestionDisplayController!, suggestionDisplayItemsFor suggestionType: WUTextSuggestionType, query suggestionQuery: String!) -> [Any]! {
         if suggestionType != .none {
             var suggestionDisplayItems : [WUTextSuggestionDisplayItem] = []
             for name in self.filteredNames(query: suggestionQuery, type: suggestionType) {
@@ -193,7 +192,7 @@ extension EditorViewController: WUTextSuggestionDisplayControllerDataSource {
 
         
         // Delete the charachters that are after the tag
-        let needsOpenAndCloseTag = findTag > findCloseBracket
+        let needsOpenAndCloseTag = findTag! > findCloseBracket!
         
         if needsOpenAndCloseTag {
             for _ in 1...itemsToDeleteTillTag {

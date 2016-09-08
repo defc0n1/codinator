@@ -22,8 +22,8 @@ extension NSObject {
         
         let delay = delay * Double(NSEC_PER_SEC)
         let time = DispatchTime.now() + Double(Int64(delay)) / Double(NSEC_PER_SEC)
-        
-        DispatchQueue.main.after(when: time) { 
+
+        DispatchQueue.main.asyncAfter(deadline: time) { 
             Thread.detachNewThreadSelector(selector, toTarget: self, with: object)
         }
     }

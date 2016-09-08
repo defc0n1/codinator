@@ -29,8 +29,8 @@ class CreateSubpageViewController: UIViewController, UITextFieldDelegate {
         }
         else {
             
-            let dirUrl = try! projectManager.inspectorURL.appendingPathComponent(textField.text!, isDirectory: true)
-            
+            let dirUrl = projectManager.inspectorURL.appendingPathComponent(textField.text!, isDirectory: true)
+
             let fileManager = FileManager.default
             
             // Create folder
@@ -46,7 +46,7 @@ class CreateSubpageViewController: UIViewController, UITextFieldDelegate {
             
             
             let indexFileBody = FileTemplates.htmlTemplateFile(forName: textField.text!)
-            let indexFileUrl = try! dirUrl.appendingPathComponent("index.html", isDirectory: false)
+            let indexFileUrl = dirUrl.appendingPathComponent("index.html", isDirectory: false)
 
             
             // Create file

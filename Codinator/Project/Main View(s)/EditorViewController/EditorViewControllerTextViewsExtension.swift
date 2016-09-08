@@ -16,7 +16,7 @@ extension EditorViewController {
         textView.frame = self.view.frame
         textView.text = text
         textView.delegate = self
-        textView.tintColor = UIColor.white()
+        textView.tintColor = UIColor.white
         textView.alwaysBounceVertical = true
         
         view.addSubview(textView)
@@ -116,11 +116,11 @@ extension EditorViewController {
     func setUpKeyboardForTextView(_ textView: CYRTextView) {
         // Keyboard Accessory
         
-        if UIDevice.current().userInterfaceIdiom == .pad {
+        if UIDevice.current.userInterfaceIdiom == .pad {
             return
         }
         else {
-            if self.view.traitCollection.horizontalSizeClass == .compact || self.view.traitCollection.verticalSizeClass == .compact || UIDevice.current().userInterfaceIdiom == .phone {
+            if self.view.traitCollection.horizontalSizeClass == .compact || self.view.traitCollection.verticalSizeClass == .compact || UIDevice.current.userInterfaceIdiom == .phone {
                 
                 textView.inputAccessoryView = VWASAccessoryView(textView: textView)
                 

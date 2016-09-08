@@ -41,7 +41,7 @@ extension WelcomeViewController: UICollectionViewDataSourcePrefetching, UICollec
         let url = indexPath.section == 0 ? projectsArray[indexPath.row] as! URL : playgroundsArray[indexPath.row] as! URL
         
         // Lod image
-        DispatchQueue.global(attributes: .qosUserInitiated).async(execute: {
+        DispatchQueue.global(qos: .userInitiated).async(execute: {
             
             
             // Load image either from chache or from scratch
@@ -63,12 +63,12 @@ extension WelcomeViewController: UICollectionViewDataSourcePrefetching, UICollec
         
         // Download files from iCloud if they aren't downloaded yet.
         if indexPath.section == 2 || url.pathExtension == "icloud" {
-            self.dealWithiCloudDownload(for: cell, for: indexPath, andFilePath: url.path!)
+            self.dealWithiCloudDownload(for: cell, for: indexPath, andFilePath: url.path)
         }
         
     
         // Make sure that there's no icloud file extension
-        let cellText = try! url.deletingPathExtension().lastPathComponent?
+        let cellText = url.deletingPathExtension().lastPathComponent
             .replacingOccurrences(of: ".icloud", with: "")
         cell.name.text = cellText
         
@@ -91,7 +91,7 @@ extension WelcomeViewController: UICollectionViewDataSourcePrefetching, UICollec
         var imagesDictionary = prefetchedImages as! [IndexPath : UIImage]
 
         // Chache async
-        DispatchQueue.global(attributes: .qosDefault).async { 
+        DispatchQueue.global(qos: .default).async {
          
             // Itterate through indexPaths
             for indexPath in indexPaths {

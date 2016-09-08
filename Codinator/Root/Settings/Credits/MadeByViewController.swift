@@ -24,7 +24,7 @@ class MadeByViewController: UIViewController {
     
     @IBAction func pupilsDidPressed(_ sender: AnyObject) {
         let alert = UIAlertController(title: nil, message: "Vladimir Danila - 16 y.o 🇩🇪\n Sam Miller - 15 y.o 🇨🇦\n Enoch Appathurai - 14 y.o 🇦🇺", preferredStyle: UIAlertControllerStyle.alert)
-        alert.view.tintColor = UIColor.purple()
+        alert.view.tintColor = UIColor.purple
         
         let action = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
         alert.addAction(action)

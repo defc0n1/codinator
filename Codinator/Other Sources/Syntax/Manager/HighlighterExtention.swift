@@ -15,7 +15,7 @@ class HighlighterExtention {
             return [:]
         }
         
-        return attriutes
+        return attriutes as [NSObject : AnyObject]
     }
     
     class func macroForKey(_ key: HighlightingMacroKey) -> String {

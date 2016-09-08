@@ -12,7 +12,7 @@ final class CSSTextView: SourceCodeTextView {
     
    override func commonSetUp() {
         self.font = defaultFont
-        self.textColor = UIColor.white()
+        self.textColor = UIColor.white
         self.indicatorStyle = .white
         
         self.tokens = highlightingTokens()
