@@ -75,6 +75,8 @@
 		646EC7271CADD2A800F359C2 /* UIAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646EC7261CADD2A800F359C2 /* UIAlertViewController.swift */; };
 		646EC7291CADD80900F359C2 /* JsTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646EC7281CADD80900F359C2 /* JsTextView.swift */; };
 		646EC72B1CADD8AC00F359C2 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646EC72A1CADD8AC00F359C2 /* UIColorExtension.swift */; };
+		646FB5761D9D1C2700B31DE4 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 646FB5741D9D1C2700B31DE4 /* Fabric.framework */; };
+		646FB5771D9D1C2700B31DE4 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 646FB5751D9D1C2700B31DE4 /* Crashlytics.framework */; };
 		647F33921CCDDC8600CA537D /* FilesTableViewControllerPreviewing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647F33911CCDDC8600CA537D /* FilesTableViewControllerPreviewing.swift */; };
 		648D14FA1D29937A00D58BA5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648D14F91D29937A00D58BA5 /* AppDelegate.swift */; };
 		649194311D15D5240025E79C /* SFMono-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 649194301D15D50C0025E79C /* SFMono-Regular.otf */; };
@@ -265,6 +267,8 @@
 		646EC7261CADD2A800F359C2 /* UIAlertViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIAlertViewController.swift; sourceTree = "<group>"; };
 		646EC7281CADD80900F359C2 /* JsTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsTextView.swift; sourceTree = "<group>"; };
 		646EC72A1CADD8AC00F359C2 /* UIColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
+		646FB5741D9D1C2700B31DE4 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = SOURCE_ROOT; };
+		646FB5751D9D1C2700B31DE4 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = SOURCE_ROOT; };
 		647F33911CCDDC8600CA537D /* FilesTableViewControllerPreviewing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilesTableViewControllerPreviewing.swift; sourceTree = "<group>"; };
 		648D14F91D29937A00D58BA5 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		649194301D15D50C0025E79C /* SFMono-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFMono-Regular.otf"; sourceTree = "<group>"; };
@@ -407,8 +411,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				64A083641BDD20740001CA0C /* libz.tbd in Frameworks */,
+				646FB5771D9D1C2700B31DE4 /* Crashlytics.framework in Frameworks */,
 				64A083631BDD1E6B0001CA0C /* libxml2.tbd in Frameworks */,
 				64BE885B1D2C46B400FD9FC5 /* libsqlite3.tbd in Frameworks */,
+				646FB5761D9D1C2700B31DE4 /* Fabric.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -605,6 +611,8 @@
 		64A080D01BDBDAEB0001CA0C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				646FB5741D9D1C2700B31DE4 /* Fabric.framework */,
+				646FB5751D9D1C2700B31DE4 /* Crashlytics.framework */,
 				64A0835B1BDD18C40001CA0C /* libxml2.tbd */,
 				64A081141BDBDE780001CA0C /* libz.tbd */,
 				64A081121BDBDE660001CA0C /* libsqlite3.tbd */,
@@ -1263,7 +1271,7 @@
 				64A080B01BDBD9D60001CA0C /* Sources */,
 				64A080B11BDBD9D60001CA0C /* Frameworks */,
 				64A080B21BDBD9D60001CA0C /* Resources */,
-				64A080CF1BDBDAA20001CA0C /* ShellScript */,
+				64A080CF1BDBDAA20001CA0C /* Run Script */,
 			);
 			buildRules = (
 			);
@@ -1343,13 +1351,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		64A080CF1BDBDAA20001CA0C /* ShellScript */ = {
+		64A080CF1BDBDAA20001CA0C /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
+			name = "Run Script";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1611,6 +1620,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Codinator/Frameworks",
+					"$(PROJECT_DIR)",
 				);
 				GCC_PREFIX_HEADER = Codinator/PrefixHeader.pch;
 				HEADER_SEARCH_PATHS = /usr/include/libxml2;
@@ -1641,6 +1651,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Codinator/Frameworks",
+					"$(PROJECT_DIR)",
 				);
 				GCC_PREFIX_HEADER = Codinator/PrefixHeader.pch;
 				HEADER_SEARCH_PATHS = /usr/include/libxml2;

@@ -192,17 +192,26 @@ extension EditorViewController: WUTextSuggestionDisplayControllerDataSource {
 
         
         // Delete the charachters that are after the tag
-        let needsOpenAndCloseTag = findTag! > findCloseBracket!
+        let needsOpenAndCloseTag = findTag! >= findCloseBracket!
         
         if needsOpenAndCloseTag {
-            for _ in 1...itemsToDeleteTillTag {
-                htmlTextView.deleteBackward()
+
+            if itemsToDeleteTillTag > 0 {
+                for _ in 1...itemsToDeleteTillTag {
+                    htmlTextView.deleteBackward()
+                }
+
             }
+
         }
         else {
-            for _ in 1...itemsToDeleteTillCloseTag {
-                htmlTextView.deleteBackward()
+
+            if itemsToDeleteTillTag > 0 {
+                for _ in 1...itemsToDeleteTillCloseTag {
+                    htmlTextView.deleteBackward()
+                }
             }
+
         }
 
         
