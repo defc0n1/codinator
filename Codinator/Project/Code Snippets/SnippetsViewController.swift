@@ -121,7 +121,7 @@ final class LinkSnippetsViewController :UIViewController,UITextFieldDelegate{
     
     func textFieldDidBeginEditing(_ textField2: UITextField) {
         let placeHolder = textField2.placeholder
-        print(placeHolder)
+        print(placeHolder as Any)
         
         if (placeHolder == "http link to subpage "){
             textField.text = "http://"

@@ -24,7 +24,7 @@ class FileMoverViewController: UIViewController, UITableViewDelegate, UITableVie
     @IBOutlet weak var backButton: UIBarButtonItem!
     var backButtonEnabled: Bool {
         get {
-            print(inspectorUrl?.path)
+            print(inspectorUrl?.path as Any)
             return !(inspectorUrl!.path.hasSuffix(".cnProj/Assets") || inspectorUrl!.path.hasSuffix(".cnProj/Assets/"))
         }
     }

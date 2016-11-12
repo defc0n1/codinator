@@ -145,8 +145,8 @@ class NewImportViewController: UIViewController,UINavigationControllerDelegate,U
     
     // MARK: - Image Picker
     
-    private func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
-        
+    internal func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+
         
         // Load animation
         self.loadingView.effect = nil
@@ -187,7 +187,9 @@ class NewImportViewController: UIViewController,UINavigationControllerDelegate,U
             DispatchQueue.main.async(execute: { 
                 picker.dismiss(animated: true, completion: {
                     self.delegate?.reloadDataWithSelection(true)
-                    self.dismiss(animated: true, completion: nil)
+					self.dismiss(animated: true, completion: {
+						self.delegate?.reloadDataWithSelection(true)
+					})
                 })
             })
             
@@ -279,17 +281,19 @@ class NewImportViewController: UIViewController,UINavigationControllerDelegate,U
             
         }
         else {
-            self.dismiss(animated: true, completion: {
-                self.delegate?.reloadDataWithSelection(true)
-            })
+			DispatchQueue.main.async(execute: {
+				self.dismiss(animated: true, completion: {
+					self.delegate?.reloadDataWithSelection(true)
+				})
+			})
         }
-    
+
     }
-    
+
 
     // MARK: - Default
-    
-    
+
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

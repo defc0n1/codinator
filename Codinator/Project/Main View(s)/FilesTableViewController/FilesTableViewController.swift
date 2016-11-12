@@ -339,7 +339,8 @@ final class FilesTableViewController: UIViewController, UITableViewDelegate, UIT
     
     
     func reloadDataWithSelection(_ selection: Bool) {
-    
+		self.prefetchedImages = [:]
+
         self.items = projectManager!.contentsOfDirectory(atPath: inspectorURL!.path).map { $0 as! URL}
         
         if selection == true {

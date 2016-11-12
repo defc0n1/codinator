@@ -141,7 +141,8 @@ extension FilesTableViewController: PeekProtocol {
                         self.getSplitView.preferredDisplayMode = .primaryOverlay
                     }
                     
-                    
+					self.prefetchedImages = [:]
+
                 } catch let error as NSError {
                     self.getSplitView.mainViewController.notificationsView.notify(with: error.localizedDescription)
                 }

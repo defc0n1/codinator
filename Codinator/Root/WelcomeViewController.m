@@ -464,6 +464,11 @@
             
             Polaris *projectManager = [[Polaris alloc] initWithProjectPath:path];
             NSString *requiresTouchID = [projectManager getSettingsDataForKey:@"TouchID"];
+			NSString *expectedPassword = [projectManager getSettingsDataForKey:@"TouchIDPassword"];
+
+			if (expectedPassword == nil)
+				expectedPassword = @"";
+
             NSLog(@"Requires TouchID: %@", requiresTouchID);
             
             [projectManager close];
@@ -484,16 +489,110 @@
                             dispatch_async(dispatch_get_main_queue(), ^{
                                 [self performSegueWithIdentifier:@"project" sender:nil];
                             });
-                            
-                            
                         }
+
+						if (authenticationError) {
+
+							UIAlertController *alertController = [UIAlertController
+																  alertControllerWithTitle:@"Password required"
+																  message:@"Enter the project password to unlock it."
+																  preferredStyle:UIAlertControllerStyleAlert];
+
+
+							[alertController addTextFieldWithConfigurationHandler:^(UITextField *textField)
+							 {
+								 textField.placeholder = @"Password";
+								 textField.secureTextEntry = YES;
+								 textField.keyboardAppearance = UIKeyboardAppearanceDark;
+							 }];
+
+
+							UIAlertAction *cancelAction = [UIAlertAction
+														   actionWithTitle:NSLocalizedString(@"Cancel", @"Cancel action")
+														   style:UIAlertActionStyleCancel
+														   handler:^(UIAlertAction *action)
+														   {
+															   NSLog(@"Cancel action");
+														   }];
+
+							UIAlertAction *okAction = [UIAlertAction
+													   actionWithTitle:NSLocalizedString(@"OK", @"OK action")
+													   style:UIAlertActionStyleDefault
+													   handler:^(UIAlertAction *action)
+													   {
+														   NSString *password = alertController.textFields.firstObject.text;
+
+														   if (![password isEqualToString: expectedPassword])
+															   return;
+
+														   projectIsOpened = YES;
+
+														   self.projectsPath = path;
+														   dispatch_async(dispatch_get_main_queue(), ^{
+															   [self performSegueWithIdentifier:@"project" sender:nil];
+														   });
+
+													   }];
+							
+							[alertController addAction:cancelAction];
+							[alertController addAction:okAction];
+							
+							dispatch_async(dispatch_get_main_queue(), ^{
+								[self presentViewController:alertController animated:YES completion:nil];
+							});
+						}
                     }];
                 }
                 else {
-                    [[Notifications sharedInstance] alertWithMessage:@"This project is locked and can only be unlocked on a device with TouchID" title:@"Project Locked" viewController:self];
-                }
-                
-                
+					UIAlertController *alertController = [UIAlertController
+														  alertControllerWithTitle:@"Password required"
+														  message:@"Enter the project password to unlock it."
+														  preferredStyle:UIAlertControllerStyleAlert];
+
+
+					[alertController addTextFieldWithConfigurationHandler:^(UITextField *textField)
+					 {
+						 textField.placeholder = @"Password";
+						 textField.secureTextEntry = YES;
+						 textField.keyboardAppearance = UIKeyboardAppearanceDark;
+					 }];
+
+
+					UIAlertAction *cancelAction = [UIAlertAction
+												   actionWithTitle:NSLocalizedString(@"Cancel", @"Cancel action")
+												   style:UIAlertActionStyleCancel
+												   handler:^(UIAlertAction *action)
+												   {
+													   NSLog(@"Cancel action");
+												   }];
+
+					UIAlertAction *okAction = [UIAlertAction
+											   actionWithTitle:NSLocalizedString(@"OK", @"OK action")
+											   style:UIAlertActionStyleDefault
+											   handler:^(UIAlertAction *action)
+											   {
+												   NSString *password = alertController.textFields.firstObject.text;
+
+												   if (![password isEqualToString: expectedPassword])
+													   return;
+
+												   projectIsOpened = YES;
+
+												   self.projectsPath = path;
+												   dispatch_async(dispatch_get_main_queue(), ^{
+													   [self performSegueWithIdentifier:@"project" sender:nil];
+												   });
+
+											   }];
+
+					[alertController addAction:cancelAction];
+					[alertController addAction:okAction];
+
+
+					dispatch_async(dispatch_get_main_queue(), ^{
+						[self presentViewController:alertController animated:YES completion:nil];
+					});
+				}                
             }
             else {
                 
@@ -907,8 +1006,7 @@
     }];
     
     
-    
-    
+
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
     
 

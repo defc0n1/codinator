@@ -56,7 +56,6 @@ class AppDelegate: UIResponder , UIApplicationDelegate, FileManagerDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
 
         Fabric.with([Crashlytics.self])
-        Fabric.sharedSDK().debug = true
 
         // TODO: - Evaluate if this process is really required
 

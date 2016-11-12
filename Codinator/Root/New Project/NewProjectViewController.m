@@ -21,6 +21,7 @@
 @interface NewProjectViewController() <UITextFieldDelegate>{
     Polaris *projectManager;
     __weak IBOutlet UIButton *cancelButton;
+	__weak IBOutlet UITextField *passwordTextField;
 }
 
 @end
@@ -338,7 +339,7 @@ BOOL done;
                                }
 
                                NSString *useTouchID;
-                               if (useTouchIDSwitch.on) {
+                               if (passwordTextField.text.length > 0) {
                                    useTouchID = @"YES";
                                }
                                else {
@@ -354,7 +355,12 @@ BOOL done;
                                [projectManager saveValue:useFTP forKey:@"UseFTP"];
                                [projectManager saveValue:usePHP forKey:@"UsePHP"];
                                [projectManager saveValue:@"1" forKey:@"version"];
-                               [projectManager saveValue:useTouchID forKey:@"TouchID"];
+
+							   if (passwordTextField.text.length > 0) {
+								   [projectManager saveValue:useTouchID forKey:@"TouchID"];
+								   [projectManager saveValue:passwordTextField.text forKey:@"TouchIDPassword"];
+							   }
+
                                [projectManager saveValue:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"] forKey:@"CodinatorVersion"];
 
                                [codinatorDocument closeWithCompletionHandler:^(BOOL success) {
